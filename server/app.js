@@ -7,4 +7,4 @@ app.listen('3000', function(){
 });
 
 
-app.use(express.static('public'));
+app.use(path.resolve(express.static('public')));
