@@ -1,4 +1,4 @@
-myApp.controller('reportsController', ['$scope', '$http', 'factory', function ($scope, $http, factory){
+myApp.controller('reportsController', ['$scope', '$http', function ($scope, $http){
   console.log('in reportsController');
 
 }]);

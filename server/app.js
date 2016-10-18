@@ -8,7 +8,7 @@ var pg = require('pg');
 
 app.use(bodyParser.json());
 app.listen(process.env.PORT, function() {
-    console.log('lisening on', process.env.PORT);
+    console.log('listening on', process.env.PORT);
 });
 
 //index route

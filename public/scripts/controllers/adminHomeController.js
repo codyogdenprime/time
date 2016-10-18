@@ -1,4 +1,4 @@
-myApp.controller('adminHomeController', ['$scope', '$http', 'factory', function ($scope, $http, factory){
+myApp.controller('adminHomeController', ['$scope', '$http', function ($scope, $http){
   console.log('in adminHomeController');
 
 }]);
