@@ -1,10 +1,12 @@
+require('dotenv').config(); // Imports all .env values
+var path = require('path');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-app.listen('3000', function(){
-  console.log('lisening on 3000');
+app.listen(process.env.PORT, function() {
+    console.log('lisening on', process.env.PORT);
 });
 
 
-app.use(path.resolve(express.static('public')));
+app.use(express.static(path.resolve('public')));
