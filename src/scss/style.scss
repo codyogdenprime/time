@@ -1,3 +1,159 @@
+/* Variables */
+
+// Status Alert Colors
+$color-warning: lighten(#ce5745, 38);
+$color-warning-border: #ce5745;
+
+$color-success: lighten( green, 72 );
+$color-success-border: green;
+
+$color-alert: lighten(#f1cc30, 42);
+$color-alert-border: darken(#f1cc30, 10 );
+
+/* Extensions */
+%font-awesome {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-	background-color: blue;
+	// background-color: blue;
+}
+
+header {
+	align-items: center;
+	display: flex;
+	margin: 0 auto;
+	max-width: 60em;
+	padding: 1em 0;
+	width:100%;
+}
+
+header h1 {
+	font-size: 1.5em;
+	margin: 0;
+	padding: 0;
+	small {
+		display: block;
+	}
+}
+
+nav {
+	flex: 1 0 40%;
+	margin-left: auto;
+	max-width: 50%;
+	ul {
+		display:flex;
+		justify-content: space-around;
+		list-style-type: none;
+		margin:0;
+		padding:0;
+	}
+}
+
+.warning {
+	box-sizing: border-box;
+	$padding: 0.5em;
+	background-color: $color-warning;
+	border: 1px solid $color-warning-border;
+	padding: 0.5em 0.75em;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	&:before {
+		@extend %font-awesome;
+		color: $color-warning-border;
+		font-size: 1.25em;
+		content: '\f06a';
+		padding: 0 0.5em 0 0;
+	}
+}
+
+.success {
+	background-color: $color-success;
+	border: 1px solid $color-success-border;
+	padding: 0.5em 0.75em;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	&:before {
+		@extend %font-awesome;
+		color: $color-success-border;
+		font-size: 1.25em;
+		content: '\f058';
+		padding: 0 0.5em 0 0;
+	}
+}
+
+.alert {
+	background-color: $color-alert;
+	border: 1px solid $color-alert-border;
+	padding: 0.5em 0.75em;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	&:before {
+		@extend %font-awesome;
+		color: $color-alert-border;
+		font-size: 1.25em;
+		content: '\f059';
+		padding: 0 0.5em 0 0;
+	}
+}
+
+.content-wrapper input[type="text"] {
+	padding: 0.25em 0.5em;
+}
+
+.content-wrapper {
+	box-sizing: border-box;
+	margin: 0 auto;
+	max-width: 60em;
+	width: 100%;
+}
+
+.project-titles {
+	background-color: lightblue;
+	display: flex;
+	justify-content: space-between;
+}
+
+ul.item-list {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.project-sheet {
+	& > div {
+		display: flex;
+		align-items: center;
+	}
+	& > .row {
+		display: flex;
+		height: 2em;
+		&:nth-of-type(odd) {
+			background-color: #f7f7f7;
+		}
+		&:hover {
+			background-color: lighten( #45BCCE, 40 );
+		}
+	}
+	.project-selector {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 2.5em;
+		input {
+			position: relative;
+			top: -1px;
+		}
+	}
+	.project-head {
+		padding: 0.5em 0;
+	}
 }
