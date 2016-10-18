@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 app.use('/inc', express.static( path.resolve('./node_modules/angular') ) );
 
 app.listen(process.env.PORT, function() {
-    console.log('lisening on', process.env.PORT);
+    console.log('listening on', process.env.PORT);
 });
 
 

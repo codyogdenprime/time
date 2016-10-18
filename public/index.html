@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <base href="/" />
     <meta charset="utf-8">
     <title>Cimaron Winter</title>
-    <script src="/inc/angular.min.js" charset="utf-8"></script>
-    <script src="/inc/angular-route.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/controllers/addHoursController.js"></script>
     <script src="scripts/controllers/adminHomeController.js"></script>
@@ -12,14 +13,15 @@
     <script src="scripts/controllers/reportsController.js"></script>
     <script src="scripts/controllers/userHomeController.js"></script>
     <script src="scripts/factory.js"></script>
-    <link rel="stylesheet" href="style.css">
+
   </head>
-  <body>
+  <body ng-app="myApp">
     <a href="#addHours">Add Hours</a>
     <a href="#adminHome">Admin Home</a>
     <a href="#empManage">Manage Employees</a>
     <a href="#reports">Reports</a>
     <a href="#userHome">User Home</a>
+    <div ng-view></div>
 
   </body>
 </html>
