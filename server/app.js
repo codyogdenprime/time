@@ -6,6 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var pg = require('pg');
+var connectionString = 'postgress://localhost:5432/cimarron';
 
 //use public folder
 app.use(express.static(path.resolve('public')));
