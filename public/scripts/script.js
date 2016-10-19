@@ -1,6 +1,6 @@
 console.log('sourced');
 
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute','firebase']);
 
 myApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
