@@ -99,4 +99,22 @@ router.get('/users/active',function(req, res){
       }//else
     });//pg.connect
 });//get active users
+router.get('/users/inactive',function(req, res){
+    console.log('users/inactive get route hit');
+    pg.connect(connectionString, function(err, client, done){
+      if(err){
+        console.log(err);
+      }else {
+        var resultsArray = [];
+        var queryResults = client.query('SELECT * FROM employee WHERE isactive = false');
+        queryResults.on('row', function(row){
+          resultsArray.push(row);
+        });//on row function
+        queryResults.on('end',function(){
+          done();
+          return res.send(resultsArray);
+        });//on end function
+      }//else
+    });//pg.connect
+});//get active users
 module.exports = router;

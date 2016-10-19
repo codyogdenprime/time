@@ -13,9 +13,12 @@ app.listen(process.env.PORT, function() {
 
 //index route
 var index = require('./routes/index');
-//employees route
+//users route
 var users = require('./routes/api/users');
 app.use('/api', users);
+// time route
+var time = require('./routes/api/time');
+app.use('/api', time);
 
 app.use('/inc', express.static( path.resolve('./node_modules/angular') ) );
 
