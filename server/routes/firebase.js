@@ -2,7 +2,7 @@ var router = require('express').Router();
 var path = require('path');
 var firebase = require('firebase');
 
-router.get("/secretData", function(req, res){
+router.get("/", function(req, res){
 
   /* This is where the magic happens. We pull the idtoken off of the request,
   verify it against our private_key, and then we return the decodedToken */
