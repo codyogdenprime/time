@@ -12,10 +12,18 @@ router.get("/secretData", function(req, res){
     there is still more work to be done if you want to implement roles
     You can use the decodedToken and some logic to do that. */
 
+    var objectToReturn ={
+      batman: 'Robin',
+      cody: 'john',
+      lisa: 'matt'
+    };
+
     console.log(decodedToken); // Here you can see the information firebase gives you about the user
-    res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name+'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
+    res.send((JSON.stringify(objectToReturn)));
+    // res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name +'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
   })
   .catch(function(error) {
+    console.log(error);
     // If the id_token isn't right, you end up in this callback function
     res.send("No secret data for you!");
   });
