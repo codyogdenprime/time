@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="/" />
+    <meta charset="utf-8">
+    <title>Cimaron Winter</title>
+    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+    <script src="config.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/controllers/addHoursController.js"></script>
+    <script src="scripts/controllers/adminHomeController.js"></script>
+    <script src="scripts/controllers/empManageController.js"></script>
+    <script src="scripts/controllers/reportsController.js"></script>
+    <script src="scripts/controllers/userHomeController.js"></script>
+    <script src="scripts/controllers/homeController.js"></script>
+    <script src="scripts/factory.js"></script>
+
+  </head>
+  <body ng-app="myApp">
+    <a href="#addHours">Add Hours</a>
+    <a href="#adminHome">Admin Home</a>
+    <a href="#empManage">Manage Employees</a>
+    <a href="#reports">Reports</a>
+    <a href="#userHome">User Home</a>
+    <div ng-controller="homeController">
+      <button ng-click="logIn()">Login</button>
+      <button ng-click="logOut()">Logout</button>
+      {{secretData}}
+      </div>
+    <div ng-view></div>
+
+  </body>
+</html>
