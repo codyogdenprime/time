@@ -5,7 +5,7 @@ var myApp = angular.module('myApp', ['ngRoute']);
 myApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
   when ('/', {
-    templateUrl: "index.html"
+    templateUrl: "dash.html"
   }).
   when ('/addHours', {
     templateUrl: "/views/addHours.html",
