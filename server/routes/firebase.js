@@ -2,7 +2,7 @@ var router = require('express').Router();
 var path = require('path');
 var firebase = require('firebase');
 
-router.get("/", function(req, res){
+router.get("/secretData", function(req, res){
 
   /* This is where the magic happens. We pull the idtoken off of the request,
   verify it against our private_key, and then we return the decodedToken */
@@ -13,7 +13,7 @@ router.get("/", function(req, res){
     You can use the decodedToken and some logic to do that. */
 
     console.log(decodedToken); // Here you can see the information firebase gives you about the user
-    res.send("Secret DATA!!! You got it!!! Great work " + decodedToken.name + "!!!");
+    res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name+'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
   })
   .catch(function(error) {
     // If the id_token isn't right, you end up in this callback function

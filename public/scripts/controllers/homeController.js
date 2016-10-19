@@ -29,6 +29,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
            }
          }).then(function(response){
            $scope.secretData = response.data;
+           console.log(response, 'response from server');
          });
        });
      }else{
