@@ -19,6 +19,9 @@ app.use('/api', users);
 // time route
 var time = require('./routes/api/time');
 app.use('/api', time);
+// reports route
+var reports = require('./routes/api/reports');
+app.use('/api', reports);
 
 app.use('/inc', express.static( path.resolve('./node_modules/angular') ) );
 
