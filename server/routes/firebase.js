@@ -17,15 +17,13 @@ router.get("/dbcheck", function(req, res){
     var token = decodedToken;
     console.log(decodedToken); // Here you can see the information firebase gives you about the user
     pg.connect(connectionString,function(err,client,done){
-      console.log(token.name,token.email,token.user_id,token.picture, 'TOKENNNNNnnNNNNNNNNNN');
-      // console.log(decodedToken.name, decodedToken.email, decodedToken.user_id,'NAME EMAIL ID');
       var authid = token.user_id;
       if (err) {
         console.log(err);
       }else {
         console.log('db connected');
         var resultsArray = [];
-        var queryResults = client.query('SELECT EXISTS 1 from employee WHERE authid = $1',[authid]);
+        var queryResults = client.query('SELECT * from employee WHERE authid = $1',[authid]);
         queryResults.on('row', function(row){
             resultsArray.push(row);
         });//end query results row
@@ -39,10 +37,6 @@ router.get("/dbcheck", function(req, res){
       // If the id_token isn't right, you end up in this callback function
       res.send("No secret data for you!");
     });//end catch
-
-
-    //sends Welcome Message to client
-    // res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name +'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
   });
 });//end router dot get
 

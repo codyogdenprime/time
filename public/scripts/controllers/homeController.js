@@ -5,8 +5,9 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
    // This code runs whenever the user logs in
    $scope.logIn = function login(){
+     
      auth.$signInWithPopup("google").then(function(firebaseUser) {
-       console.log("Signed in as:", firebaseUser.user.displayName);
+       console.log("Signed in as:", firebaseUser);
      }).catch(function(error) {
        console.log("Authentication failed: ", error);
      });

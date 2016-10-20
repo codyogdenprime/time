@@ -1,7 +1,5 @@
 require('dotenv').config(); // Imports all .env values
 var firebase = require('firebase');
-require('firebase/auth');
-require('firebase/database');
 var path = require('path');
 var express = require('express');
 var app = express();
@@ -10,7 +8,6 @@ var connectionString = 'postgres://localhost:5432/cimaron-winter';
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var pg = require('pg');
 var connectionString = 'postgress://localhost:5432/cimarron';
-
 
 //use public folder
 app.use(express.static(path.resolve('public')));
@@ -46,10 +43,3 @@ var firebase = require('./routes/firebase');
 app.use('/', firebase);
 //use public folder
 app.use(express.static(path.resolve('public')));
-
-
-// app.get('/stuff', function(){
-//   pg.connect(connectionString,function)
-// });
-
-//pull in angular to project
