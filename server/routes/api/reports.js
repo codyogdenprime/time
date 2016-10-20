@@ -7,7 +7,7 @@ var connectionString = 'postgres://localhost:5432/cimaron-winter';
 router.use(bodyParser.urlencoded({extended:true}));
 
 //report get route
-router.get('/reports/?:userid',function(req, res){
+router.get('/reports/:userid?',function(req, res){
 
     console.log('/reports get route hit');
     var username = req.params.userid;
