@@ -25,9 +25,24 @@
     </header>
     <main>
         <div class="content-wrapper">
+            <div class="selector">
+                Project: 
+                <select>
+                    <option>--</option>
+                    <option>Martin Group</option>
+                    <option>Dan Group</option>
+                    <option>Millie Group</option>
+                    <option>Dev Group</option>
+                    <option>John Group</option>
+                    <option>Lisa Group</option>
+                    <option>Matt Group</option>
+                </select>
+            </div>
+        </div>
+        <div class="content-wrapper">
         	<div class="sheet">
         		<div class="row entry-form">
-        			<div class="date"><input type="text" value="Oct 6, 2016" /></div>
+        			<div class="date"><input type="date" value="2016-10-23" /></div>
         			<div class="person">
         				<select>
         					<option>Cody Ogden</option>
@@ -51,7 +66,7 @@
         			<div class="person">Cody Ogden</div>
         			<div class="time">2.00</div>
         			<div class="description">Worked on the Cimarron Winter site.</div>
-        			<div class="actions">edit X</div>
+        			<div class="actions">edit X</div> <!-- Edit will be a button/link that opens the x-editable form. 'X' will be a button that confirms if the user wants to delete this entry. -->
         		</div>        		<div class="row">
         			<div class="date">Oct 23</div>
         			<div class="person">Cody Ogden</div>
@@ -59,14 +74,98 @@
         			<div class="description">Worked on the Cimarron Winter site.</div>
         			<div class="actions">edit X</div>
         		</div>        		<div class="row">
-        			<div class="date">Oct 23</div>
-        			<div class="person">Cody Ogden</div>
-        			<div class="time">2.00</div>
-        			<div class="description">Worked on the Cimarron Winter site.</div>
-        			<div class="actions">edit X</div>
+                    <div class="date">Oct 23</div>
+                    <div class="person">Cody Ogden</div>
+                    <div class="time">2.00</div>
+                    <div class="description">Worked on the Cimarron Winter site.</div>
+                    <div class="actions">edit X</div>
+                </div>
+                <div class="row total">
+        			<div class="date"></div>
+        			<div class="total-hours">Total Hours</div>
+        			<div class="time">8.00</div> <!-- This totals the Time column. -->
+        			<div class="description"></div>
+        			<div class="actions">Export to CSV</div>
         		</div>
         	</div>
         </div>
+    </main>
+    <hr/>
+    <main>
+        <div class="content-wrapper">
+            <div class="sheet">
+                <div class="row report-form">
+                    <div>
+                        Project: 
+                        <select>
+                            <option>--</option> <!-- Report will not be generated until the form is sent. -->
+                            <option>Martin Group</option>
+                            <option>Dan Group</option>
+                            <option>Millie Group</option>
+                            <option>Dev Group</option>
+                            <option>John Group</option>
+                            <option>Lisa Group</option>
+                            <option>Matt Group</option>
+                        </select>
+                    </div>
+                    <div> <!-- Shows only if user is an admin. -->
+                        Members: 
+                        <select>
+                            <option>Everyone</option> <!-- No user value is sent and server should send back all entries. -->
+                            <option>Lisa</option> <!-- This user's ID is sent. -->
+                            <option>Matt</option>
+                            <option>John</option>
+                            <option>Cody</option>
+                        </select>
+                    </div>
+                    <div>
+                        From: <input type="date" value="2016-10-01" />
+                    </div>
+                    <div>
+                        To: <input type="date" value="2016-10-31" />
+                    </div>
+                    <div>
+                        <input type="submit" value="Run Report" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="date">Oct 23</div>
+                    <div class="person">Cody Ogden</div>
+                    <div class="time">2.00</div>
+                    <div class="description">Worked on the Cimarron Winter site.</div>
+                    <div class="actions">edit X</div> <!-- In This View, only Admins will see these actions to edit and delete. -->
+                </div>              <div class="row">
+                    <div class="date">Oct 23</div>
+                    <div class="person">Cody Ogden</div>
+                    <div class="time">2.00</div>
+                    <div class="description">Worked on the Cimarron Winter site.</div>
+                    <div class="actions">edit X</div>
+                </div>              <div class="row">
+                    <div class="date">Oct 23</div>
+                    <div class="person">Cody Ogden</div>
+                    <div class="time">2.00</div>
+                    <div class="description">Worked on the Cimarron Winter site.</div>
+                    <div class="actions">edit X</div>
+                </div>              <div class="row">
+                    <div class="date">Oct 23</div>
+                    <div class="person">Cody Ogden</div>
+                    <div class="time">2.00</div>
+                    <div class="description">Worked on the Cimarron Winter site.</div>
+                    <div class="actions">edit X</div>
+                </div>
+                <div class="row total">
+                    <div class="date"></div>
+                    <div class="total-hours">Total Hours</div>
+                    <div class="time">8.00</div>
+                    <div class="description"></div>
+                    <div class="actions">Export to CSV</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <hr/>
+    <main>
+        
     </main>
     <footer>
         Copyright sdlfkjsdflk

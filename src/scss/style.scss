@@ -148,13 +148,13 @@ ul.item-list {
 		padding: 0.25em 0.5em;
 		border-bottom: 1px solid $color-lightgrey;
 		font-size: 0.8em;
-		&:not(.entry-form):hover {
+		&:not(.entry-form):not(.report-form):not(.total):hover {
 			background-color: $color-blue;
 		}
 		.date {
 			flex: 0 0 15%;
 			input {
-				max-width: 8em;
+				max-width: 10em;
 			}
 		}
 		.person {
@@ -186,6 +186,25 @@ ul.item-list {
 	.row.entry-form {
 		background-color: #f7f7f7;
 		padding: 0.5em inherit;
+	}
+	.row.total {
+		border-top: 1px solid #333;
+		padding: 0.5em 0.5em;
+		.total-hours {
+			flex: 0 0 15%;
+			font-weight: bold;
+			text-align: center;
+			box-sizing: border-box;
+		}
+		&:hover {
+			background-color: transparent;
+		}
+	}
+	&-functions {
+		padding: 0.5em 0.5em;
+  		font-size: 0.8em;
+  		text-align: right;
+  		border-top: 1px solid #333;
 	}
 }
 
@@ -230,4 +249,24 @@ ul.item-list {
   		}
   	}
   }
+}
+
+.selector {
+	font-weight: bold;
+	padding: 1em 0.5em;
+}
+
+.row.report-form {
+	display: flex;
+	font-size: 0.8em;
+	background-color: #f7f7f7;
+	justify-content: space-between;
+	align-items: center;
+}
+
+@media screen and ( max-width: $sb-md ) {
+	.row.report-form {
+		display: block;
+		background-color: #f7f7f7;
+	}
 }
