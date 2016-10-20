@@ -7,6 +7,12 @@ authid VARCHAR(50),
 authpic VARCHAR(50),
 authemail VARCHAR(50)
 );
+
+CREATE TABLE emp_proj(
+empid INT REFERENCES employee(empid),
+projectid INT REFERENCES projects(projectid)
+);
+
 CREATE TABLE time(
 timeid SERIAL PRIMARY KEY,
 date VARCHAR(100),
@@ -15,6 +21,7 @@ description VARCHAR(150),
 empid INT REFERENCES employee(empid),
 projectid INT REFERENCES projects(projectid)
 );
+
 CREATE TABLE projects(
 projectid SERIAL PRIMARY KEY,
 projectname VARCHAR(100),
