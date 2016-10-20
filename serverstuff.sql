@@ -2,6 +2,7 @@ CREATE TABLE employee(
 empid SERIAL PRIMARY KEY,
 empname VARCHAR(50),
 isadmin BOOLEAN,
+isactive BOOLEAN,
 authid VARCHAR(50),
 authpic VARCHAR(50),
 authemail VARCHAR(50)
