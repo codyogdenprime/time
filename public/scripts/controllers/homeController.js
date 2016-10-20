@@ -26,27 +26,25 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
        firebaseUser.getToken().then(function(idToken){
          $http({
            method: 'GET',
-           url: '/secretData',
+           url: '/dbcheck',
            headers: {
              id_token: idToken
            }
          }).then(function(response){
            $scope.secretData = response.data;
+           console.log($scope.secretData, 'response from server');
          });
        });
      }else{
        console.log('Not logged in.');
        $scope.secretData = "Log in to get some secret data.";
-     }
-
-   });
+     }//end else
+   });//end auth on status change
 
    // This code runs when the user logs out
    $scope.logOut = function(){
      auth.$signOut().then(function(){
        console.log('Logging the user out!');
-     });
-   };
-
-
-}]);
+     });//end auth sign out
+   };//end log out
+}]);//end controller
