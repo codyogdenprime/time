@@ -14,13 +14,18 @@ router.get("/dbcheck", function(req, res){
     WARNING: So far you are returning secret data to ANYONE who is logged in
     there is still more work to be done if you want to implement roles
     You can use the decodedToken and some logic to do that. */
+    var token = decodedToken;
     console.log(decodedToken); // Here you can see the information firebase gives you about the user
-    pg.connect(connectionString, function(err,client,done){
+    pg.connect(connectionString,function(err,client,done){
+      console.log(token.name,token.email,token.user_id,token.picture, 'TOKENNNNNnnNNNNNNNNNN');
+      // console.log(decodedToken.name, decodedToken.email, decodedToken.user_id,'NAME EMAIL ID');
+      var authid = token.user_id;
       if (err) {
         console.log(err);
       }else {
+        console.log('db connected');
         var resultsArray = [];
-        var queryResults = client.query('SELECT * from employee ');
+        var queryResults = client.query('SELECT * from employee WHERE authid = $1',[authid]);
         queryResults.on('row', function(row){
             resultsArray.push(row);
         });//end query results row
