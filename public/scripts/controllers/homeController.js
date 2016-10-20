@@ -8,7 +8,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
    // This code runs whenever the user logs in
    $scope.logIn = function login(){
-     
+
      auth.$signInWithPopup("google").then(function(firebaseUser) {
        console.log("Signed in as:", firebaseUser);
      }).catch(function(error) {
@@ -16,10 +16,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
      });
    };
 
-   // This code runs whenever the user changes authentication states
-   // e.g. whevenever the user logs in or logs out
-   // this is where we put most of our logic so that we don't duplicate
-   // the same things in the login and the logout code
+
    auth.$onAuthStateChanged(function(firebaseUser){
      // firebaseUser will be null if not logged in
      if(firebaseUser) {
@@ -45,7 +42,12 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
    // This code runs when the user logs out
    $scope.logOut = function(){
      auth.$signOut().then(function(){
+        emptySessionStorage();
        console.log('Logging the user out!');
      });//end auth sign out
    };//end log out
 }]);//end controller
+var emptySessionStorage = function() {
+    sessionStorage.removeItem('userProfile');
+    sessionStorage.removeItem('idToken');
+}; // end emptyLocalStorage
