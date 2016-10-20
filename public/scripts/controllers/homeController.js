@@ -3,6 +3,9 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
   var auth = $firebaseAuth();
 
+
+ sessionStorage.user = "mew";
+
    // This code runs whenever the user logs in
    $scope.logIn = function login(){
      
