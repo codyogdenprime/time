@@ -23,7 +23,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
        firebaseUser.getToken().then(function(idToken){
          $http({
            method: 'GET',
-           url: '/secretData',
+           url: '/dbcheck',
            headers: {
              id_token: idToken
            }

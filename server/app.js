@@ -19,6 +19,7 @@ app.listen(process.env.PORT, function() {
     console.log('listening on', process.env.PORT);
 });//end app.listen
 
+//firebase init
 firebase.initializeApp({
 serviceAccount:"./server/firebase-service-account.json",
 databaseURL:"https://cimarron-1d0ea.firebaseio.com"
@@ -27,6 +28,7 @@ databaseURL:"https://cimarron-1d0ea.firebaseio.com"
 //index route
 var index = require('./routes/index');
 
+//firebase route 
 var firebase = require('./routes/firebase');
 app.use('/', firebase);
 

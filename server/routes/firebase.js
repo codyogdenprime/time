@@ -5,7 +5,7 @@ var pg = require('pg');
 var connectionString = 'postgress://localhost:5432/cimarron';
 
 
-router.get("/secretData", function(req, res){
+router.get("/dbcheck", function(req, res){
 
   /* This is where the magic happens. We pull the idtoken off of the request,
   verify it against our private_key, and then we return the decodedToken */
@@ -20,7 +20,7 @@ router.get("/secretData", function(req, res){
         console.log(err);
       }else {
         var resultsArray = [];
-        var queryResults = client.query('SELECT * from employee');
+        var queryResults = client.query('SELECT * from employee ');
         queryResults.on('row', function(row){
             resultsArray.push(row);
         });//end query results row
@@ -31,14 +31,14 @@ router.get("/secretData", function(req, res){
       }//end else
     });//end pg dot connect
 
-    // res.send((JSON.stringify(objectToReturn)));
+
+    //sends Welcome Message to client
     // res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name +'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function
     res.send("No secret data for you!");
-  });
-
-});
+  });//end catch
+});//end router dot get
 
 module.exports = router;
