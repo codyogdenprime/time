@@ -25,9 +25,11 @@ router.get('/reports',function(req, res){
         var queryResults;
         if (objectIn.username === undefined) {
           // 'SELECT title FROM movies RIGHT JOIN favorites ON movie_id = id WHERE
-          queryResults = client.query('SELECT * FROM time  RIGHT JOIN projects on projectid = projectid WHERE projectid = $1 AND startdate >=$2 AND enddate <=$3',[objectIn.projectId,objectIn.sDate, objectIn.eDate]);
+          
+          // conditional-> if no usierid and no date range=thing 1-- if no userid and date range=thing2--if userid and date range thing 3
+          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1;',[objectIn.projectId]);
         }else {
-          queryResults = client.query('SELECT * FROM time WHERE projectid = $1 AND startdate >=$2 AND enddate <=$3 AND empid = $4',[objectIn.projectId,objectIn.sDate, objectIn.eDate,objectIn.username]);
+          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $4',[objectIn.projectId,objectIn.sDate, objectIn.eDate,objectIn.username]);
         }
         queryResults.on('row', function(row){
           resultsArray.push(row);
