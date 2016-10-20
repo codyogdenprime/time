@@ -25,7 +25,7 @@ router.get("/dbcheck", function(req, res){
       }else {
         console.log('db connected');
         var resultsArray = [];
-        var queryResults = client.query('SELECT * from employee WHERE authid = $1',[authid]);
+        var queryResults = client.query('SELECT EXISTS 1 from employee WHERE authid = $1',[authid]);
         queryResults.on('row', function(row){
             resultsArray.push(row);
         });//end query results row
@@ -34,16 +34,16 @@ router.get("/dbcheck", function(req, res){
           return res.send(resultsArray);
         });//end query results on end
       }//end else
-    });//end pg dot connect
+    }).catch(function(error) {
+      console.log(error);
+      // If the id_token isn't right, you end up in this callback function
+      res.send("No secret data for you!");
+    });//end catch
 
 
     //sends Welcome Message to client
     // res.send("Welcome to Cimarron Winter Time"+ ' ' + decodedToken.name +'.' + ' ' +'Your email has been verified ' + ' ' + decodedToken.email_verified);
-  }).catch(function(error) {
-    console.log(error);
-    // If the id_token isn't right, you end up in this callback function
-    res.send("No secret data for you!");
-  });//end catch
+  });
 });//end router dot get
 
 module.exports = router;

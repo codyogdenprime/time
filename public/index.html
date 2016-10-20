@@ -30,7 +30,7 @@
     <div ng-controller="homeController">
       <button ng-click="logIn()">Login</button>
       <button ng-click="logOut()">Logout</button>
-      <span ng-repeat="user in secretData">
+      <span ng-repeat="user in secretData track by $index">
       {{user.empname}}
       {{user.authemail}}
       <!-- <img src="{{user.authpic}}" alt="" /></img> -->
