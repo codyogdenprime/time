@@ -8,7 +8,7 @@ var connectionString = 'postgress://localhost:5432/cimarron';
 router.get("/dbcheck", function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
 
-        var clientEmail = decodedToken.email;
+        var clientUID = decodedToken.user_id;
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
@@ -16,7 +16,7 @@ router.get("/dbcheck", function(req, res) {
                 console.log('connected to db');
                 var resultsArray = [];
                 //check if email in decodedToken has admin privliges
-                var queryResults = client.query('SELECT isadmin FROM employee WHERE authemail = $1', [clientEmail]);
+                var queryResults = client.query('SELECT isadmin FROM employee WHERE authid = $1', [clientUID]);
                 queryResults.on('row', function(row) {
                     //push query to resultsArray
                     resultsArray.push(row);
