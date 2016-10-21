@@ -1,10 +1,19 @@
+db name: cimarron
+
 CREATE TABLE employee(
 empid SERIAL PRIMARY KEY,
 empname VARCHAR(50),
 isadmin BOOLEAN,
+isactive BOOLEAN,
 authid VARCHAR(50),
 authpic VARCHAR(50),
 authemail VARCHAR(50)
+);
+
+CREATE TABLE projects(
+projectid SERIAL PRIMARY KEY,
+projectname VARCHAR(100),
+isactive BOOLEAN
 );
 CREATE TABLE time(
 timeid SERIAL PRIMARY KEY,
@@ -14,11 +23,7 @@ description VARCHAR(150),
 empid INT REFERENCES employee(empid),
 projectid INT REFERENCES projects(projectid)
 );
-CREATE TABLE projects(
-projectid SERIAL PRIMARY KEY,
-projectname VARCHAR(100),
-isactive BOOLEAN
-);
+
 
 INSERT INTO employee(empname,isadmin) VALUES('matt',false);
 INSERT INTO employee(empname,isadmin) VALUES('john',false);

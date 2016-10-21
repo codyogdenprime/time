@@ -3,7 +3,7 @@
   <head>
     <base href="/" />
     <meta charset="utf-8">
-    <title>Cimaron Winter</title>
+    <title>Cimarron Winter</title>
     <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
     <!-- Firebase -->
@@ -30,7 +30,11 @@
     <div ng-controller="homeController">
       <button ng-click="logIn()">Login</button>
       <button ng-click="logOut()">Logout</button>
-      {{secretData}}
+      <span ng-repeat="user in secretData track by $index">
+      {{user.empname}}
+      {{user.authemail}}
+      <!-- <img src="{{user.authpic}}" alt="" /></img> -->
+    </span>
       </div>
     <div ng-view></div>
 
