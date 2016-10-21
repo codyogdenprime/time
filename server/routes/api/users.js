@@ -4,7 +4,7 @@ var pg = require ('pg');
 var connectionString = 'postgres://localhost:5432/cimaron-winter';
 
 router.route('/users')
-//selecting all from employees table
+//selecting all users who are not admins from employees table
 .get(function(req, res) {
   console.log('users get route hit');
   pg.connect(connectionString, function(err, client, done){
@@ -12,7 +12,7 @@ router.route('/users')
       console.log(err);
     }else {
       var resultsArray = [];
-      var queryResults = client.query('SELECT * FROM employee');
+      var queryResults = client.query('SELECT * FROM employee WHERE isadmin = false');
       queryResults.on('row', function(row){
         resultsArray.push(row);
       });//on row function
@@ -40,6 +40,8 @@ router.route('/users')
 })//post route
 
 //toggle employee isactive or isadmin status
+//  to toggle active status, it expects an object with a key of empid and a key of isactive with any value
+//  to toggle user as an admin, it expects an object with a key of empid and a key of isadmin with any value
 .put(function(req,res){
   console.log('put route');
   var data = req.body;
@@ -98,7 +100,8 @@ router.get('/users/active',function(req, res){
         });//on end function
       }//else
     });//pg.connect
-});//get active users
+
+});//get inactive users
 router.get('/users/inactive',function(req, res){
     console.log('users/inactive get route hit');
     pg.connect(connectionString, function(err, client, done){

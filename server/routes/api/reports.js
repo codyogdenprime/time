@@ -23,13 +23,18 @@ router.get('/reports',function(req, res){
       }else {
         var resultsArray = [];
         var queryResults;
-        if (objectIn.username === undefined) {
-          // 'SELECT title FROM movies RIGHT JOIN favorites ON movie_id = id WHERE
-          
-          // conditional-> if no usierid and no date range=thing 1-- if no userid and date range=thing2--if userid and date range thing 3
-          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1;',[objectIn.projectId]);
-        }else {
-          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $4',[objectIn.projectId,objectIn.sDate, objectIn.eDate,objectIn.username]);
+
+        //object properties expected req.query{userid,projectId,sDate,eDate}
+
+        if(objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined){
+          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4',[objectIn.projectId,objectIn.username,objectIn.sDate, objectIn.eDate]);
+          // console.log('test thing one');
+        }else if (objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
+          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3',[objectIn.projectId,objectIn.sDate, objectIn.eDate]);
+          // console.log('test thing two');
+        }else{
+          queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1',[objectIn.projectId]);
+          // console.log('test thing three');
         }
         queryResults.on('row', function(row){
           resultsArray.push(row);

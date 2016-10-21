@@ -36,6 +36,9 @@ app.use('/api', time);
 // reports route
 var reports = require('./routes/api/reports');
 app.use('/api', reports);
+// projects route
+var projects = require('./routes/api/projects');
+app.use('/api', projects);
 
 var firebase = require('./routes/firebase');
 app.use('/', firebase);
