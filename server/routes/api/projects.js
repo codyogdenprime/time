@@ -4,7 +4,7 @@ var pg = require ('pg');
 var connectionString = 'postgres://localhost:5432/cimaron-winter';
 
 router.route('/projects')
-//selecting all projects who are not admins from employees table
+//selecting all projects
 .get(function(req, res) {
   console.log('projects get route hit');
   pg.connect(connectionString, function(err, client, done){
@@ -39,9 +39,7 @@ router.route('/projects')
   });//pg.connect
 })//post route
 
-//toggle employee isactive or isadmin status
-//  to toggle active status, it expects an object with a key of empid and a key of isactive with any value
-//  to toggle user as an admin, it expects an object with a key of empid and a key of isadmin with any value
+//expects an object with two properties projectid and one of these{projectname, isactive,startdate,enddate,clientid}
 .put(function(req,res){
   console.log('put route');
   var data = req.body;
@@ -49,15 +47,36 @@ router.route('/projects')
     if (err){
       console.log(err);
     }else {
-      //toggle isactive
-      if(data.isactive!==undefined){
-    client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
-    res.sendStatus(202);
-      //toggle isadmin
-      }else if(data.isadmin!==undefined){
-        client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
-        res.sendStatus(202);
-      }//nested else
+      if(1){
+
+      }else if(2){
+
+      }else if (3) {
+
+      }else if (4){
+
+      }else if (5){
+
+      }else{
+        console.log('error - req.body is somehow whacky');
+      }
+
+
+
+
+
+
+
+
+    //   //toggle isactive
+    //   if(data.isactive!==undefined){
+    // client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
+    // res.sendStatus(202);
+    //   //toggle isadmin
+    //   }else if(data.isadmin!==undefined){
+    //     client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
+    //     res.sendStatus(202);
+    //   }//nested else
     }//else
   });//pg.connect
 });//.put route
