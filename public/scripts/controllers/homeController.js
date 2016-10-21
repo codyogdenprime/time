@@ -8,41 +8,39 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
    // This code runs whenever the user logs in
    $scope.logIn = function login(){
-
      auth.$signInWithPopup("google").then(function(firebaseUser) {
        console.log("Signed in as:", firebaseUser.user.email);
-
-       var userEmail = firebaseUser.user.email;
-       //if its gmail procced 
-       if (userEmail.indexOf("gmail.com") >= 0) {
-         console.log('use a different email');
-       }else {
-          auth.$onAuthStateChanged(function(firebaseUser){
-            // firebaseUser will be null if not logged in
-            if(firebaseUser) {
-              // This is where we make our call to our server
-              firebaseUser.getToken().then(function(idToken){
-                $http({
-                  method: 'GET',
-                  url: '/dbcheck',
-                  headers: {
-                    id_token: idToken
-                  }//end headers
-                }).then(function(response){
-                  $scope.secretData = response.data;
-                  console.log($scope.secretData, 'response from server');
-                });//end then
-              });//end geToken
-            }else{
-              console.log('Not logged in.');
-              $scope.secretData = "Log in to get some secret data.";
-            }//end else
-          });//end auth on status change
-       }//end else
+       if(!firebaseUser.user.email.includes("@gmail.com")){
+         $scope.logOut();
+         alert("Only Users with a @gmail.com account");
+       }
      }).catch(function(error) {
        console.log("Authentication failed: ", error);
      });//end catch
    };//end scope dot login
+
+   auth.$onAuthStateChanged(function(firebaseUser){
+     // firebaseUser will be null if not logged in
+     if(firebaseUser) {
+       // This is where we make our call to our server
+       firebaseUser.getToken().then(function(idToken){
+         $http({
+           method: 'GET',
+           url: '/dbcheck',
+           headers: {
+             id_token: idToken
+           }//end headers
+         }).then(function(response){
+           $scope.secretData = response.data;
+           console.log($scope.secretData, 'response from server');
+         });//end then
+       });//end geToken
+     }else{
+       console.log('Not logged in.');
+       $scope.secretData = "Log in to get some secret data.";
+     }//end else
+   });//end auth on status change
+
 
 
 
@@ -52,9 +50,12 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
      auth.$signOut().then(function(){
         emptySessionStorage();
        console.log('Logging the user out!');
-     });//end auth sign out
-   };//end log out
+  });
+};
+
+
 }]);//end controller
+
 var emptySessionStorage = function() {
     sessionStorage.removeItem('userProfile');
     sessionStorage.removeItem('idToken');

@@ -7,8 +7,14 @@ var connectionString = 'postgress://localhost:5432/cimarron';
 
 router.get("/dbcheck", function(req, res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
-    var token = decodedToken;
+
     console.log(decodedToken);
+    
+    //get users permission level
+    //where email in database  === decodedToken.email
+    //if isAdmin = true then -----
+    //if isAdmin == false then ------
+
     res.send("Welcome to Cimarron Winter Time Tracker " + decodedToken.name);
     }).catch(function(error) {
       console.log(error);
