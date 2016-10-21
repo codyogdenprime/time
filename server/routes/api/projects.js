@@ -33,7 +33,7 @@ router.route('/projects')
     if(err){
       console.log(err);
     }else {
-    var query = client.query('INSERT INTO employee (empname, isadmin, authid, authpic, authemail) VALUES ($1,$2,$3,$4,$5)',[data.name, data.adminstatus, data.authid, data.authpic, data.authemail]);
+    var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)',[data.projectname, data.isactive, data.startdate, data.enddate, data.client_id]);
     res.sendStatus(201);
     }//else bracket
   });//pg.connect
@@ -61,3 +61,6 @@ router.route('/projects')
     }//else
   });//pg.connect
 });//.put route
+
+
+module.exports = router;
