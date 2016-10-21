@@ -40,6 +40,7 @@ router.route('/time')
 })//post route
 
 //update time table
+//expects an object that includes a key of projid and one of the following: date,hours,description,empid
 .put(function(req,res){
   console.log('/time put route');
   var data = req.body;
@@ -64,7 +65,7 @@ router.route('/time')
           column = 'empid';
           updatedInfo = data.empid;
         }
-    client.query( 'UPDATE time SET ' + column + ' = $1 WHERE projectid = $2',[ updatedInfo, data.projectid ] );
+    client.query( 'UPDATE time SET ' + column + ' = $1 WHERE projid = $2',[ updatedInfo, data.projectid ] );
     res.sendStatus(202);
     }//else
   });//pg.connect
