@@ -39,7 +39,7 @@ router.route('/projects')
   });//pg.connect
 })//post route
 
-//expects an object with two properties projectid and one of these{projectname, isactive,startdate,enddate,clientid}
+//expects an object with two properties projectid and one of these{projectname, isactive(needs to be correct boolean),startdate,enddate,clientid}
 .put(function(req,res){
   console.log('put route');
   var data = req.body;
@@ -47,19 +47,27 @@ router.route('/projects')
     if (err){
       console.log(err);
     }else {
-      if(1){
+      var column = '';
+      var updatedInfo = '';
+      //build sql statement based on data in
+        if (data.projectname!==undefined){
+          column = 'projectname';
+          updatedInfo = data.projectname;
+        }else if (data.isactive!==undefined) {
+          column = 'isactive';
+          updatedInfo = data.isactive;
+        }else if (data.enddate!==undefined) {
+          column = 'enddate';
+          updatedInfo = data.enddate;
+        }else if (data.clientid!==undefined) {
+        column = 'clientid';
+        updatedInfo = data.clientid;
+      } else{
+            console.log('error - your method of requesting stuff from here is somehow whacky');
+          }
+    client.query( 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2',[ updatedInfo, data.projectid ] );
+    res.sendStatus(202);
 
-      }else if(2){
-
-      }else if (3) {
-
-      }else if (4){
-
-      }else if (5){
-
-      }else{
-        console.log('error - req.body is somehow whacky');
-      }
 
 
 
