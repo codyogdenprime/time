@@ -10,34 +10,42 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
    $scope.logIn = function login(){
 
      auth.$signInWithPopup("google").then(function(firebaseUser) {
-       console.log("Signed in as:", firebaseUser);
+       console.log("Signed in as:", firebaseUser.user.email);
+
+       var userEmail = firebaseUser.user.email;
+       //if its gmail procced 
+       if (userEmail.indexOf("gmail.com") >= 0) {
+         console.log('use a different email');
+       }else {
+          auth.$onAuthStateChanged(function(firebaseUser){
+            // firebaseUser will be null if not logged in
+            if(firebaseUser) {
+              // This is where we make our call to our server
+              firebaseUser.getToken().then(function(idToken){
+                $http({
+                  method: 'GET',
+                  url: '/dbcheck',
+                  headers: {
+                    id_token: idToken
+                  }//end headers
+                }).then(function(response){
+                  $scope.secretData = response.data;
+                  console.log($scope.secretData, 'response from server');
+                });//end then
+              });//end geToken
+            }else{
+              console.log('Not logged in.');
+              $scope.secretData = "Log in to get some secret data.";
+            }//end else
+          });//end auth on status change
+       }//end else
      }).catch(function(error) {
        console.log("Authentication failed: ", error);
-     });
-   };
+     });//end catch
+   };//end scope dot login
 
 
-   auth.$onAuthStateChanged(function(firebaseUser){
-     // firebaseUser will be null if not logged in
-     if(firebaseUser) {
-       // This is where we make our call to our server
-       firebaseUser.getToken().then(function(idToken){
-         $http({
-           method: 'GET',
-           url: '/dbcheck',
-           headers: {
-             id_token: idToken
-           }
-         }).then(function(response){
-           $scope.secretData = response.data;
-           console.log($scope.secretData, 'response from server');
-         });
-       });
-     }else{
-       console.log('Not logged in.');
-       $scope.secretData = "Log in to get some secret data.";
-     }//end else
-   });//end auth on status change
+
 
    // This code runs when the user logs out
    $scope.logOut = function(){
