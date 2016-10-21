@@ -4,7 +4,7 @@
 		box-sizing: border-box;
 		padding: 0.25em 0.5em;
 		border-bottom: 1px solid $color-lightgrey;
-		font-size: 0.8em;
+		
 		&:not(.entry-form):not(.report-form):not(.total):hover {
 			background-color: $color-blue;
 		}
@@ -24,8 +24,12 @@
 			}
 		}
 		.description {
+			flex: 1 1 auto;
+			padding-right: 1em;
 			input {
-				width: 35em;
+				width: 100%;
+				box-sizing: border-box;
+				max-width: 35em;
 			}
 		}
 		.actions {
@@ -35,9 +39,11 @@
 		.person,
 		.time,
 		.actions {
+			font-size: 0.8em;
 			display: flex;
 			align-items: center;
 		}
+
 
 	}
 	.row.entry-form {

@@ -1,0 +1,25 @@
+.header {
+	max-width: 60em;
+	margin: 0 auto;
+	background-color: pink;
+}
+
+.header__title {
+	margin: 0;
+	.header__subtitle {
+		display: block;
+	}
+}
+
+nav {
+	float: right;
+	width: 60%;
+}
+
+nav ul {
+	display: flex;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	justify-content: space-around;
+}

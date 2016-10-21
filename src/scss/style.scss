@@ -1,103 +1,26 @@
-/* Variables */
+/* -- Variables -- */
 
-// Colors
-$color-blue: lighten( #45BCCE, 42 );
-$color-lightgrey: #f7f7f7;
+	// Screen Breaks
+		$sb-sm: 500px;
+		$sb-md: 650px;
+		$sb-lg: 800px;
+		$sb-xl: 1100px;
 
-// Status Alert Colors
-$color-warning: lighten(#ce5745, 38);
-$color-warning-border: #ce5745;
+	// Colors
+		$color-blue: lighten( #45BCCE, 42 );
+		$color-lightgrey: #f7f7f7;
 
-$color-success: lighten( green, 72 );
-$color-success-border: green;
+	// Status Alert Colors
+		$color-warning: lighten(#ce5745, 38);
+		$color-warning-border: #ce5745;
 
-$color-alert: lighten(#f1cc30, 42);
-$color-alert-border: darken(#f1cc30, 10 );
+		$color-success: lighten( green, 72 );
+		$color-success-border: green;
 
-// Screen Breaks
+		$color-alert: lighten(#f1cc30, 42);
+		$color-alert-border: darken(#f1cc30, 10 );
 
-$sb-sm: 500px;
-$sb-md: 650px;
-$sb-lg: 800px;
-$sb-xl: 1100px;
+/* -- Imports -- */
 
-/* Extensions */
-%font-awesome {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-header {
-	align-items: center;
-	display: flex;
-	margin: 0 auto;
-	max-width: 100%;
-	width: 60em;
-	padding: 1em 0;
-}
-
-header h1 {
-	font-size: 1.5em;
-	margin: 0;
-	padding: 0;
-	small {
-		display: block;
-	}
-}
-
-nav {
-	flex: 1 0 40%;
-	margin-left: auto;
-	max-width: 50%;
-	ul {
-		display:flex;
-		justify-content: space-around;
-		list-style-type: none;
-		margin:0;
-		padding:0;
-	}
-}
-
-@media screen and ( max-width: $sb-sm ) {
-	nav {
-		display: none;
-	}
-}
-
-@import 'alerts';
-
-.content-wrapper input[type="text"] {
-	padding: 0.25em 0.5em;
-}
-
-.content-wrapper {
-	max-width: 100%;
-	width: 60em;
-	box-sizing: border-box;
-	margin: 0 auto;
-}
-
-.project-titles {
-	background-color: lightblue;
-	display: flex;
-	justify-content: space-between;
-}
-
-ul.item-list {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
-}
-
-@import 'sheet';
-@import 'report';
-
-.selector {
-	font-weight: bold;
-	padding: 1em 0.5em;
-}
-
+	// All classes and tags inside the header block
+	@import 'header';
