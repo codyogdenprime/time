@@ -20,7 +20,31 @@
 		$color-alert: lighten(#f1cc30, 42);
 		$color-alert-border: darken(#f1cc30, 10 );
 
+
+body {
+	background-color: #FAFAFA;
+}
+
 /* -- Imports -- */
 
 	// All classes and tags inside the header block
 	@import 'header';
+
+	//
+	@import 'cards';
+
+	.projects,
+	.single-project {
+		position: relative;
+	}
+
+	.single-project {
+		display: none;
+		margin: 0 auto;
+		max-width: 100%;
+		width: 60em;
+		left: 200px;
+		opacity: 0;
+		padding: 1em;
+		box-sizing: border-box;
+	}
