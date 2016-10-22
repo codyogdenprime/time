@@ -1,0 +1,50 @@
+/* -- Variables -- */
+
+	// Screen Breaks
+		$sb-sm: 500px;
+		$sb-md: 650px;
+		$sb-lg: 800px;
+		$sb-xl: 1100px;
+
+	// Colors
+		$color-blue: lighten( #45BCCE, 42 );
+		$color-lightgrey: #f7f7f7;
+
+	// Status Alert Colors
+		$color-warning: lighten(#ce5745, 38);
+		$color-warning-border: #ce5745;
+
+		$color-success: lighten( green, 72 );
+		$color-success-border: green;
+
+		$color-alert: lighten(#f1cc30, 42);
+		$color-alert-border: darken(#f1cc30, 10 );
+
+
+body {
+	background-color: #FAFAFA;
+}
+
+/* -- Imports -- */
+
+	// All classes and tags inside the header block
+	@import 'header';
+
+	//
+	@import 'cards';
+
+	.projects,
+	.single-project {
+		position: relative;
+	}
+
+	.single-project {
+		display: none;
+		margin: 0 auto;
+		max-width: 100%;
+		width: 60em;
+		left: 200px;
+		opacity: 0;
+		padding: 1em;
+		box-sizing: border-box;
+	}

@@ -1,0 +1,53 @@
+.header {
+	max-width: 60em;
+	margin: 0.5em auto 0 auto;
+	// background-color: pink;
+	display: flex;
+}
+
+.header__title {
+	margin: 0;
+	.header__subtitle {
+		display: block;
+	}
+}
+
+.main__nav {
+	float: right;
+	width: 60%;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	margin-right: 0;
+	// background-color: lightblue;
+}
+
+.main__nav .menu__main {
+	display: flex;
+	list-style-type: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	justify-content: space-around;
+}
+
+@media screen and ( max-width: $sb-md ) {
+	.header {
+		display: block;
+		padding: 0.5em;
+	}
+	.header__title {
+		font-size: 1em;
+		display: flex;
+		justify-content: space-between;
+	}
+	.header__title .header__subtitle {
+		display: inline-block;
+		font-size: 1em;
+	}
+	.main__nav {
+		float: none;
+		width: 100%;
+		margin: 1em 0;
+	}
+}
