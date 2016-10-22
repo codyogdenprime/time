@@ -1,3 +1,0 @@
-.header{max-width:60em;margin:0 auto;background-color:pink;display:-ms-flexbox;display:flex}.header__title{margin:0}.header__title .header__subtitle{display:block}nav{float:right;width:60%;margin-left:auto;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;margin-right:0;background-color:lightblue}nav ul{display:-ms-flexbox;display:flex;list-style-type:none;width:100%;margin:0;padding:0;-ms-flex-pack:distribute;justify-content:space-around}
-
-/*# sourceMappingURL=style.min.css.map */
