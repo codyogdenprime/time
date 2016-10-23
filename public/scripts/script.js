@@ -11,7 +11,7 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: "/views/addHours.html",
     controller: "addHoursController",
     resolve: {
-          // controller will not be loaded until $waitForSignIn resolves
+          // controller will not be loaded until $requireSignIn resolves
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
           }
@@ -21,7 +21,6 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: "views/adminHome.html",
     controller: "adminHomeController",
     resolve: {
-          // controller will not be loaded until $waitForSignIn resolves
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
           }
@@ -31,7 +30,6 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: "views/empManage.html",
     controller: "empManageController",
     resolve: {
-          // controller will not be loaded until $waitForSignIn resolves
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
           }
@@ -41,7 +39,6 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: "views/reports.html",
     controller: "reportsController",
     resolve: {
-          // controller will not be loaded until $waitForSignIn resolves
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
           }
@@ -51,7 +48,6 @@ myApp.config(['$routeProvider', function ($routeProvider) {
     templateUrl: "views/userHome.html",
     controller: "userHomeController",
     resolve: {
-          // controller will not be loaded until $waitForSignIn resolves
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
           }
