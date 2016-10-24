@@ -12,6 +12,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             console.log("Signed in as:", firebaseUser.user.email);
             if (!firebaseUser.user.email.includes("@gmail.com")) {
                 $scope.logOut();
+                //change to @cimarronwinter.com to only allow cimarron emp's
                 alert("Only Users with a @gmail.com account");
             }//end if
         }).catch(function(error) {
@@ -40,9 +41,6 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             $scope.secretData = "Log in to get some secret data.";
         } //end else
     }); //end auth on status change
-
-
-
 
 
     // This code runs when the user logs out
