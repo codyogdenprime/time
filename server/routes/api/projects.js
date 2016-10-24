@@ -56,7 +56,6 @@ router.route('/projects')
 })//post route
 
 //expects an object with two properties projectid and one of these{projectname, isactive(needs to be correct boolean),startdate,enddate,clientid}
->>>>>>> getRoutes
 .put(function(req,res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
