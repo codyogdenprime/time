@@ -6,6 +6,7 @@ var connectionString = 'postgres://localhost:5432/cimaron-winter';
 router.route('/users')
 //selecting all users who are not admins from employees table
 .get(function(req, res) {
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('users get route hit');
   pg.connect(connectionString, function(err, client, done){
     if(err){
@@ -22,10 +23,16 @@ router.route('/users')
       });//on end function
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 })//router.get
 
 //add an employee
 .post(function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('users post route hit');
   var data = req.body;
   console.log('data which is also req.body',data);
@@ -37,12 +44,18 @@ router.route('/users')
     res.sendStatus(201);
     }//else bracket
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 })//post route
 
 //toggle employee isactive or isadmin status
 //  to toggle active status, it expects an object with a key of empid and a key of isactive with any value
 //  to toggle user as an admin, it expects an object with a key of empid and a key of isadmin with any value
 .put(function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
   var data = req.body;
   pg.connect(connectionString, function (err, client, done){
@@ -60,10 +73,16 @@ router.route('/users')
       }//nested else
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 });//.put route
 
 //get users who are admins
 router.get('/users/admin',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/admin get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -80,10 +99,16 @@ router.get('/users/admin',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//get admin users
 
 //get users who are active
 router.get('/users/active',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/active get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -100,9 +125,15 @@ router.get('/users/active',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 
 });//get inactive users
 router.get('/users/inactive',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/inactive get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -119,6 +150,11 @@ router.get('/users/inactive',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//get active users
 router.get('/users/verify',function(req, res){
     console.log('users/verify get route hit');
