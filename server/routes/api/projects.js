@@ -12,7 +12,9 @@ router.route('/projects')
       console.log(err);
     }else {
       var resultsArray = [];
-      var queryResults = client.query('SELECT * FROM projects');
+      
+      var queryResults = client.query('SELECT * FROM projects WHERE userid = $1',[clientUID]);
+
       queryResults.on('row', function(row){
         resultsArray.push(row);
       });//on row function
