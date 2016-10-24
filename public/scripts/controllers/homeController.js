@@ -3,9 +3,6 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
     var auth = $firebaseAuth();
 
-
-    sessionStorage.user = "mew";
-
     // This code runs whenever the user logs in
     $scope.logIn = function login() {
         auth.$signInWithPopup("google").then(function(firebaseUser) {
@@ -33,6 +30,10 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                 }).then(function(response) {
                     $scope.secretData = response.data;
                     console.log($scope.secretData, 'response from server');
+                    console.log(firebaseUser);
+                    sessionStorage.userGoogleId = firebaseUser.uid;
+                    sessionStorage.userDisplayName = firebaseUser.displayName;
+                    sessionStorage.userPhotoUrl = firebaseUser.photoURL;
                 }); //end then
             }); //end geToken
         } else {
