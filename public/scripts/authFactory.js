@@ -1,5 +1,5 @@
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseAuth) {
-    console.log('in homeController');
+myApp.controller('authFactory', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseAuth) {
+    console.log('in authFactory');
 
     var auth = $firebaseAuth();
 
@@ -7,17 +7,17 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
     sessionStorage.user = "mew";
 
     // This code runs whenever the user logs in
-    $scope.logIn = function login() {
+
         auth.$signInWithPopup("google").then(function(firebaseUser) {
             console.log("Signed in as:", firebaseUser.user.email);
             if (!firebaseUser.user.email.includes("@gmail.com")) {
-                $scope.logOut();
+                auth.logOut();
                 alert("Only Users with a @gmail.com account");
             }//end if
         }).catch(function(error) {
             console.log("Authentication failed: ", error);
         }); //end catch
-    }; //end scope dot login
+
 
     auth.$onAuthStateChanged(function(firebaseUser) {
         // firebaseUser will be null if not logged in
@@ -46,12 +46,18 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
 
     // This code runs when the user logs out
-    $scope.logOut = function() {
         auth.$signOut().then(function() {
             emptySessionStorage();
             console.log('Logging the user out!');
         });//auth sign out
-    };//end scope dot logOut
-
 
 }]); //end controller
+
+var emptySessionStorage = function() {
+    sessionStorage.removeItem('userProfile');
+    sessionStorage.removeItem('idToken');
+}; // end emptyLocalStorage
+
+
+
+}]);
