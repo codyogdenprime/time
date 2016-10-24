@@ -1,14 +1,16 @@
 myApp.factory('factory', ['$http', function($http){
   console.log('in factory');
 
-
-  var isAdmin = '';
+  var idToken = sessionStorage.getItem('userAuth');
+  var isAdmin = true;
 
   var getAllEmployees = function () {
     console.log('got to getAllEmployees');
     return $http({
     method: 'GET',
-    url: 'api/employees'
+    url: 'api/employees',
+    headers: {
+      id_token: idToken}
     });//end http
   };//end getAllEmployees
 
@@ -16,7 +18,9 @@ myApp.factory('factory', ['$http', function($http){
     console.log('got into checkUserDB');
     return $http({
       method: 'GET',
-      url: '/dbcheck/?clientUID=' + id + '&' + name + '&' + photo
+      url: '/dbcheck/?clientUID=' + id + '&' + name + '&' + photo,
+      headers:{
+        id_token: idToken}
     });
   };
 
@@ -30,7 +34,9 @@ myApp.factory('factory', ['$http', function($http){
       if(isAdmin){
         return $http({
           method: 'GET',
-          url: 'api/projects/'
+          url: 'api/projects/',
+          headers: {
+            id_token: idToken}
         });
       }else {
         //add an http call for if not admin send ID
@@ -40,8 +46,25 @@ myApp.factory('factory', ['$http', function($http){
 
   var getAllMyTime = function (project) {
     console.log('made it to getAllMyTime');
+    return $http({
+      method: "GET",
+      url: 'api/time',
+      headers: {
+        id_token: idToken}
+    });
   };
 
+  var addTime = function (objectToSend) {
+
+
+  return $http({
+    method: 'POST',
+    url: 'api/time',
+    headers: {
+      id_token: idToken},
+    data: objectToSend
+  });
+};
   return {
     getAllEmployees: getAllEmployees,
     checkUserDB: checkUserDB,
@@ -50,7 +73,8 @@ myApp.factory('factory', ['$http', function($http){
     },
     changeIsAdmin: changeIsAdmin,
     getMyProjects: getMyProjects,
-    getAllMyTime: getAllMyTime
+    getAllMyTime: getAllMyTime,
+    addTime: addTime
   };
 
 }]);
