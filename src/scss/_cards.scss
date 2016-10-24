@@ -16,7 +16,7 @@
 }
 
 .card__link {
-	background-color: #FFF;
+	background-color: lighten(#9ad8db, 20%);
 	box-sizing: border-box;
 	display: block;
 	margin: 0 1em;
@@ -26,11 +26,31 @@
 	&:hover {
 		box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 	}
+	&,
+	&:visited,
+	&:hover,
+	&:active {
+		color: #B75928;
+		color: darken(#9ad8db, 35%);
+		text-decoration: none;
+	}
 }
 
 @media screen and ( max-width: $sb-md ) {
 	.card {
 		flex: 0 0 100%;
 		width: 100%;
+	}
+}
+
+.return-link {
+	margin: 0 0 0.5em 0;
+	font-size: 1.25em;
+	a,
+	a:hover,
+	a:visited,
+	a:active {
+		color: currentColor;
+		text-decoration: none;
 	}
 }

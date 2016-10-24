@@ -23,6 +23,11 @@
 
 body {
 	background-color: #FAFAFA;
+	background-color: #c8c8c8;
+	background-color: #e1e1e1;
+	background-color: #3ca5b3;
+	background-color: #9ad8db;
+	background-color: #FFF;
 }
 
 /* -- Imports -- */
@@ -32,6 +37,9 @@ body {
 
 	//
 	@import 'cards';
+
+	//
+	@import 'sheets';
 
 	.projects,
 	.single-project {

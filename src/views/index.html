@@ -12,77 +12,77 @@
 
 <body>
     <header class="header">
-        <h1 class="h1 header__title">Cimarron Winter <small class="header__subtitle">Time Reporting</small></h1>
+        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main">
                 <li>Projects</li>
                 <li>Reports</li>
-                <!-- <li>Settings</li> -->
+                <!-- <li>Settings</li> For Admin Only -->
                 <li>Sign Out</li>
-                <!-- <li>Sign In</li> -->
+                <!-- <li>Sign In</li> For Logged Out Only -->
             </ul>
         </nav>
         <script>
-        (function($) {
+            (function($) {
 
-            $.fn.fadeOutToLeft = function(callback) {
-                $(this).animate({
-                    opacity: 0,
-                    left: "-200px"
-                }, 300, function() {
-                    $(this).hide();
-                    if (callback) {
-                        callback();
-                    }
+                $.fn.fadeOutToLeft = function(callback) {
+                    $(this).animate({
+                        opacity: 0,
+                        left: "-200px"
+                    }, 300, function() {
+                        $(this).hide();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                    return this;
+                };
+
+                $.fn.fadeInFromRight = function(callback) {
+                    $(this).show().animate({
+                        opacity: 1,
+                        left: "0px"
+                    }, 200);
+                    return this;
+                };
+
+                $.fn.fadeOutToRight = function(callback) {
+                    $(this).animate({
+                        opacity: 0,
+                        left: "200px"
+                    }, 300, function() {
+                        $(this).hide();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                    return this;
+                };
+
+                $.fn.fadeInFromLeft = function(callback) {
+                    $(this).animate({
+                        opacity: 1,
+                        left: "0px"
+                    }, 200);
+                };
+
+            })(jQuery);
+
+            var showProject = function() {
+
+                $('.projects').fadeOutToLeft(function() {
+                    $('.single-project').fadeInFromRight();
                 });
-                return this;
             };
 
-            $.fn.fadeInFromRight = function(callback) {
-                $(this).show().animate({
-                    opacity: 1,
-                    left: "0px"
-                }, 200);
-                return this;
-            };
+            var showProjects = function() {
 
-            $.fn.fadeOutToRight = function(callback) {
-                $(this).animate({
-                    opacity: 0,
-                    left: "200px"
-                }, 300, function() {
-                    $(this).hide();
-                    if (callback) {
-                        callback();
-                    }
+                $('.single-project').fadeOutToRight(function() {
+                    $('.projects').show();
+                    $('.projects').fadeInFromLeft();
                 });
-                return this;
+
             };
-
-            $.fn.fadeInFromLeft = function(callback) {
-                $(this).animate({
-                    opacity: 1,
-                    left: "0px"
-                }, 200);
-            };
-
-        })(jQuery);
-
-        var showProject = function() {
-
-            $('.projects').fadeOutToLeft(function() {
-                $('.single-project').fadeInFromRight();
-            });
-        };
-
-        var showProjects = function() {
-
-            $('.single-project').fadeOutToRight(function() {
-                $('.projects').show();
-                $('.projects').fadeInFromLeft();
-            });
-
-        };
         </script>
     </header>
     <main>
@@ -128,7 +128,26 @@
             </div>
         </div>
         <div class="single-project">
-            <a onClick="showProjects()" href="#">&lt; Back</a>
+            <div class="return-link">
+                <a onClick="showProjects()" href="#">&lt; All Projects</a>
+            </div>
+            <section>
+                <h2>Some Project Name Goes Here It Could Be Quite Long</h2>
+                <div class="sheet">
+                    <div class="row titles">
+                        <div>Date</div>
+                        <div>Time</div>
+                        <div>Description</div>
+                        <div>Actions</div>
+                    </div>
+                    <div class="row">
+                        <div>Date</div>
+                        <div>Time</div>
+                        <div>Description</div>
+                        <div>Actions</div>
+                    </div>
+                </div>
+            </section>
             <div style="height: 400px; background-color:#FFF;"></div>
         </div>
     </main>
