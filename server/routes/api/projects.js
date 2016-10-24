@@ -10,7 +10,7 @@ router.route('/projects')
 .get(function(req, res) {
   //verify idToken sent in headers
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
-    
+
   console.log('projects get route hit');
   pg.connect(connectionString, function(err, client, done){
     if(err){
@@ -36,6 +36,7 @@ router.route('/projects')
 
 //add an employee
 .post(function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('projects post route hit');
   var data = req.body;
   console.log('data which is also req.body',data);
@@ -47,12 +48,18 @@ router.route('/projects')
     res.sendStatus(201);
     }//else bracket
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 })//post route
 
 //toggle employee isactive or isadmin status
 //  to toggle active status, it expects an object with a key of empid and a key of isactive with any value
 //  to toggle user as an admin, it expects an object with a key of empid and a key of isadmin with any value
 .put(function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
   var data = req.body;
   pg.connect(connectionString, function (err, client, done){
@@ -70,6 +77,11 @@ router.route('/projects')
       }//nested else
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 });//.put route
 
 
