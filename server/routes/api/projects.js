@@ -56,11 +56,14 @@ router.route('/projects')
         }else if (data.isactive!==undefined) {
           column = 'isactive';
           updatedInfo = data.isactive;
+        }else if (data.startdate!==undefined) {
+          column = 'startdate';
+          updatedInfo = data.startdate;
         }else if (data.enddate!==undefined) {
           column = 'enddate';
           updatedInfo = data.enddate;
         }else if (data.clientid!==undefined) {
-        column = 'clientid';
+        column = 'client_id';
         updatedInfo = data.clientid;
       } else{
             console.log('error - your method of requesting stuff from here is somehow whacky');
