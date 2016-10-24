@@ -55,6 +55,7 @@ router.route('/projects')
 });//end catch
 })//post route
 
+
 //toggle employee isactive or isadmin status
 //  to toggle active status, it expects an object with a key of empid and a key of isactive with any value
 //  to toggle user as an admin, it expects an object with a key of empid and a key of isadmin with any value
@@ -83,6 +84,7 @@ router.route('/projects')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 });//.put route
+
 
 
 
