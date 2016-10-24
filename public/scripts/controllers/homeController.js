@@ -55,3 +55,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
 
 }]); //end controller
+
+var emptySessionStorage = function() {
+    sessionStorage.removeItem('userProfile');
+    sessionStorage.removeItem('idToken');
+}; // end emptyLocalStorage
