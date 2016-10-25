@@ -53,7 +53,7 @@ router.route('/projects')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)',[data.projectname, true, data.startdate, data.enddate, data.client_id]);
-    res.sendStatus(201);
+    res.send({success:true});
     }//else bracket
   });//pg.connect
 }).catch(function(error){
@@ -94,7 +94,7 @@ router.route('/projects')
       }
       updatedInfo = data.value;
     client.query( 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2',[ updatedInfo, data.projectid ] );
-    res.sendStatus(202);
+    res.send({success:true});
     }//else
   });//pg.connect
 }).catch(function(error){

@@ -42,7 +42,7 @@ router.route('/time')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO time (date, hours, description, empid, projectid) VALUES ($1,$2,$3,$4,$5)',[data.date, data.hours, data.description, data.empid, data.projectid]);
-    res.sendStatus(201);
+    res.send({success:true});
     }//else bracket
   });//pg.connect
 }).catch(function(error){
@@ -83,7 +83,7 @@ router.route('/time')
         }
         updatedInfo = data.value;
     client.query( 'UPDATE time SET ' + column + ' = $1 WHERE timeid = $2',[ updatedInfo, data.timeid ] );
-    res.sendStatus(202);
+    res.send({success:true});
     }//else
   });//pg.connect
 }).catch(function(error){
