@@ -1,0 +1,15 @@
+<p>in manage projects view</p>
+
+{{allMyProjects}}
+
+<br>
+
+{{allEmployees}}
+
+<input type="text" placeholder="Project Name" ng-model="projectNameModel">
+<label>Start Date</label><input type="date" ng-model="startDateModel">
+<label>End Date</label><input type="date" ng-model="endDateModel">
+<input type="text" placeholder="Client" ng-model="clientModel">
+<button ng-click="addProject()">New Project</button>
+
+{{addProjectSuccess}}
