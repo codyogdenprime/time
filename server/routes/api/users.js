@@ -217,6 +217,7 @@ router.post('/users/verify',function(req, res){
 
 //search users by project using join table
 router.get('/users/byProject',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     var data = req.query;
     console.log('users/byProject get route hit');
     pg.connect(connectionString, function(err, client, done){
@@ -234,6 +235,11 @@ router.get('/users/byProject',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//users by project get call
 
 module.exports = router;

@@ -94,6 +94,7 @@ router.route('/time')
 })//.put route
 //finds by timeid and deletes the whole thing
 .delete(function(req, res){
+    firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   var data = req.body;
   pg.connect(connectionString,function(err,client,done){
     if(err){
@@ -103,5 +104,10 @@ router.route('/time')
     res.send({success:true});
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 });//delete function
 module.exports = router;
