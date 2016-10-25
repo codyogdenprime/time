@@ -157,4 +157,56 @@ router.get('/users/inactive',function(req, res){
     res.send("Sorry your Auth-Token was incorrect");
   });//end catch
 });//get active users
+router.get('/users/verify',function(req, res){
+    console.log('users/verify get route hit');
+    pg.connect(connectionString, function(err, client, done){
+      if(err){
+        console.log(err);
+      }else {
+        var resultsArray = [];
+        var objectIn= {
+          name:req.query.name,
+          adminstatus:false,
+          activestatus:true,
+          authpic:req.query.pic,
+          authemail:null,
+          userId: req.query.clientUID
+       };
+      console.log('this is the req.query',req.query);
+
+        var queryResults = client.query('SELECT * FROM employee WHERE authid = $1',[objectIn.userId]);
+
+
+        queryResults.on('row', function(row){
+          resultsArray.push(row);
+        });//on row function
+        queryResults.on('end',function(){
+          if(resultsArray.length===0){
+            pg.connect(connectionString, function(err, client, done){
+              var resultsArray1 = [];
+              var query = client.query('INSERT INTO employee (empname, isadmin, isactive, authid, authpic, authemail) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',[objectIn.name, objectIn.adminstatus, objectIn.activestatus, objectIn.userId, objectIn.authpic, objectIn.authemail]);
+              query.on('row', function(row){
+                resultsArray1.push(row);
+              });//query on row function
+              query.on('end',function(){
+                console.log('resultsArray1',resultsArray1);
+                done();
+                return res.send(resultsArray1);
+              });//.on end function
+            });//queryResults on end function
+          }else if(resultsArray.length>0){
+          console.log('resultsArray again >>>>>>>', resultsArray);
+          done();
+          return res.send(resultsArray);
+        }// nested else if
+        });//on end function
+      }//else
+    });//pg.connect
+});//verify get call
+//select id
+  //if exists
+  //returns an object active:boolean admin:boolean
+  //else
+    //post in list
+    //returns an object active:boolean admin:boolean
 module.exports = router;

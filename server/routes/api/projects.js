@@ -13,13 +13,21 @@ router.route('/projects')
 
   console.log('projects get route hit');
   pg.connect(connectionString, function(err, client, done){
+    var data = client.query;
     if(err){
       console.log(err);
     }else {
       var resultsArray = [];
-      var queryResults = client.query('SELECT * FROM projects WHERE isactive = TRUE');
+      var queryResults;
+      if(data.clientUID!==undefined){
+          queryResults = client.query('SELECT * FROM projects WHERE authid = $1',[data.clientUID]);
+    }else{
+          queryResults = client.query('SELECT * FROM projects');
+    }
+
       queryResults.on('row', function(row){
         resultsArray.push(row);
+
       });//on row function
       queryResults.on('end',function(){
         done();

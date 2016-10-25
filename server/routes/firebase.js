@@ -16,7 +16,7 @@ router.get("/dbcheck", function(req, res) {
                 console.log('connected to db');
                 var resultsArray = [];
                 //check if email in decodedToken has admin privliges
-                var queryResults = client.query('SELECT isadmin FROM employee WHERE authid = $1', [clientUID]);
+                var queryResults = client.query('SELECT * FROM employee WHERE authid = $1', [clientUID]);
                 queryResults.on('row', function(row) {
                     //push query to resultsArray
                     resultsArray.push(row);
