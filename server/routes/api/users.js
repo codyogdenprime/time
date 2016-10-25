@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var path = require('path');
 var pg = require ('pg');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
 router.route('/users')
@@ -42,7 +42,7 @@ router.route('/users')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO employee (empname, isadmin, authid, authpic, authemail) VALUES ($1,$2,$3,$4,$5)',[data.name, data.adminstatus, data.authid, data.authpic, data.authemail]);
-    res.sendStatus(201);
+    res.send({success:true});
     }//else bracket
   });//pg.connect
 }).catch(function(error){
@@ -67,12 +67,12 @@ router.route('/users')
         //toggle isactive
         case 'activeStatus':
         client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
-        res.sendStatus(202);
+        res.send({success:true})(202);
           break;
         //toggle isadmin
         case 'adminStatus':
         client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
-        res.sendStatus(202);
+        res.send({success:true});
           break;
         default:
         console.log('critical switch failure');
@@ -162,7 +162,9 @@ router.get('/users/inactive',function(req, res){
     res.send("Sorry your Auth-Token was incorrect");
   });//end catch
 });//get active users
-router.get('/users/verify',function(req, res){
+
+router.post('/users/verify',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/verify get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -170,14 +172,13 @@ router.get('/users/verify',function(req, res){
       }else {
         var resultsArray = [];
         var objectIn= {
-          name:req.query.name,
+          name:req.body.name,
           adminstatus:false,
           activestatus:true,
-          authpic:req.query.pic,
-          authemail:null,
-          userId: req.query.clientUID
+          authpic:req.body.pic,
+          authemail:req.body.email,
+          userId: req.body.id
        };
-      console.log('this is the req.query',req.query);
 
         var queryResults = client.query('SELECT * FROM employee WHERE authid = $1',[objectIn.userId]);
 
@@ -207,6 +208,11 @@ router.get('/users/verify',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//verify get call
 
 //search users by project using join table

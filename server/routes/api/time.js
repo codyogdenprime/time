@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var path = require('path');
 var pg = require ('pg');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
 router.route('/time')
@@ -42,7 +42,7 @@ router.route('/time')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO time (date, hours, description, empid, projectid) VALUES ($1,$2,$3,$4,$5)',[data.date, data.hours, data.description, data.empid, data.projectid]);
-    res.sendStatus(201);
+    res.send({success:true});
     }//else bracket
   });//pg.connect
 }).catch(function(error){
@@ -83,7 +83,7 @@ router.route('/time')
         }
         updatedInfo = data.value;
     client.query( 'UPDATE time SET ' + column + ' = $1 WHERE timeid = $2',[ updatedInfo, data.timeid ] );
-    res.sendStatus(202);
+    res.send({success:true});
     }//else
   });//pg.connect
 }).catch(function(error){
@@ -91,5 +91,23 @@ router.route('/time')
   // If the id_token isn't right, you end up in this callback function
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
-});//.put route
+})//.put route
+//finds by timeid and deletes the whole thing
+.delete(function(req, res){
+    firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+  var data = req.body;
+  pg.connect(connectionString,function(err,client,done){
+    if(err){
+      console.log(err);
+  }else{
+    var query = client.query('DELETE FROM time WHERE timeid = $1',[data.timeid]);
+    res.send({success:true});
+    }//else
+  });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
+});//delete function
 module.exports = router;
