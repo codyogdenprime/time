@@ -91,5 +91,17 @@ router.route('/time')
   // If the id_token isn't right, you end up in this callback function
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
-});//.put route
+})//.put route
+//finds by timeid and deletes the whole thing
+.delete(function(req, res){
+  var data = req.body;
+  pg.connect(connectionString,function(err,client,done){
+    if(err){
+      console.log(err);
+  }else{
+    var query = client.query('DELETE FROM time WHERE timeid = $1',[data.timeid]);
+    res.send({success:true});
+    }//else
+  });//pg.connect
+});//delete function
 module.exports = router;
