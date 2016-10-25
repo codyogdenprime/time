@@ -23,11 +23,23 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         // firebaseUser will be null if not logged in
         if (firebaseUser) {
             // This is where we make our call to our server
+
             firebaseUser.getToken().then(function(idToken) {
+              console.log(sessionStorage,'storage``````');
+              var objectToSend = {
+                name:firebaseUser.displayName,
+                admin: false,
+                status: true,
+                id:firebaseUser.uid,
+                pic: firebaseUser.photoURL,
+                email:firebaseUser.email
+              };
+
               sessionStorage.userAuth = idToken;
                 $http({
-                    method: 'GET',
-                    url: '/dbcheck',
+                    method: 'POST',
+                    url: '/api/users/verify',
+                    data: objectToSend,
                     headers: {
                         id_token: idToken
                     } //end headers
@@ -38,12 +50,6 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
-                    if ($scope.secretData === undefined || $scope.secretData.length == 0) {
-                        console.log('empty');
-                        factory.
-                      }else {
-                        console.log($scope.secretData,'not empty ');
-                      }
 
                 }); //end then
             }); //end geToken

@@ -162,7 +162,8 @@ router.get('/users/inactive',function(req, res){
     res.send("Sorry your Auth-Token was incorrect");
   });//end catch
 });//get active users
-router.get('/users/verify',function(req, res){
+
+router.post('/users/verify',function(req, res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/verify get route hit');
     pg.connect(connectionString, function(err, client, done){
@@ -171,14 +172,13 @@ router.get('/users/verify',function(req, res){
       }else {
         var resultsArray = [];
         var objectIn= {
-          name:req.query.name,
+          name:req.body.name,
           adminstatus:false,
           activestatus:true,
-          authpic:req.query.pic,
-          authemail:null,
-          userId: req.query.clientUID
+          authpic:req.body.pic,
+          authemail:req.body.email,
+          userId: req.body.id
        };
-      console.log('this is the req.query',req.query);
 
         var queryResults = client.query('SELECT * FROM employee WHERE authid = $1',[objectIn.userId]);
 
