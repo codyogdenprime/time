@@ -52,7 +52,7 @@ router.route('/projects')
     if(err){
       console.log(err);
     }else {
-    var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)',[data.projectname, data.isactive, data.startdate, data.enddate, data.client_id]);
+    var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)',[data.projectname, true, data.startdate, data.enddate, data.client_id]);
     res.sendStatus(201);
     }//else bracket
   });//pg.connect
@@ -62,8 +62,7 @@ router.route('/projects')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 })//post route
-
-//expects an object with two properties projectid and one of these{projectname, isactive(needs to be correct boolean),startdate,enddate,clientid}
+//edits projects table expects an object like this{projectid: whatever type:'string' value: whatever updated value}
 .put(function(req,res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
@@ -75,44 +74,27 @@ router.route('/projects')
       var column = '';
       var updatedInfo = '';
       //build sql statement based on data in
-        if (data.projectname!==undefined){
-          column = 'projectname';
-          updatedInfo = data.projectname;
-        }else if (data.isactive!==undefined) {
+      switch (data.type) {
+        case 'projectname':
+        column = 'projectname';
+          break;
+        case 'isactive':
           column = 'isactive';
-          updatedInfo = data.isactive;
-        }else if (data.startdate!==undefined) {
+            break;
+        case 'startdate':
           column = 'startdate';
-          updatedInfo = data.startdate;
-        }else if (data.enddate!==undefined) {
+            break;
+        case 'enddate':
           column = 'enddate';
-          updatedInfo = data.enddate;
-        }else if (data.clientid!==undefined) {
-        column = 'client_id';
-        updatedInfo = data.clientid;
-      } else{
-            console.log('error - your method of requesting stuff from here is somehow whacky');
-          }
+            break;
+        case 'client_id':
+            column = 'client_id';
+            break;
+        default:console.log('critical switch malfunction');
+      }
+      updatedInfo = data.value;
     client.query( 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2',[ updatedInfo, data.projectid ] );
     res.sendStatus(202);
-
-
-
-
-
-
-
-
-
-    //   //toggle isactive
-    //   if(data.isactive!==undefined){
-    // client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
-    // res.sendStatus(202);
-    //   //toggle isadmin
-    //   }else if(data.isadmin!==undefined){
-    //     client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
-    //     res.sendStatus(202);
-    //   }//nested else
     }//else
   });//pg.connect
 }).catch(function(error){
@@ -121,8 +103,4 @@ router.route('/projects')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 });//.put route
-
-
-
-
 module.exports = router;
