@@ -24,10 +24,24 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         if (firebaseUser) {
             // This is where we make our call to our server
             firebaseUser.getToken().then(function(idToken) {
+
+              //google profile information to add to the database
+              //admin default to false & active to true
+              //can change these in emp Manage
+              var objectToSend = {
+                name:firebaseUser.displayName,
+                admin: false,
+                status: true,
+                id:firebaseUser.uid,
+                pic: firebaseUser.photoURL,
+                email:firebaseUser.email
+              };
+              //store idToken in sessionStorage
               sessionStorage.userAuth = idToken;
                 $http({
-                    method: 'GET',
-                    url: '/dbcheck',
+                    method: 'POST',
+                    url: '/api/users/verify',
+                    data: objectToSend,
                     headers: {
                         id_token: idToken
                     } //end headers
@@ -35,14 +49,17 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     $scope.secretData = response.data;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser);
+                    //store google profile info in session storage
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
+
                 }); //end then
             }); //end geToken
         } else {
             console.log('Not logged in.');
-            $scope.secretData = "Log in to get some secret data.";
+            //if null firebaseUser
+            $scope.secretData = "Login Required";
         } //end else
     }); //end auth on status change
 
@@ -55,28 +72,9 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         });//auth sign out
     };//end scope dot logOut
 
-// random test sending headers to server with token
-    // $scope.testTest = function(){
-    //
-    //   console.log('test');
-    //   $scope.allProjects = [];
-    //    $http({
-    //       method: 'GET',
-    //       url: '/api/projects',
-    //       headers: {
-    //           id_token: sessionStorage.userAuth
-    //       } //end headers
-    //   }).then(function(response) {
-    //       $scope.allProjects = response;
-    //       console.log($scope.allProjects, 'response from server');
-    //   }); //end then
-    //
-    // };
-
-
-
 }]); //end controller
 
+//clear session storage on log out
 var emptySessionStorage = function() {
     sessionStorage.removeItem('userProfile');
     sessionStorage.removeItem('idToken');
