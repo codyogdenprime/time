@@ -42,7 +42,7 @@ router.route('/users')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO employee (empname, isadmin, authid, authpic, authemail) VALUES ($1,$2,$3,$4,$5)',[data.name, data.adminstatus, data.authid, data.authpic, data.authemail]);
-    res.sendStatus(201);
+    res.send({success:true});
     }//else bracket
   });//pg.connect
 }).catch(function(error){
@@ -67,12 +67,12 @@ router.route('/users')
         //toggle isactive
         case 'activeStatus':
         client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
-        res.sendStatus(202);
+        res.send({success:true})(202);
           break;
         //toggle isadmin
         case 'adminStatus':
         client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
-        res.sendStatus(202);
+        res.send({success:true});
           break;
         default:
         console.log('critical switch failure');

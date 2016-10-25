@@ -8,7 +8,6 @@ myApp.factory('factory', ['$http', function($http){
     console.log('got to getAllEmployees');
     return $http({
     method: 'GET',
-    //WHERE isadmin = false
     url: 'api/users',
     headers: {
       id_token: idToken}
@@ -30,7 +29,7 @@ myApp.factory('factory', ['$http', function($http){
     console.log('is admin set to:', isAdmin);
   };
 
-  var getMyProjects = function (id) {
+  var getMyProjects = function () {
     console.log('into factory getMyProjects');
       if(isAdmin){
         return $http({
@@ -57,15 +56,58 @@ myApp.factory('factory', ['$http', function($http){
 
   var addTime = function (objectToSend) {
 
+    return $http({
+      method: 'POST',
+      url: 'api/time',
+      headers: {
+        id_token: idToken},
+      data: objectToSend
+    });
+  };
+  //get all users for a specific project
+  var getProjectUsers = function (projectId) {
+    console.log('made it to getProjectUsers');
 
-  return $http({
-    method: 'POST',
-    url: 'api/time',
-    headers: {
-      id_token: idToken},
-    data: objectToSend
-  });
-};
+    return $http({
+      method: 'GET',
+      url: 'users/byProject/?projectId=' + projectId,
+      headers: {
+        id_token: idToken}
+    });
+  };//end getProjectUsers function
+
+  var editProject = function (type, value) {
+    console.log('made it to isProjectActive');
+    var objectToSend = {
+      type: type,
+      value: value
+    };
+
+    return $http({
+      method: 'PUT',
+      url: 'api/projects'
+    });
+  };
+
+  var addProject = function (name, start, end, client, active) {
+    console.log('made it to addProject', name, start, end, client);
+    var objectToSend = {
+      projectname: name,
+      startdate: start,
+      enddate: end,
+      client_id: client,
+      isactive: active
+    };
+    return $http({
+      method: 'POST',
+      url: 'api/projects',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}
+    });
+  };
+
+
   return {
     getAllEmployees: getAllEmployees,
     checkUserDB: checkUserDB,
@@ -75,7 +117,10 @@ myApp.factory('factory', ['$http', function($http){
     changeIsAdmin: changeIsAdmin,
     getMyProjects: getMyProjects,
     getAllMyTime: getAllMyTime,
-    addTime: addTime
+    addTime: addTime,
+    getProjectUsers: getProjectUsers,
+    editProject: editProject,
+    addProject: addProject
   };
 
 }]);
