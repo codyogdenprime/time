@@ -66,20 +66,23 @@ router.route('/time')
       var column = '';
       var updatedInfo = '';
       //build sql statement based on data in
-        if (data.date!==undefined){
+        switch (data.type) {
+          case 'date':
           column = 'date';
-          updatedInfo = data.date;
-        }else if (data.hours!==undefined) {
+            break;
+          case 'hours':
           column = 'hours';
-          updatedInfo = data.hours;
-        }else if (data.description!==undefined) {
+            break;
+          case 'description':
           column = 'description';
-          updatedInfo = data.description;
-        }else if (data.empid!==undefined) {
+            break;
+          case 'empid':
           column = 'empid';
-          updatedInfo = data.empid;
+            break;
+          default:
         }
-    client.query( 'UPDATE time SET ' + column + ' = $1 WHERE projid = $2',[ updatedInfo, data.projectid ] );
+        updatedInfo = data.value;
+    client.query( 'UPDATE time SET ' + column + ' = $1 WHERE timeid = $2',[ updatedInfo, data.timeid ] );
     res.sendStatus(202);
     }//else
   });//pg.connect
