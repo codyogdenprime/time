@@ -8,7 +8,6 @@ var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var pg = require('pg');
 
-
 //use public folder
 app.use(express.static(path.resolve('public')));
 

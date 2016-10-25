@@ -209,10 +209,26 @@ router.get('/users/verify',function(req, res){
     res.send("Sorry your Auth-Token was incorrect");
   });//end catch
 });//verify get call
-//select id
-  //if exists
-  //returns an object active:boolean admin:boolean
-  //else
-    //post in list
-    //returns an object active:boolean admin:boolean
+
+//search users by project using join table
+router.get('/users/byProject',function(req, res){
+    var data = req.query;
+    console.log('users/byProject get route hit');
+    pg.connect(connectionString, function(err, client, done){
+      if(err){
+        console.log(err);
+      }else {
+        var resultsArray = [];
+      console.log('this is the req.query',data);
+        var queryResults = client.query('SELECT * FROM employee JOIN emp_proj ON empid=emp_id WHERE project_id = $1',[data.projectId]);
+        queryResults.on('row', function(row){
+          resultsArray.push(row);
+        });//on row function
+        queryResults.on('end',function(){
+        return res.send(resultsArray);
+        });//on end function
+      }//else
+    });//pg.connect
+});//users by project get call
+
 module.exports = router;

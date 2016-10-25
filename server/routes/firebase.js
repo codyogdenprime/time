@@ -5,6 +5,7 @@ var pg = require('pg');
 var connectionString = 'postgress://localhost:5432/cimarron-winter';
 
 
+
 router.get("/dbcheck", function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
 
