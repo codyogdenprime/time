@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var router = require('express').Router();
 var path = require('path');
 var pg = require ('pg');
-var connectionString = 'postgres://localhost:5432/cimarron';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
 router.use(bodyParser.urlencoded({extended:true}));

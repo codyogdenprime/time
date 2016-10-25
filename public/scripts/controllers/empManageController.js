@@ -12,8 +12,9 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function 
     });
   };
 
+//get emp status
 $scope.empStatus = function(){
-  
+  factory.
 };
 
 $scope.init();
