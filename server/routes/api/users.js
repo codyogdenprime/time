@@ -158,6 +158,7 @@ router.get('/users/inactive',function(req, res){
   });//end catch
 });//get active users
 router.get('/users/verify',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/verify get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -202,6 +203,11 @@ router.get('/users/verify',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//verify get call
 //select id
   //if exists
