@@ -1,0 +1,36 @@
+.cards {
+	display: flex;
+	margin: 0 auto;
+	max-width: 100%;
+	padding: 1em 0;
+	width: 60em;
+	flex-flow: row wrap;
+}
+
+.card {
+	box-sizing: border-box;
+	flex: 0 0 33.3333%;
+	margin: 0 0 1em 0;
+	width: 33.3333%;
+	
+}
+
+.card__link {
+	background-color: #FFF;
+	box-sizing: border-box;
+	display: block;
+	margin: 0 1em;
+	padding: 1em;
+	border: 1px solid #eee;
+	transition: box-shadow 200ms linear;
+	&:hover {
+		box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+	}
+}
+
+@media screen and ( max-width: $sb-md ) {
+	.card {
+		flex: 0 0 100%;
+		width: 100%;
+	}
+}

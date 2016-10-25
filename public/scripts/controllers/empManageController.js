@@ -3,15 +3,16 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function 
 
   $scope.allEmployees = [];
 
-  $scope.getAllEmployees = function () {
-    factory.getAllEmployees();
+  // $scope.getAllEmployees = function () {
+  //   firebaseUser.getToken().then(function () {
+  //     factory.getAllEmployees().then(function (results) {
+  //       $scope.allEmployees = results.data;
+  //       console.log($scope.allEmployees);
+  //     });
+  //   });
+  // };
 
-    // .then(function (results) {
-    //   $scope.allEmployees = results.data;
-    //   console.log($scope.allEmployees);
-    // });
-  };
 
-  $scope.getAllEmployees();
+  // $scope.getAllEmployees();
 
 }]);

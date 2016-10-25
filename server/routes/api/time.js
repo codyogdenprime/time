@@ -1,11 +1,13 @@
 var router = require('express').Router();
 var path = require('path');
 var pg = require ('pg');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron';
+var firebase = require('firebase');
 
 router.route('/time')
 //selecting all from time table
 .get(function(req, res) {
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('time get route hit');
   pg.connect(connectionString, function(err, client, done){
     if(err){
@@ -22,10 +24,16 @@ router.route('/time')
       });//on end function
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 })//router.get
 
 //add a time instance
 .post(function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('time post route hit');
   var data = req.body;
   console.log('data which is also req.body',data);
@@ -37,11 +45,17 @@ router.route('/time')
     res.sendStatus(201);
     }//else bracket
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 })//post route
 
 //update time table
 //expects an object that includes a key of projid and one of the following: date,hours,description,empid
 .put(function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('/time put route');
   var data = req.body;
   console.log("data logged here",data);
@@ -72,5 +86,10 @@ router.route('/time')
     res.sendStatus(202);
     }//else
   });//pg.connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
 });//.put route
 module.exports = router;
