@@ -17,9 +17,9 @@ myApp.config(['$routeProvider', function ($routeProvider) {
           }
         }
   }).
-  when ('/adminHome', {
-    templateUrl: "views/adminHome.html",
-    controller: "adminHomeController",
+  when ('/manageProjects', {
+    templateUrl: "views/manageProjects.html",
+    controller: "manageProjectsController",
     resolve: {
           "firebaseUser": function($firebaseAuthService) {
             return $firebaseAuthService.$requireSignIn();
