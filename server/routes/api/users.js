@@ -63,15 +63,20 @@ router.route('/users')
     if (err){
       console.log(err);
     }else {
-      //toggle isactive
-      if(data.isactive!==undefined){
-    client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
-    res.sendStatus(202);
-      //toggle isadmin
-      }else if(data.isadmin!==undefined){
+      switch (data.type) {
+        //toggle isactive
+        case 'activeStatus':
+        client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1',[data.empid]);
+        res.sendStatus(202);
+          break;
+        //toggle isadmin
+        case 'adminStatus':
         client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1',[data.empid]);
         res.sendStatus(202);
-      }//nested else
+          break;
+        default:
+        console.log('critical switch failure');
+      }//end switch
     }//else
   });//pg.connect
 }).catch(function(error){
