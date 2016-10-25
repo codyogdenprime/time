@@ -8,7 +8,7 @@ myApp.factory('factory', ['$http', function($http){
     console.log('got to getAllEmployees');
     return $http({
     method: 'GET',
-    url: 'api/employees',
+    url: 'api/users',
     headers: {
       id_token: idToken}
     });//end http

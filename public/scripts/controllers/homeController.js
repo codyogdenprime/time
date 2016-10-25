@@ -55,26 +55,6 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         });//auth sign out
     };//end scope dot logOut
 
-// random test sending headers to server with token
-    // $scope.testTest = function(){
-    //
-    //   console.log('test');
-    //   $scope.allProjects = [];
-    //    $http({
-    //       method: 'GET',
-    //       url: '/api/projects',
-    //       headers: {
-    //           id_token: sessionStorage.userAuth
-    //       } //end headers
-    //   }).then(function(response) {
-    //       $scope.allProjects = response;
-    //       console.log($scope.allProjects, 'response from server');
-    //   }); //end then
-    //
-    // };
-
-
-
 }]); //end controller
 
 var emptySessionStorage = function() {
