@@ -2,7 +2,7 @@ var router = require('express').Router();
 var path = require('path');
 var firebase = require('firebase');
 var pg = require('pg');
-var connectionString = 'postgress://localhost:5432/cimarron';
+var connectionString = 'postgres://localhost:5432/cimaron-winter';
 
 
 router.get("/dbcheck", function(req, res) {

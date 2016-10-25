@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var connectionString = 'postgres://localhost:5432/cimaron-winter';
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var pg = require('pg');
-var connectionString = 'postgress://localhost:5432/cimarron';
 
 //use public folder
 app.use(express.static(path.resolve('public')));
