@@ -38,6 +38,13 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
+                    if ($scope.secretData === undefined || $scope.secretData.length == 0) {
+                        console.log('empty');
+                        factory.
+                      }else {
+                        console.log($scope.secretData,'not empty ');
+                      }
+
                 }); //end then
             }); //end geToken
         } else {

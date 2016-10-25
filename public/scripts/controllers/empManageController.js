@@ -3,6 +3,7 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function 
 
   $scope.allEmployees = [];
 
+
   //get all employees WHERE isadmin = false
   //happens on page load feel free to change.....
   $scope.init = function () {
@@ -14,7 +15,8 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function 
 
 //get emp status
 $scope.empStatus = function(){
-  factory.getAllEmployees();
+  // isActive =
+  // isAdmin =
 };
 
 $scope.init();
