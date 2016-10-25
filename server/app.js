@@ -40,8 +40,5 @@ app.use('/api', reports);
 var projects = require('./routes/api/projects');
 app.use('/api', projects);
 
-//firebase route
-var firebase = require('./routes/firebase');
-app.use('/', firebase);
 //use public folder
 app.use(express.static(path.resolve('public')));

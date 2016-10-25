@@ -23,9 +23,11 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         // firebaseUser will be null if not logged in
         if (firebaseUser) {
             // This is where we make our call to our server
-
             firebaseUser.getToken().then(function(idToken) {
-              console.log(sessionStorage,'storage``````');
+
+              //google profile information to add to the database
+              //admin default to false & active to true
+              //can change these in emp Manage
               var objectToSend = {
                 name:firebaseUser.displayName,
                 admin: false,
@@ -34,7 +36,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                 pic: firebaseUser.photoURL,
                 email:firebaseUser.email
               };
-
+              //store idToken in sessionStorage
               sessionStorage.userAuth = idToken;
                 $http({
                     method: 'POST',
@@ -47,6 +49,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     $scope.secretData = response.data;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser);
+                    //store google profile info in session storage
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
@@ -55,7 +58,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             }); //end geToken
         } else {
             console.log('Not logged in.');
-            $scope.secretData = "Log in to get some secret data.";
+            //if null firebaseUser
+            $scope.secretData = "Login Required";
         } //end else
     }); //end auth on status change
 
@@ -70,6 +74,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
 
 }]); //end controller
 
+//clear session storage on log out
 var emptySessionStorage = function() {
     sessionStorage.removeItem('userProfile');
     sessionStorage.removeItem('idToken');
