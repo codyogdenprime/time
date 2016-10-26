@@ -64,6 +64,10 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   };//end addProject
 
   //add employees to project
+  $scope.addEmpToProject = function (empId, projId) {
+    console.log('in addEmpToProject');
+    factory.addEmpToProject(empId, projId);
+  };
 
   //remove employee from project
 
@@ -84,6 +88,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   //$scope.editProject(2, true);
   //$scope.getAllEmployees();
   //$scope.editProject('isactive', false, 2);
-  $scope.deleteTimeEntry(3);
+  //$scope.deleteTimeEntry(3);
+  $scope.addEmpToProject(2, 4);
 
 }]);

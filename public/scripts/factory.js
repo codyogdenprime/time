@@ -123,6 +123,21 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
+  var addEmpToProject = function (empId, projId) {
+    console.log('made it to addEmpToProject');
+    var objectToSend = {
+      empid: empID,
+      projectid: projId,
+    };
+    return $http({
+      method: 'POST',
+      url: 'api/projects/users',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}            
+    });
+  };
+
   return {
     getAllEmployees: getAllEmployees,
     checkUserDB: checkUserDB,
@@ -136,7 +151,8 @@ myApp.factory('factory', ['$http', function($http){
     getProjectUsers: getProjectUsers,
     editProject: editProject,
     addProject: addProject,
-    deleteTimeEntry: deleteTimeEntry
+    deleteTimeEntry: deleteTimeEntry,
+    addEmpToProject: addEmpToProject
   };
 
 }]);
