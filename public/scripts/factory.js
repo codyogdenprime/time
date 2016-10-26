@@ -111,6 +111,17 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
+  var deleteTimeEntry = function (timeId) {
+    console.log('made it to deleteTimeEntry in factory');
+
+    return $http({
+      method: 'DELETE',
+      url: '/api/time',
+      data: {timeid: timeId},
+      headers: {id_token: idToken,
+        "Content-Type": "application/json;charset=utf-8"}
+    });
+  };
 
   return {
     getAllEmployees: getAllEmployees,
@@ -124,7 +135,8 @@ myApp.factory('factory', ['$http', function($http){
     addTime: addTime,
     getProjectUsers: getProjectUsers,
     editProject: editProject,
-    addProject: addProject
+    addProject: addProject,
+    deleteTimeEntry: deleteTimeEntry
   };
 
 }]);

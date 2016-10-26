@@ -92,6 +92,8 @@ router.route('/time')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 })//.put route
+
+
 //finds by timeid and deletes the whole thing
 .delete(function(req, res){
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
@@ -110,4 +112,6 @@ router.route('/time')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 });//delete function
+
+
 module.exports = router;

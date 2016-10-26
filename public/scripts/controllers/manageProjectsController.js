@@ -61,17 +61,17 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
         $scope.addProjectSuccess = "Project sucessfully added!";
       }
     });
-
-
-  };
-
+  };//end addProject
 
   //add employees to project
 
   //remove employee from project
 
   //delete time
-
+  $scope.deleteTimeEntry = function (timeId) {
+    console.log('in deleteTimeEntry');
+    factory.deleteTimeEntry(timeId);
+  };
   //edit time hours
 
   //edit time date
@@ -83,6 +83,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   //$scope.getProjectUsers(2);
   //$scope.editProject(2, true);
   //$scope.getAllEmployees();
-  $scope.editProject('isactive', false, 2);
+  //$scope.editProject('isactive', false, 2);
+  $scope.deleteTimeEntry(3);
 
 }]);
