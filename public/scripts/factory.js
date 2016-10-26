@@ -76,16 +76,18 @@ myApp.factory('factory', ['$http', function($http){
     });
   };//end getProjectUsers function
 
-  var editProject = function (type, value) {
-    console.log('made it to isProjectActive');
+  var editProject = function (type, value, projId) {
+    console.log('made it to editProject with', type, value, projId);
     var objectToSend = {
       type: type,
-      value: value
+      value: value,
+      projectid: projId
     };
 
     return $http({
       method: 'PUT',
       url: 'api/projects',
+      data: objectToSend,
       headers: {
         id_token: idToken}
     });

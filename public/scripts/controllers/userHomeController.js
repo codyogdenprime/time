@@ -69,8 +69,8 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
   //   }
   // };
 
-  $scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
-  $scope.newTime(2, 4);
-  $scope.getMyProjects(2);
-  $scope.getAllTime(2);
+  //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
+  //$scope.newTime(2, 4);
+  //$scope.getMyProjects(2);
+  //$scope.getAllTime(2);
 }]);
