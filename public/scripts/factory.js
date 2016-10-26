@@ -5,6 +5,7 @@ myApp.factory('factory', ['$http', function($http){
   var isAdmin = true;
 
   var getAllEmployees = function () {
+    //gets all non admin employees
     console.log('got to getAllEmployees');
     return $http({
     method: 'GET',
@@ -13,6 +14,7 @@ myApp.factory('factory', ['$http', function($http){
       id_token: idToken}
     });//end http
   };//end getAllEmployees
+
   //check if a user already exists
   var checkUserDB = function (id, name, photo) {
     console.log('got into checkUserDB');
@@ -21,20 +23,40 @@ myApp.factory('factory', ['$http', function($http){
       url: '/dbcheck/?clientUID=' + id + '&' + name + '&' + photo,
       headers:{
         id_token: idToken}
-    });
+    });//end htto
+  };//end checkUserDB
+
+  var getActiveEmp = function(){
+    //get only active employees including admins
+    return $http({
+      method: 'GET',
+      url:'api/users/active',
+      headers:{
+        id_token: idToken}
+    });//end http
   };
+
+  var getInActiveEmp = function(){
+      //get inactive employees
+      return $http({
+        method:'GET',
+        url:'api/users/inactive',
+        headers:{
+          id_token: idToken}
+      });//end http
+  };//end get inactive employees
 
   var changeIsAdmin = function (objectToSend) {
     console.log(objectToSend,'object to send');
-
+      //route to is user active / is user admin
     return $http({
       method:'PUT',
       url:'/api/users',
       headers :{
         id_token: idToken},
         data: objectToSend
-      });
-    };
+      });//end http
+    };//end changeIsAdmin
 
 
 
@@ -171,6 +193,8 @@ myApp.factory('factory', ['$http', function($http){
       return isAdmin;
     },
     changeIsAdmin: changeIsAdmin,
+    getActiveEmp: getActiveEmp,
+    getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,
     getAllMyTime: getAllMyTime,
     addTime: addTime,
