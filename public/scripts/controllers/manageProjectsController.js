@@ -75,9 +75,9 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
 
 
   //----------------test all of the below:
-  $scope.getMyProjects();
+  //$scope.getMyProjects();
   $scope.getProjectUsers(2);
-  $scope.editProject(2, true);
-  $scope.getAllEmployees();
+  //$scope.editProject(2, true);
+  //$scope.getAllEmployees();
 
 }]);
