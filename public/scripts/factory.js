@@ -64,6 +64,23 @@ myApp.factory('factory', ['$http', function($http){
       data: objectToSend
     });
   };
+  var editTime = function (type, value,id) {
+    console.log('made it to edit time factory');
+    var objectToSend = {
+      timeid:id,
+      type: type,
+      value: value
+    };//objectToSend
+
+    return $http({
+      method: 'PUT',
+      url: 'api/time',
+      data:objectToSend,
+      headers: {
+        id_token: idToken}
+    });//http call
+  };//edit time function
+
   //get all users for a specific project
   var getProjectUsers = function (projectId) {
     console.log('made it to getProjectUsers');
@@ -122,7 +139,8 @@ myApp.factory('factory', ['$http', function($http){
     addTime: addTime,
     getProjectUsers: getProjectUsers,
     editProject: editProject,
-    addProject: addProject
+    addProject: addProject,
+    editTime:editTime
   };
 
 }]);
