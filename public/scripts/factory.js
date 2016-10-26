@@ -36,6 +36,16 @@ myApp.factory('factory', ['$http', function($http){
     });//end http
   };
 
+  var getInActiveEmp = function(){
+      //get inactive employees
+      return $http({
+        method:'GET',
+        url:'api/users/inactive',
+        headers:{
+          id_token: idToken}
+      });//end http
+  };//end get inactive employees
+
   var changeIsAdmin = function (objectToSend) {
     console.log(objectToSend,'object to send');
       //route to is user active / is user admin
@@ -184,6 +194,7 @@ myApp.factory('factory', ['$http', function($http){
     },
     changeIsAdmin: changeIsAdmin,
     getActiveEmp: getActiveEmp,
+    getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,
     getAllMyTime: getAllMyTime,
     addTime: addTime,
