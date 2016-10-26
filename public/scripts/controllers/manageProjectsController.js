@@ -4,6 +4,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   //all projects
   $scope.allMyProjects = [];
   $scope.allEmployees = [];
+  $scope.allProjectUsers = [];
 
   //get all projects
   $scope.getMyProjects = function () {
@@ -15,7 +16,9 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   //get all users by projects
   $scope.getProjectUsers = function (projectId) {
     console.log('in getProjectUsers');
-    factory.getProjectUsers(projectId);
+    factory.getProjectUsers(projectId).then(function (response) {
+      $scope.allProjectUsers = response.data;
+    });
   };
   //edit time date
   //edit time description
@@ -72,9 +75,9 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
 
 
   //----------------test all of the below:
-  $scope.getMyProjects();
+  //$scope.getMyProjects();
   $scope.getProjectUsers(2);
-  $scope.editProject(2, true);
-  $scope.getAllEmployees();
+  //$scope.editProject(2, true);
+  //$scope.getAllEmployees();
 
 }]);

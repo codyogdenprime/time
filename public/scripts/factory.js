@@ -13,7 +13,7 @@ myApp.factory('factory', ['$http', function($http){
       id_token: idToken}
     });//end http
   };//end getAllEmployees
-
+  //check if a user already exists
   var checkUserDB = function (id, name, photo) {
     console.log('got into checkUserDB');
     return $http({
@@ -79,7 +79,7 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'GET',
-      url: 'users/byProject/?projectId=' + projectId,
+      url: 'api/users/byProject/?projectId=' + projectId,
       headers: {
         id_token: idToken}
     });
@@ -94,7 +94,9 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'PUT',
-      url: 'api/projects'
+      url: 'api/projects',
+      headers: {
+        id_token: idToken}
     });
   };
 

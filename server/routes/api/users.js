@@ -218,20 +218,28 @@ router.post('/users/verify',function(req, res){
 
 //search users by project using join table
 router.get('/users/byProject',function(req, res){
+  var verbose = true;
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     var data = req.query;
+    console.log(req.query);
     console.log('users/byProject get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
         console.log(err);
       }else {
         var resultsArray = [];
-      console.log('this is the req.query',data);
-        var queryResults = client.query('SELECT * FROM employee JOIN emp_proj ON empid=emp_id WHERE project_id = $1',[data.projectId]);
+      if( verbose ) console.log('this is the req.query',data);
+        var tester = 'SELECT * FROM employee JOIN emp_proj ON empid=emp_id WHERE project_id = ' + data.projectId;
+        if( verbose ) console.log( '---------=============', tester + '!!!!!!!!!!!!!!!!!!!!' );
+        var queryResults = client.query( tester );
+        if( verbose ) console.log( 'queryResults:', queryResults );
+        if( verbose ) console.log( 'after!!!!!' );
         queryResults.on('row', function(row){
+          if( verbose ) console.log( 'in!!!!!' );
           resultsArray.push(row);
         });//on row function
         queryResults.on('end',function(){
+        if( verbose ) console.log( 'end!!!!!' );
         return res.send(resultsArray);
         });//on end function
       }//else

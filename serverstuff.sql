@@ -4,7 +4,7 @@ empname VARCHAR(50),
 isadmin BOOLEAN,
 isactive BOOLEAN,
 authid VARCHAR(50),
-authpic VARCHAR(50),
+authpic TEXT,
 authemail VARCHAR(50)
 );
 
