@@ -26,8 +26,16 @@ myApp.factory('factory', ['$http', function($http){
 
   var changeIsAdmin = function (id) {
     isAdmin = id;
-    console.log('is admin set to:', isAdmin);
-  };
+    return $http({
+      method:'PUT',
+      url:'/api/users',
+      headers :{
+        id_token: idToken},
+        data: objectToSend
+      });
+    };
+
+
 
   var getMyProjects = function () {
     console.log('into factory getMyProjects');
