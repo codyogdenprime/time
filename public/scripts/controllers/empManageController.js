@@ -18,8 +18,8 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
       //grab data from user empId and isactive or isadmin
       //if checked send adminstatus //if toggles green send activeStatus black activeStatus
       var objectToSend = {
-        empid: 16,
-        type: 'adminStatus'
+        empid: 16, //of selected employee
+        type: 'adminStatus' // set to active or admin based on whats selected
       };
         //send object to factory http call
         factory.changeIsAdmin(objectToSend).then(function(results){

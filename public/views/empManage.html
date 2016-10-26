@@ -1,11 +1,5 @@
 <p>in empManage view</p>
 Non Admin employee's
-<div ng-repeat="employee in allEmployees">
-  {{employee.empname}}
-</div>
-
-
-Change Admin Status of user
-<div>
-<input type="checkbox" ng-click="empStatus()" ng-model="adminStatus" name="name" checked>
+<div ng-repeat="emp in allEmployees">
+  {{emp.empname}}
 </div>
