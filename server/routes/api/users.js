@@ -1,7 +1,7 @@
 var router = require('express').Router();
 var path = require('path');
 var pg = require ('pg');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
 router.route('/users')
@@ -162,7 +162,9 @@ router.get('/users/inactive',function(req, res){
     res.send("Sorry your Auth-Token was incorrect");
   });//end catch
 });//get active users
-router.get('/users/verify',function(req, res){
+
+router.post('/users/verify',function(req, res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('users/verify get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
@@ -170,14 +172,13 @@ router.get('/users/verify',function(req, res){
       }else {
         var resultsArray = [];
         var objectIn= {
-          name:req.query.name,
+          name:req.body.name,
           adminstatus:false,
           activestatus:true,
-          authpic:req.query.pic,
-          authemail:null,
-          userId: req.query.clientUID
+          authpic:req.body.pic,
+          authemail:req.body.email,
+          userId: req.body.id
        };
-      console.log('this is the req.query',req.query);
 
         var queryResults = client.query('SELECT * FROM employee WHERE authid = $1',[objectIn.userId]);
 
@@ -207,27 +208,46 @@ router.get('/users/verify',function(req, res){
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//verify get call
 
 //search users by project using join table
 router.get('/users/byProject',function(req, res){
+  var verbose = true;
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     var data = req.query;
+    console.log(req.query);
     console.log('users/byProject get route hit');
     pg.connect(connectionString, function(err, client, done){
       if(err){
         console.log(err);
       }else {
         var resultsArray = [];
-      console.log('this is the req.query',data);
-        var queryResults = client.query('SELECT * FROM employee JOIN emp_proj ON empid=emp_id WHERE project_id = $1',[data.projectId]);
+      if( verbose ) console.log('this is the req.query',data);
+        var tester = 'SELECT * FROM employee JOIN emp_proj ON empid=emp_id WHERE project_id = ' + data.projectId;
+        if( verbose ) console.log( '---------=============', tester + '!!!!!!!!!!!!!!!!!!!!' );
+        var queryResults = client.query( tester );
+        if( verbose ) console.log( 'queryResults:', queryResults );
+        if( verbose ) console.log( 'after!!!!!' );
         queryResults.on('row', function(row){
+          if( verbose ) console.log( 'in!!!!!' );
           resultsArray.push(row);
         });//on row function
         queryResults.on('end',function(){
+        if( verbose ) console.log( 'end!!!!!' );
         return res.send(resultsArray);
         });//on end function
       }//else
     });//pg.connect
+  }).catch(function(error){
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+  });//end catch
 });//users by project get call
 
 module.exports = router;

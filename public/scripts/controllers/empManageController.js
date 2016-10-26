@@ -3,16 +3,22 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function 
 
   $scope.allEmployees = [];
 
-  // $scope.getAllEmployees = function () {
-  //   firebaseUser.getToken().then(function () {
-  //     factory.getAllEmployees().then(function (results) {
-  //       $scope.allEmployees = results.data;
-  //       console.log($scope.allEmployees);
-  //     });
-  //   });
-  // };
 
+  //get all employees WHERE isadmin = false
+  //happens on page load feel free to change.....
+  $scope.init = function () {
+    factory.getAllEmployees().then(function (results) {
+     $scope.allEmployees = results.data;
+     console.log($scope.allEmployees);
+    });
+  };
 
-  // $scope.getAllEmployees();
+//get emp status
+$scope.empStatus = function(){
+  // isActive =
+  // isAdmin =
+};
+
+$scope.init();
 
 }]);

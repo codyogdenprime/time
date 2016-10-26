@@ -10,7 +10,8 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
 
 
   // $scope.checkUserDB = function (id, name, photo) {
-  //   factory.checkUserDB(id, name, photo).then(function (results) {
+  //   factory.checkUserDB(id, name, photo);
+  //   //.then(function (results) {
   //     //console.log(results);
   //   //   if(results){
   //   //     //if user get all user projects
@@ -20,7 +21,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
   //   //     //if admin, get projects, change view to admin view
   //   //   }
   //
-  //   });
+  //   //});
   //   //$scope.getMyProjects(id);
   //   //$scope.getAllTime();
   // };
@@ -68,7 +69,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
   //   }
   // };
 
-  //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
+  $scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
   $scope.newTime(2, 4);
   $scope.getMyProjects(2);
   $scope.getAllTime(2);
