@@ -6,7 +6,7 @@ var firebase = require('firebase');
 
 
 router.route('/projects')
-//selecting all projects
+//selecting all projects- also listens for an optional query
 .get(function(req, res) {
   //verify idToken sent in headers
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
@@ -42,7 +42,7 @@ router.route('/projects')
 });//end catch
 })//router.get
 
-//add an employee
+//add a project expects an object a little something like this {projectname: 'string', startdate:y-m-d, enddate:y-m-d, client_id:number,}
 .post(function(req, res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('projects post route hit');
@@ -53,6 +53,7 @@ router.route('/projects')
       console.log(err);
     }else {
     var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)',[data.projectname, true, data.startdate, data.enddate, data.client_id]);
+    //need to assign employees to project via emp_proj join table
     res.send({success:true});
     }//else bracket
   });//pg.connect
@@ -106,4 +107,12 @@ router.route('/projects')
   res.send("Sorry your Auth-Token was incorrect");
 });//end catch
 });//.put route
+
+//expects an object like so--- {projectid:number,empid:number}
+router.post('/projects/users',function(req,res){
+  var data = req.body;
+  
+});//router.post projects/users
+
+
 module.exports = router;
