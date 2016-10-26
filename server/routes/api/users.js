@@ -180,10 +180,7 @@ router.post('/users/verify',function(req, res){
           authemail:req.body.email,
           userId: req.body.id
        };
-
         var queryResults = client.query('SELECT * FROM employee WHERE authid = $1',[objectIn.userId]);
-
-
         queryResults.on('row', function(row){
           resultsArray.push(row);
         });//on row function

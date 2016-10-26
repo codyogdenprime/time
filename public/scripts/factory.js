@@ -148,6 +148,43 @@ myApp.factory('factory', ['$http', function($http){
         "Content-Type": "application/json;charset=utf-8"}
     });
   };
+  var getAllClients = function () {
+    console.log('got to getAllClients');
+    return $http({
+    method: 'GET',
+    url: 'api/clients',
+    headers: {
+      id_token: idToken}
+    });//end http
+  };//end getAllEmployees
+
+  var editClients = function (clientName,clientId) {
+    console.log('made it to editProject with', clientName, clientId);
+    var objectToSend = {
+      clientname:clientName,
+      clientid:clientId
+    };
+
+    return $http({
+      method: 'PUT',
+      url: 'api/clients',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}
+    });
+  };
+
+  var deleteClients = function (clientId) {
+    console.log('made it to deleteClients factory, yo');
+
+    return $http({
+      method: 'DELETE',
+      url: '/api/clients',
+      data: {clientid: clientId},
+      headers: {id_token: idToken,
+        "Content-Type": "application/json;charset=utf-8"}
+    });
+  };
 
   var addEmpToProject = function (empId, projId) {
     console.log('made it to addEmpToProject');
@@ -179,7 +216,10 @@ myApp.factory('factory', ['$http', function($http){
     addProject: addProject,
     editTime:editTime,
     deleteTimeEntry: deleteTimeEntry,
-    addEmpToProject: addEmpToProject
+    addEmpToProject: addEmpToProject,
+    getAllClients:getAllClients,
+    editClients:editClients,
+    deleteClients:deleteClients
   };
 
 }]);

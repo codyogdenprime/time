@@ -76,11 +76,30 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     console.log('in deleteTimeEntry');
     factory.deleteTimeEntry(timeId);
   };
-  //edit time hours
 
-  //edit time date
+  //get all clients
+  $scope.getAllClients = function () {
+    console.log('in getAllClients');
+    factory.getAllClients().then(function (response) {
+      $scope.allClients = response.data;
+      console.log('back from server in getAllClients',$scope.allClients);
+    });//factory call
+  };//get all clients
 
-  //edit time description
+  $scope.editClients = function (clientName, clientId) {
+    console.log('in editClients');
+    factory.editClients(clientName, clientId).then(function (response) {
+      $scope.editClientsSuccess = response.data;
+      console.log($scope.editClientsSuccess);
+    });
+  };
+  $scope.deleteClients = function (clientId) {
+    console.log('in deleteClients');
+    factory.editClients(clientId).then(function (response) {
+      $scope.editClientsSuccess = response.data;
+      console.log($scope.editClientsSuccess);
+    });
+  };
 
   //----------------test all of the below:
   //$scope.getMyProjects();
@@ -89,6 +108,8 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
   //$scope.getAllEmployees();
   //$scope.editProject('isactive', false, 2);
   //$scope.deleteTimeEntry(3);
-  $scope.addEmpToProject(2, 4);
+  // $scope.addEmpToProject(2, 4);
+//  $scope.getAllClients();
+    $scope.editClients('MATTISEDITING THIS',1);
 
 }]);
