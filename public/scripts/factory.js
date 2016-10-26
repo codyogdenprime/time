@@ -24,8 +24,9 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
-  var changeIsAdmin = function (id) {
-    isAdmin = id;
+  var changeIsAdmin = function (objectToSend) {
+    console.log(objectToSend,'object to send');
+    
     return $http({
       method:'PUT',
       url:'/api/users',

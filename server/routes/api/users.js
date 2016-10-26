@@ -59,6 +59,7 @@ router.route('/users')
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
   var data = req.body;
+  console.log(data,'DATAAAAA');
   pg.connect(connectionString, function (err, client, done){
     if (err){
       console.log(err);

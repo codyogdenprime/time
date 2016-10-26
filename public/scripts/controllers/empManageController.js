@@ -15,10 +15,10 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
 
     //get emp status
     $scope.empStatus = function() {
-      //grab data from user empId and isactive or isadmin 
+      //grab data from user empId and isactive or isadmin
         var objectToSend = {
-          id: 16,
-          type: 'isadmin'
+          empid: 16,
+          type: 'activeStatus'
         };
         factory.changeIsAdmin(objectToSend).then(function(results){
           console.log(results);
