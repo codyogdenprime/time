@@ -21,7 +21,7 @@
 	display: block;
 	margin: 0 1em;
 	padding: 1em;
-	border: 1px solid #eee;
+	border: 2px solid lighten(#45BCCE, 25%);
 	transition: box-shadow 200ms linear;
 	&:hover {
 		box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -30,7 +30,6 @@
 	&:visited,
 	&:hover,
 	&:active {
-		color: #B75928;
 		color: darken(#9ad8db, 35%);
 		text-decoration: none;
 	}

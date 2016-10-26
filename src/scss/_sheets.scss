@@ -1,0 +1,183 @@
+button {
+	background-color: transparent;
+	color: #45bcce;
+	padding: 0.25em 0.5em;
+	border: 2px solid lighten(#45BCCE, 25%);
+	outline-color: lighten(#45bcce, 25%);
+	cursor: pointer;
+	&:active {
+		background-color: lighten(#45bcce, 25%);
+	}
+}
+
+input[type="text"] {
+	border: 2px solid lighten(#45bcce, 25%);
+	padding: 0.25em 0.5em;
+	outline-color: lighten(#45bcce, 25%);
+}
+
+h2.entity-title {
+	color: darken(#9ad8db, 35%);
+}
+
+.add-time {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	label {
+		color: #45bcce;
+		display: block;
+	}
+	.description input {
+		width: 350px;
+	}
+	.person-input {
+		max-width: 180px;
+		background-color: transparent;
+		margin-bottom: 0.25em;
+	}
+	.date-input {
+		width: 90px;
+	}
+	.time-input {
+		width: 50px;
+	}
+}
+
+@media screen and ( max-width: $sb-lg ) {
+	.add-time {
+		display: block;
+		.date-input {
+			box-sizing: border-box;
+			width: 100%;
+		}
+		.person-input {
+			max-width: 100%;
+			min-width: 100%;
+		}
+		.time-input {
+			box-sizing: border-box;
+			width: 100%;
+		}
+		.description input {
+			box-sizing: border-box;
+			width: 100%;
+		}
+		& > div {
+			padding-bottom: 1em;
+		}
+		button {
+			box-sizing: border-box;
+			width: 100%;
+		}
+	}
+}
+
+.sheet .row {
+	display: flex;
+	box-sizing: border-box;
+	padding: 0.75em 1em;
+	//margin: 0.25em 0;
+	border-bottom: 1px solid lighten(#45BCCE, 25%);
+	&.titles {
+		font-weight: bold;
+	}
+	.date,
+	.total {
+		flex: 0 0 10%;
+	}
+	.time,
+	.total-time {
+		flex: 0 0 8%;
+	}
+	.description {
+
+	}
+	.actions {
+		flex: 0 0 120px;
+		margin: 0 0 0 auto;
+	}
+	.edit-time {
+		@extend .add-time;
+		label {
+			display: none;
+		}
+	}
+	.date,
+	.time,
+	.description,
+	.actions {
+		display: flex;
+		align-items: center;
+	}
+}
+
+.sheet {
+	margin: 2em 0 0 0;
+	.row {
+		margin: 0.25em 0 0 0;
+	}
+	& > .row:first-of-type,
+	& > .row:last-of-type {
+		margin: 0 !important;
+		background-color: lighten(#9ad8db, 20%);
+		color: darken(#9ad8db, 35%);
+	}
+	.btn-export,
+	.btn-delete {
+		font-size: 0.8em;
+	}
+	.btn-delete:hover {
+		color: #B75928;
+		border-color: currentColor;
+	}
+}
+
+@media screen and ( max-width: $sb-md ) {
+	.sheet .row {
+		position: relative;
+		flex-flow: column nowrap;
+		&.titles {
+			display: none;
+		}
+		.date:before {
+			font-weight: bold;
+			content: 'Date: ';
+		}
+		.time {
+			margin: 1em 0 0 0;
+		}
+		.time:before {
+			font-weight: bold;
+			content: 'Hours: ';
+		}
+		.description {
+			margin: 1em 0;
+		}
+		.description:before {
+			display: block;
+			font-weight: bold;
+			content: 'Description: ';
+		}
+		.actions {
+			order: -1;
+			position: absolute;
+			right: 0;
+		}
+		.date,
+		.time,
+		.description,
+		.actions {
+			display: block;
+		}
+		.btn-export {
+			display: none;
+		}
+	}
+	div.row.totals {
+		flex-flow: row nowrap;
+		.total {
+			margin-right: 1em;
+		}
+	}
+}
