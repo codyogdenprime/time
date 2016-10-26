@@ -108,11 +108,49 @@ router.route('/projects')
 });//end catch
 });//.put route
 
+
+//add user to project
 //expects an object like so--- {projectid:number,empid:number}
-router.post('/projects/users',function(req,res){
+router.route('/projects/users')
+.post(function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+  console.log('projects/users post route hit');
   var data = req.body;
-  
-});//router.post projects/users
+  pg.connect(connectionString, function(err, client, done){
+  if (err){
+    console.log(err);
+  }else {
+    var query = client.query('INSERT INTO emp_proj (emp_id,project_id) VALUES ($1,$2)',[data.empid, data.projectid]);
+    res.send({success:true});
+  }
+  });//pg connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
+})//router.post projects/users
+
+//delete user from project
+.delete(function(req,res){
+  console.log('projects/users delete route hit');
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+    var data = req.body;
+    console.log('making sure there is a req.body',data);
+    pg.connect(connectionString, function(err, client, done){
+    if (err){
+      console.log(err);
+    }else {
+      var query = client.query('DELETE FROM emp_proj WHERE emp_id=$1 AND project_id=$2',[data.empid, data.projectid]);
+      res.send({success:true});
+    }
+    });//pg connect
+}).catch(function(error){
+  console.log(error);
+  // If the id_token isn't right, you end up in this callback function
+  res.send("Sorry your Auth-Token was incorrect");
+});//end catch
+});//router.delete
 
 
 module.exports = router;

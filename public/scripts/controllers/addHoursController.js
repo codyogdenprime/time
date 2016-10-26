@@ -6,5 +6,5 @@ myApp.controller('addHoursController', ['$scope', '$http','factory', function ($
     factory.editTime(type, value, id);
   };//scope.editTime
 
-$scope.editTime('empid','3',2);
+$scope.editTime('empid', 1, 2);
 }]);//addHoursController
