@@ -68,6 +68,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
     $scope.logOut = function() {
         auth.$signOut().then(function() {
             emptySessionStorage();
+            location.reload();
             console.log('Logging the user out!');
         });//auth sign out
     };//end scope dot logOut
