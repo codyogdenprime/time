@@ -67,6 +67,7 @@ router.route('/projects')
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   console.log('put route');
   var data = req.body;
+  console.log('req.body', req.body.type, req.body.value, req.body.projectid);
   pg.connect(connectionString, function (err, client, done){
     if (err){
       console.log(err);
@@ -93,6 +94,8 @@ router.route('/projects')
         default:console.log('critical switch malfunction');
       }
       updatedInfo = data.value;
+      var clientQuery = 'UPDATE projects SET ' + column + ' = ' + updatedInfo + ' WHERE projectid = ' + data.projectid;
+      console.log(clientQuery);
     client.query( 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2',[ updatedInfo, data.projectid ] );
     res.send({success:true});
     }//else

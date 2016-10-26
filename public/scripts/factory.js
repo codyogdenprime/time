@@ -76,16 +76,18 @@ myApp.factory('factory', ['$http', function($http){
     });
   };//end getProjectUsers function
 
-  var editProject = function (type, value) {
-    console.log('made it to isProjectActive');
+  var editProject = function (type, value, projId) {
+    console.log('made it to editProject with', type, value, projId);
     var objectToSend = {
       type: type,
-      value: value
+      value: value,
+      projectid: projId
     };
 
     return $http({
       method: 'PUT',
       url: 'api/projects',
+      data: objectToSend,
       headers: {
         id_token: idToken}
     });
@@ -109,6 +111,32 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
+  var deleteTimeEntry = function (timeId) {
+    console.log('made it to deleteTimeEntry in factory');
+
+    return $http({
+      method: 'DELETE',
+      url: '/api/time',
+      data: {timeid: timeId},
+      headers: {id_token: idToken,
+        "Content-Type": "application/json;charset=utf-8"}
+    });
+  };
+
+  var addEmpToProject = function (empId, projId) {
+    console.log('made it to addEmpToProject');
+    var objectToSend = {
+      empid: empID,
+      projectid: projId,
+    };
+    return $http({
+      method: 'POST',
+      url: 'api/projects/users',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}            
+    });
+  };
 
   return {
     getAllEmployees: getAllEmployees,
@@ -122,7 +150,9 @@ myApp.factory('factory', ['$http', function($http){
     addTime: addTime,
     getProjectUsers: getProjectUsers,
     editProject: editProject,
-    addProject: addProject
+    addProject: addProject,
+    deleteTimeEntry: deleteTimeEntry,
+    addEmpToProject: addEmpToProject
   };
 
 }]);
