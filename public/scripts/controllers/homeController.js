@@ -1,4 +1,4 @@
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseAuth) {
+myApp.controller('homeController', ['factory','$scope', '$http', '$firebaseArray', '$firebaseAuth', function(factory, $scope, $http, $firebaseArray, $firebaseAuth) {
     console.log('in homeController');
 
     var auth = $firebaseAuth();
@@ -72,6 +72,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             console.log('Logging the user out!');
         });//auth sign out
     };//end scope dot logOut
+
 
 }]); //end controller
 
