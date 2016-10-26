@@ -1,4 +1,4 @@
-myApp.controller('reportsController', ['$scope', '$http', function ($scope, $http){
+myApp.controller('reportsController', ['factory','$scope', '$http', function (factory,$scope, $http){
   console.log('in reportsController');
 
   //this exports to CSV! see html for more

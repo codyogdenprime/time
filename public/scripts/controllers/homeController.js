@@ -1,4 +1,4 @@
-myApp.controller('homeController', ['factory','$scope', '$http', '$firebaseArray', '$firebaseAuth', function(factory, $scope, $http, $firebaseArray, $firebaseAuth) {
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseAuth) {
     console.log('in homeController');
 
     var auth = $firebaseAuth();
