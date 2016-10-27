@@ -1,5 +1,73 @@
 console.log('sourced');
 
+(function($) {
+
+    $.fn.fadeOutToLeft = function(callback) {
+        $(this).animate({
+            opacity: 0,
+            left: "-200px"
+        }, 300, function() {
+            $(this).hide();
+            if (callback) {
+                callback();
+            }
+        });
+        return this;
+    };
+
+    $.fn.fadeInFromRight = function(callback) {
+        $(this).show().animate({
+            opacity: 1,
+            left: "0px"
+        }, 200);
+        return this;
+    };
+
+    $.fn.fadeOutToRight = function(callback) {
+        $(this).animate({
+            opacity: 0,
+            left: "200px"
+        }, 300, function() {
+            $(this).hide();
+            if (callback) {
+                callback();
+            }
+        });
+        return this;
+    };
+
+    $.fn.fadeInFromLeft = function(callback) {
+        $(this).animate({
+            opacity: 1,
+            left: "0px"
+        }, 200);
+        if (callback) {
+            callback();
+        }
+    };
+
+})(jQuery);
+
+// These are example functions for testing UI interaction.
+// We can incorporate these into the client scripts
+// inside Angular as needed.
+
+var showProject = function() {
+
+    $('.projects').fadeOutToLeft(function() {
+        $('.single-project').fadeInFromRight();
+    });
+};
+
+var showProjects = function() {
+
+    $('.single-project').fadeOutToRight(function() {
+        $('.projects').show();
+        $('.projects').fadeInFromLeft();
+    });
+
+};
+
 var myApp = angular.module('myApp', ['ngRoute','firebase']);
 
 myApp.config(['$routeProvider', function ($routeProvider) {
