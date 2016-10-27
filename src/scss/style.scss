@@ -3,7 +3,7 @@
 	// Screen Breaks
 		$sb-sm: 500px;
 		$sb-md: 650px;
-		$sb-lg: 800px;
+		$sb-lg: 900px;
 		$sb-xl: 1100px;
 
 	// Colors
@@ -23,6 +23,11 @@
 
 body {
 	background-color: #FAFAFA;
+	background-color: #c8c8c8;
+	background-color: #e1e1e1;
+	background-color: #3ca5b3;
+	background-color: #9ad8db;
+	background-color: #FFF;
 }
 
 /* -- Imports -- */
@@ -32,6 +37,9 @@ body {
 
 	//
 	@import 'cards';
+
+	//
+	@import 'sheets';
 
 	.projects,
 	.single-project {
@@ -47,4 +55,12 @@ body {
 		opacity: 0;
 		padding: 1em;
 		box-sizing: border-box;
+	}
+	.report {
+		opacity: 1;
+		max-width: 100%;
+		width: 60em;
+		padding: 1em;
+		box-sizing: border-box;
+		margin: 0 auto;
 	}

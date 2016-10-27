@@ -1,10 +1,117 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>User Reports View</title>
-	</head>
-	<body>
-	
-	</body>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Reports</title>
+    <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css" />
+    <link rel="stylesheet" href="../../public/files/style.min.css" />
+    <script src="https://unpkg.com/jquery@3.1.1"></script>
+</head>
+
+<body>
+    <header class="header"><!-- This header is the same on every page. -->
+        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
+        <nav class="nav main__nav">
+            <ul class="menu menu__main">
+                <li>Projects</li>
+                <li>Reports</li>
+                <!-- <li>Settings</li> For Admin Only -->
+                <li>Sign Out</li>
+                <!-- <li>Sign In</li> For Logged Out Only -->
+            </ul>
+        </nav>
+    </header>
+    <main><!-- This is the ng-view -->
+        <div class="report">
+            <section>
+                <h2 class="entity-title">Reports</h2>
+                <!-- The Project's Name -->
+                <div>
+                    <!-- ng-show if the project is active. -->
+                    <form class="add-time">
+                        <div class="date">
+                            <label>Start Date</label>
+                            <input class="date-input" type="text" value="2016-10-23" />
+                        </div>
+                        <div class="date">
+                            <label>End Date</label>
+                            <input class="date-input" type="text" value="2016-10-23" />
+                        </div>
+                        <!-- This only shows if there is an administrator present. -->
+                        <!--<div>
+                            
+                            <label>Person</label>
+                            <select class="person-input">
+                                <option>Von Masterdom Con Winderbottom III</option>
+                                <option>Cody Ogden</option>
+                                <option>Lisa Cook</option>
+                                <option>Jazzy Cordaro</option>
+                                <option>Matt Callahan</option>
+                                <option>John Arkema</option>
+                                <option>Millicent Walsh</option>
+                                <option>Huckleberry Brock</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>-->
+                        <div class="description">
+                            <label>Project</label>
+                            <select style="">
+                            	<option>Some Project Name Goes Here It Could Be Quite Long</option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            </select>
+                        </div>
+                        <div class="submit">
+                            <button>Run Report</button>
+                            <!-- This button should save the time entry to the server. -->
+                        </div>
+                    </form>
+                </div>
+                <div class="sheet">
+                    <div class="row titles">
+                        <div class="date">Date</div>
+                        <div class="time">Time</div>
+                        <div class="description">Description</div>
+                        <!--<div class="actions">Actions</div>--><!-- ng-show if the project is active -->
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row totals">
+                        <div class="total"><b>Total:</b></div>
+                        <div class="total-time">6.75</div>
+                        <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                        <div class="actions">
+                            <button class="btn-export">Export to CSV</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
 </html>

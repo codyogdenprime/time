@@ -16,15 +16,22 @@
 }
 
 .card__link {
-	background-color: #FFF;
+	background-color: lighten(#9ad8db, 20%);
 	box-sizing: border-box;
 	display: block;
 	margin: 0 1em;
 	padding: 1em;
-	border: 1px solid #eee;
+	border: 2px solid lighten(#45BCCE, 25%);
 	transition: box-shadow 200ms linear;
 	&:hover {
 		box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+	}
+	&,
+	&:visited,
+	&:hover,
+	&:active {
+		color: darken(#9ad8db, 35%);
+		text-decoration: none;
 	}
 }
 
@@ -32,5 +39,17 @@
 	.card {
 		flex: 0 0 100%;
 		width: 100%;
+	}
+}
+
+.return-link {
+	margin: 0 0 0.5em 0;
+	font-size: 1.25em;
+	a,
+	a:hover,
+	a:visited,
+	a:active {
+		color: currentColor;
+		text-decoration: none;
 	}
 }
