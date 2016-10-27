@@ -4,12 +4,23 @@ empname VARCHAR(50),
 isadmin BOOLEAN,
 isactive BOOLEAN,
 authid VARCHAR(50),
-authpic VARCHAR(50),
+authpic TEXT,
 authemail VARCHAR(50)
 );
-CREATE TABLE emp_proj(
-emp_id INT REFERENCES employee(empid),
-project_id INT REFERENCES projects(projectid)
+
+
+CREATE TABLE clients(
+clientid SERIAL PRIMARY KEY,
+clientname VARCHAR(100)
+);
+
+CREATE TABLE projects(
+projectid SERIAL PRIMARY KEY,
+startdate DATE,
+enddate DATE,
+projectname VARCHAR(100),
+isactive BOOLEAN,
+client_id INT REFERENCES clients(clientid)
 );
 CREATE TABLE time(
 timeid SERIAL PRIMARY KEY,
@@ -19,18 +30,12 @@ description VARCHAR(150),
 empid INT REFERENCES employee(empid),
 projid INT REFERENCES projects(projectid)
 );
-CREATE TABLE projects(
-projectid SERIAL PRIMARY KEY,
-startdate DATE,
-enddate DATE,
-projectname VARCHAR(100),
-isactive BOOLEAN,
-client_id INT REFERENCES clients(clientid)
+CREATE TABLE emp_proj(
+emp_id INT REFERENCES employee(empid),
+project_id INT REFERENCES projects(projectid)
 );
-CREATE TABLE clients(
-clientid SERIAL PRIMARY KEY,
-clientname VARCHAR(100)
-);
+
+
 
 INSERT INTO employee(empname,isadmin,isactive) VALUES('matt',false,true);
 INSERT INTO employee(empname,isadmin,isactive) VALUES('john',false,true);

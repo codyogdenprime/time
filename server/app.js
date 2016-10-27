@@ -4,10 +4,9 @@ var path = require('path');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var pg = require('pg');
-var connectionString = 'postgress://localhost:5432/cimarron';
 
 //use public folder
 app.use(express.static(path.resolve('public')));
@@ -40,9 +39,8 @@ app.use('/api', reports);
 // projects route
 var projects = require('./routes/api/projects');
 app.use('/api', projects);
-
-//firebase route
-var firebase = require('./routes/firebase');
-app.use('/', firebase);
+//clients route
+var clients = require('./routes/api/clients');
+app.use('/api', clients);
 //use public folder
 app.use(express.static(path.resolve('public')));

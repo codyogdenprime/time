@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/codyogden/time",
   "dependencies": {
+    "alasql": "^0.3.3",
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
     "body-parser": "^1.15.2",

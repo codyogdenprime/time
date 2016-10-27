@@ -44,3 +44,5 @@ jspm_packages
 
 # firebase
 firebase-service-account.json
+
+.DS_Store
