@@ -1,7 +1,78 @@
-<p>in userHome view</p>
-
-<input type="date" placeholder="Date" ng-model="timeDate">
-<input type="number" placeholder="Hours" ng-model="timeHours">
-<input type="text" placeholder="Description" ng-model="timeDescription">
-{{allMyProjects}}<br>
-{{allMyTime}}
+<div class="projects cards">
+    <div class="card">
+        <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
+        <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
+    </div>
+</div>
+<div class="single-project">
+    <div class="return-link">
+        <a onClick="showProjects()" href="#">&lt; All Projects</a>
+    </div>
+    <section>
+        <h2 class="entity-title">Some Project Name Goes Here It Could Be Quite Long</h2>
+        <!-- The Project's Name -->
+        <div>
+            <!-- ng-show if the project is active. -->
+            <form class="add-time">
+                <div class="date">
+                    <label>Date</label>
+                    <input class="date-input" type="text" value="2016-10-23" />
+                </div>
+                <!-- This only shows if there is an administrator present. -->
+                <!--<div>
+                            
+                            <label>Person</label>
+                            <select class="person-input">
+                                <option>Von Masterdom Con Winderbottom III</option>
+                                <option>Cody Ogden</option>
+                                <option>Lisa Cook</option>
+                                <option>Jazzy Cordaro</option>
+                                <option>Matt Callahan</option>
+                                <option>John Arkema</option>
+                                <option>Millicent Walsh</option>
+                                <option>Huckleberry Brock</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>-->
+                <div class="time">
+                    <label>Time</label>
+                    <input class="time-input" type="text" value="2.25" />
+                </div>
+                <div class="description">
+                    <label>Description</label>
+                    <input type="text" value="I ate pizza and watched Netflix" />
+                </div>
+                <div class="submit">
+                    <button>Add Time</button>
+                    <!-- This button should save the time entry to the server. -->
+                </div>
+            </form>
+        </div>
+        <div class="sheet">
+            <div class="row titles">
+                <div class="date">Date</div>
+                <div class="time">Time</div>
+                <div class="description">Description</div>
+                <div class="actions">Actions</div> <!-- ng-show if the project is active -->
+            </div>
+            <div class="row"> <!-- ng-repeat would go here -->
+                <div class="date">Oct 23</div>
+                <div class="time">2.25</div>
+                <div class="description">Worked on something for some client somewhere.</div>
+                <div class="actions"><!-- ng-show if the project is active -->
+                    <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
+                    <button class="btn-delete">Delete</button>
+                </div>
+            </div>
+            <div class="row totals">
+                <div class="total"><b>Total:</b></div>
+                <div class="total-time">6.75</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                <div class="actions">
+                    <button class="btn-export">Export to CSV</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
