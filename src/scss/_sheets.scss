@@ -131,6 +131,9 @@ h2.entity-title {
 		color: #B75928;
 		border-color: currentColor;
 	}
+	.btn-delete:active {
+		background-color: lighten(#B75928,30%);
+	}
 }
 
 @media screen and ( max-width: $sb-md ) {

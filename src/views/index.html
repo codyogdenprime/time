@@ -8,20 +8,7 @@
     <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css" />
     <link rel="stylesheet" href="../../public/files/style.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1"></script>
-</head>
 
-<body>
-    <header class="header">
-        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
-        <nav class="nav main__nav">
-            <ul class="menu menu__main">
-                <li>Projects</li>
-                <li>Reports</li>
-                <!-- <li>Settings</li> For Admin Only -->
-                <li>Sign Out</li>
-                <!-- <li>Sign In</li> For Logged Out Only -->
-            </ul>
-        </nav>
         <script>
         /*
          * This should be added into client.js. Requires jQuery to run.
@@ -95,46 +82,24 @@
 
         };
         </script>
+</head>
+
+<body>
+    <header class="header"><!-- This header is the same on every page. -->
+        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
+        <nav class="nav main__nav">
+            <ul class="menu menu__main">
+                <li>Projects</li>
+                <li>Reports</li>
+                <!-- <li>Settings</li> For Admin Only -->
+                <li>Sign Out</li>
+                <!-- <li>Sign In</li> For Logged Out Only -->
+            </ul>
+        </nav>
     </header>
-    <main>
+    <main><!-- This is the ng-view -->
         <div class="projects cards">
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
-                <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
-            </div>
-            <div class="card">
+            <div class="card"><!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
                 <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
             </div>
         </div>
