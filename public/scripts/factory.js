@@ -2,7 +2,7 @@ myApp.factory('factory', ['$http', function($http) {
     console.log('in factory');
 
     var idToken = sessionStorage.getItem('userAuth');
-    var isAdmin = true;
+  
 
     var getAllEmployees = function() {
         //gets all non admin employees

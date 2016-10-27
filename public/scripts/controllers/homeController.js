@@ -1,4 +1,4 @@
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseAuth) {
+myApp.controller('homeController', ['authFactory', '$scope', '$http', '$firebaseArray', '$firebaseAuth', function(authFactory, $scope, $http, $firebaseArray, $firebaseAuth) {
     console.log('in homeController');
 
     var auth = $firebaseAuth();
@@ -36,17 +36,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     pic: firebaseUser.photoURL,
                     email: firebaseUser.email
                 };
-                //store idToken in sessionStorage
-                sessionStorage.userAuth = idToken;
-                $http({
-                    method: 'POST',
-                    url: '/api/users/verify',
-                    data: objectToSend,
-                    headers: {
-                        id_token: idToken
-                    } //end headers
-                }).then(function(response) {
-                    $scope.secretData = response.data;
+                authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
+                    $scope.secretData = results.data;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser);
                     //store google profile info in session storage
@@ -54,14 +45,14 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
 
-                }); //end then
-            }); //end geToken
+                });
+            });
         } else {
             console.log('Not logged in.');
             //if null firebaseUser
             $scope.secretData = "Login Required";
-        } //end else
-    }); //end auth on status change
+        }
+    });
 
 
     // This code runs when the user logs out
