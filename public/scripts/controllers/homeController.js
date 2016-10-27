@@ -12,7 +12,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                 $scope.logOut();
                 //change to @cimarronwinter.com to only allow cimarron emp's
                 alert("Only Users with a @gmail.com account");
-            }//end if
+            } //end if
         }).catch(function(error) {
             console.log("Authentication failed: ", error);
         }); //end catch
@@ -25,19 +25,19 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             // This is where we make our call to our server
             firebaseUser.getToken().then(function(idToken) {
 
-              //google profile information to add to the database
-              //admin default to false & active to true
-              //can change these in emp Manage
-              var objectToSend = {
-                name:firebaseUser.displayName,
-                admin: false,
-                status: true,
-                id:firebaseUser.uid,
-                pic: firebaseUser.photoURL,
-                email:firebaseUser.email
-              };
-              //store idToken in sessionStorage
-              sessionStorage.userAuth = idToken;
+                //google profile information to add to the database
+                //admin default to false & active to true
+                //can change these in emp Manage
+                var objectToSend = {
+                    name: firebaseUser.displayName,
+                    admin: false,
+                    status: true,
+                    id: firebaseUser.uid,
+                    pic: firebaseUser.photoURL,
+                    email: firebaseUser.email
+                };
+                //store idToken in sessionStorage
+                sessionStorage.userAuth = idToken;
                 $http({
                     method: 'POST',
                     url: '/api/users/verify',
@@ -70,8 +70,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             emptySessionStorage();
             location.reload();
             console.log('Logging the user out!');
-        });//auth sign out
-    };//end scope dot logOut
+        }); //auth sign out
+    }; //end scope dot logOut
 
 
 }]); //end controller

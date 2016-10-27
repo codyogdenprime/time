@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base href="/" />
-    <meta charset="utf-8">
-    <title>Cimarron Winter</title>
-    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
-    <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
-    <!-- alasql -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
-    <script src="config.js"></script>
-    <script src="scripts/script.js"></script>
-    <script src="scripts/controllers/addHoursController.js"></script>
-    <script src="scripts/controllers/manageProjectsController.js"></script>
-    <script src="scripts/controllers/empManageController.js"></script>
-    <script src="scripts/controllers/reportsController.js"></script>
-    <script src="scripts/controllers/userHomeController.js"></script>
-    <script src="scripts/controllers/homeController.js"></script>
-    <script src="scripts/factory.js"></script>
+    <head>
+        <base href="/" />
+        <meta charset="utf-8">
+        <title>Cimarron Winter</title>
+        <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
+        <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
+        <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+        <!-- alasql -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
 
-  </head>
-  <body ng-app="myApp">
-    <a href="#addHours">Add Hours</a>
-    <a href="#manageProjects">Manage Projects</a>
-    <a href="#empManage">Manage Employees</a>
-    <a href="#reports">Reports</a>
-    <a href="#userHome">User Home</a>
-    <div ng-controller="homeController">
-      <button ng-click="logIn()">Login</button>
-      <button ng-click="logOut()">Logout</button>
-      
-      <!-- <span ng-repeat="user in secretData track by $index">
-      {{user.empname}}
-      {{user.authemail}}
-      <img src="{{user.authpic}}" alt="" /></img>
-    </span> -->
-      </div>
-    <div ng-view></div>
+        <script src="config.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/controllers/addHoursController.js"></script>
+        <script src="scripts/controllers/manageProjectsController.js"></script>
+        <script src="scripts/controllers/empManageController.js"></script>
+        <script src="scripts/controllers/reportsController.js"></script>
+        <script src="scripts/controllers/userHomeController.js"></script>
+        <script src="scripts/controllers/homeController.js"></script>
+        <script src="scripts/factory.js"></script>
 
-  </body>
+    </head>
+
+    <body ng-app="myApp">
+        <a href="#addHours">Add Hours</a>
+        <a href="#manageProjects">Manage Projects</a>
+        <a href="#empManage">Manage Employees</a>
+        <a href="#reports">Reports</a>
+        <a href="#userHome">User Home</a>
+        <div ng-controller="homeController">
+            <button ng-click="logIn()">Login</button>
+            <button ng-click="logOut()">Logout</button>
+        </div>
+        <div ng-view></div>
+
+    </body>
+
 </html>
