@@ -8,26 +8,9 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
   var userDisplayName = sessionStorage.getItem('userDisplayName');
   var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
-
-  // $scope.checkUserDB = function (id, name, photo) {
-  //   factory.checkUserDB(id, name, photo);
-  //   //.then(function (results) {
-  //     //console.log(results);
-  //   //   if(results){
-  //   //     //if user get all user projects
-  //   //   }else if{
-  //   //     //if not user, user setup, get projects, if no projects none assigned
-  //   //   }else{
-  //   //     //if admin, get projects, change view to admin view
-  //   //   }
-  //
-  //   //});
-  //   //$scope.getMyProjects(id);
-  //   //$scope.getAllTime();
-  // };
   //get all projects for the user
-  $scope.getMyProjects = function (arg) {
-    factory.getMyProjects(arg).then(function (results) {
+  $scope.getMyProjects = function () {
+    factory.getMyProjects(userUID).then(function (results) {
      $scope.allMyProjects = results.data;
     });
   };
@@ -54,20 +37,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
     });
   };
 
-  // $scope.deleteTimeEntry = function () {
-  //
-  // }
-
-  // $scope.editTimeEntry = function (type) {
-  //   var objectToSend = {
-  //     type: type,
-  //     timeId: timeId,
-  //
-  //   };
-  //
-  //
-  //   }
-  // };
+  $scope.getMyProjects();
 
   //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
   //$scope.newTime(2, 4);

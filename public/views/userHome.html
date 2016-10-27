@@ -1,7 +1,7 @@
 <div class="projects cards">
-    <div class="card">
+    <div class="card" ng-repeat="project in allMyProjects">
         <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
-        <a onClick="showProject()" class="card__link project__title" href="#">Some Project Name Goes Here It Could Be Quite Long</a>
+        <a onClick="showProject()" class="card__link project__title" href="#">{{project.projectname}}</a>
     </div>
 </div>
 <div class="single-project">
@@ -20,7 +20,7 @@
                 </div>
                 <!-- This only shows if there is an administrator present. -->
                 <!--<div>
-                            
+
                             <label>Person</label>
                             <select class="person-input">
                                 <option>Von Masterdom Con Winderbottom III</option>

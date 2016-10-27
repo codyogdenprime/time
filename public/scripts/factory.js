@@ -60,19 +60,16 @@ myApp.factory('factory', ['$http', function($http){
 
 
 
-  var getMyProjects = function () {
+  var getMyProjects = function (empid) {
     console.log('into factory getMyProjects');
       if(isAdmin){
         return $http({
           method: 'GET',
-          url: 'api/projects/',
+          url: 'api/projects/?empid=' + empid,
           headers: {
             id_token: idToken}
         });
-      }else {
-        //add an http call for if not admin send ID
       }
-
   };
 
   var getAllMyTime = function (project) {
