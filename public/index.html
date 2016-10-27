@@ -10,6 +10,10 @@
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+    <!-- alasql -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
     <script src="config.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/controllers/addHoursController.js"></script>
@@ -30,7 +34,7 @@
     <div ng-controller="homeController">
       <button ng-click="logIn()">Login</button>
       <button ng-click="logOut()">Logout</button>
-
+      
       <!-- <span ng-repeat="user in secretData track by $index">
       {{user.empname}}
       {{user.authemail}}

@@ -73,6 +73,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         });//auth sign out
     };//end scope dot logOut
 
+
 }]); //end controller
 
 //clear session storage on log out
