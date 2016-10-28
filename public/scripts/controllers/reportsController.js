@@ -7,6 +7,7 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
               console.log('in get clients ');
                   factory.getAllClients().then(function(results){
                     console.log(results.data);
+                    $scope.allClients = results.data;
                   });
 
                 };
