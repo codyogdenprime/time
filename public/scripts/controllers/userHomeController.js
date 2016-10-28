@@ -1,4 +1,4 @@
-myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
+myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'authFactory', function($scope, $http, factory, authFactory) {
     console.log('in userHomeController');
 
   $scope.allMyProjects = [];
@@ -13,6 +13,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($
   $scope.getMyProjects = function () {
     factory.getMyProjects(userUID).then(function (results) {
      $scope.allMyProjects = results.data;
+     console.log('allMyProjects', $scope.allMyProjects);
     });
   };
   //
@@ -61,6 +62,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($
 
   $scope.getMyTimeForThisProject = function () {
     console.log('in getMyTimeForThisProject');
+    authFactory.getUserInfo().
     factory.getMyTimeForThisProject(userUID, $scope.myCurrentProject.projectid);
   };
 

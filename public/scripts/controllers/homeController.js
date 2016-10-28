@@ -1,5 +1,5 @@
 
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', function($scope, $http, $firebaseArray, $firebaseAuth, $location) {
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory', function($scope, $http, $firebaseArray, $firebaseAuth, $location, authFactory) {
 
     console.log('in homeController');
 
@@ -42,6 +42,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     email: firebaseUser.email
                 };
                 authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
+                  console.log('in authFactory', results);
+                  //authFactory.storeUserId(results);
                     $scope.secretData = results.data;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser);
