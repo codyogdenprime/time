@@ -1,7 +1,12 @@
-myApp.controller('homeController', ['authFactory', '$scope', '$http', '$firebaseArray', '$firebaseAuth', function(authFactory, $scope, $http, $firebaseArray, $firebaseAuth) {
+
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', function($scope, $http, $firebaseArray, $firebaseAuth, $location) {
+
     console.log('in homeController');
 
     var auth = $firebaseAuth();
+
+    $scope.loggedIn = false;
+    $scope.loggedOut = true;
 
 
     // This code runs whenever the user logs in
@@ -44,9 +49,9 @@ myApp.controller('homeController', ['authFactory', '$scope', '$http', '$firebase
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
                     sessionStorage.userPhotoUrl = firebaseUser.photoURL;
-
-                });
-            });
+                    $scope.ifFirebaseUser(firebaseUser);
+                }); //end then
+            }); //end geToken
         } else {
             console.log('Not logged in.');
             //if null firebaseUser
@@ -61,9 +66,22 @@ myApp.controller('homeController', ['authFactory', '$scope', '$http', '$firebase
             emptySessionStorage();
             location.reload();
             console.log('Logging the user out!');
-        }); //auth sign out
-    }; //end scope dot logOut
+            $scope.ifFirebaseUser();
+        });//auth sign out
+    };//end scope dot logOut
 
+    //if user is logged in, show log out button and change views
+    $scope.ifFirebaseUser = function (fbu) {
+      if (fbu){
+        $scope.loggedIn = true;
+        $scope.loggedOut = false;
+        $location.url('/userHome');
+      }else {
+        $scope.loggedIn = false;
+        $scope.loggedOut = true;
+        $location.url('/');
+      }
+    };
 
 }]); //end controller
 
