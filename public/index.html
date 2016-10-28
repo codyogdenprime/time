@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html>
-
-    <head>
-        <base href="/" />
-        <meta charset="utf-8">
-        <title>Cimarron Winter</title>
-        <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
-        <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
-        <!-- Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-        <!-- AngularFire -->
-        <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
-        <!-- alasql -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
-
-        <script src="config.js"></script>
-        <script src="scripts/script.js"></script>
-        <script src="scripts/controllers/addHoursController.js"></script>
-        <script src="scripts/controllers/manageProjectsController.js"></script>
-        <script src="scripts/controllers/empManageController.js"></script>
-        <script src="scripts/controllers/reportsController.js"></script>
-        <script src="scripts/controllers/userHomeController.js"></script>
-        <script src="scripts/controllers/homeController.js"></script>
-        <script src="scripts/authFactory.js"></script>
-        <script src="scripts/factory.js"></script>
-
-    </head>
-
-    <body ng-app="myApp">
-        <a href="#addHours">Add Hours</a>
-        <a href="#manageProjects">Manage Projects</a>
-        <a href="#empManage">Manage Employees</a>
-        <a href="#reports">Reports</a>
-        <a href="#userHome">User Home</a>
-        <div ng-controller="homeController">
-            <button ng-click="logIn()">Login</button>
-            <button ng-click="logOut()">Logout</button>
-        </div>
-        <div ng-view></div>
-
-    </body>
-
+  <head>
+    <base href="/" />
+    <meta charset="utf-8">
+    <title>Cimarron Winter</title>
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css@5.0.0/normalize.css" />
+    <link rel="stylesheet" href="files/style.min.css" />
+    <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+    <!-- alasql -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
+    <script src="config.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/controllers/addHoursController.js"></script>
+    <script src="scripts/controllers/manageProjectsController.js"></script>
+    <script src="scripts/controllers/empManageController.js"></script>
+    <script src="scripts/controllers/reportsController.js"></script>
+    <script src="scripts/controllers/userHomeController.js"></script>
+    <script src="scripts/controllers/homeController.js"></script>
+    <script src="scripts/authFactory.js"></script>
+    <script src="scripts/factory.js"></script>
+  </head>
+  <body ng-app="myApp">
+    <header class="header"><!-- This header is the same on every page. -->
+        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
+        <nav class="nav main__nav">
+            <ul class="menu menu__main">
+                <li>Projects</li>
+                <li>Reports</li>
+                <!-- <li>Settings</li> For Admin Only? Maybe different now that we changed the views. -->
+                <li><button ng-click="logOut()">Logout</button></li>
+                <!-- <li><button ng-click="logIn()">Login</button></li> For Logged Out Only -->
+            </ul>
+        </nav>
+    </header>
+    <main ng-view>
+      <!-- This is where the ng-view -->
+    </main>
+  </body>
 </html>

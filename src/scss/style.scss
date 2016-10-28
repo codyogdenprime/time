@@ -41,6 +41,12 @@ body {
 	//
 	@import 'sheets';
 
+	//
+	@import 'reports';
+
+	//
+	@import 'users';
+
 	.projects,
 	.single-project {
 		position: relative;
@@ -55,12 +61,4 @@ body {
 		opacity: 0;
 		padding: 1em;
 		box-sizing: border-box;
-	}
-	.report {
-		opacity: 1;
-		max-width: 100%;
-		width: 60em;
-		padding: 1em;
-		box-sizing: border-box;
-		margin: 0 auto;
 	}

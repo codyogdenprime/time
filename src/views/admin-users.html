@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css" />
     <link rel="stylesheet" href="../../public/files/style.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -24,15 +25,23 @@
         </nav>
     </header>
     <main>
-        <div class="report">
+        <div class="users">
             <div class="sheet">
-                <div class="row">
-                    <div>Date</div>
-                    <div>Person</div>
-                    <div>Hours</div>
-                    <div>Description</div>
-                    <div>1</div>
-                    <div>1</div>
+                <div class="row titles">
+                    <div class="name">Name</div>
+                    <div class="email">Email Address</div>
+                    <div class="isadmin">Admin?</div>
+                    <div class="isactive">Active?</div>
+                </div>
+            </div>
+            <div class="row user">
+                <div class="name">dsf</div>
+                <div class="email">dsf</div>
+                <div class="isadmin"><input type="checkbox" /></div>
+                <div class="isactive">
+                    <i class="fa fa-toggle-on"></i> <!-- If user is active -->
+                    <!-- <i class="fa fa-toggle-off"></i> --> <!-- If user is not active. -->
+                    <!-- Admin should be able to click this similar to a checkbox. When clicked, it should trigger turning the specific user on or off. -->
                 </div>
             </div>
         </div>

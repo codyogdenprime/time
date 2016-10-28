@@ -1,0 +1,28 @@
+.users {
+	opacity: 1;
+	max-width: 100%;
+	width: 60em;
+	padding: 1em;
+	box-sizing: border-box;
+	margin: 0 auto;
+	.row {
+		display: flex;
+		border-bottom: 1px solid lighten(#45BCCE, 25%);
+		.name {
+			flex: 0 0 30%;
+		}
+		.email {
+			flex: 0 0 45%;
+		}
+		.isadmin {
+			flex: 0 0 10%;
+		}
+		.isactive {
+			flex: 0 0 10%;
+			margin: 0 0 0 auto;
+		}
+	}
+	.user {
+		padding: 0.5em 1em;
+	}
+}
