@@ -1,6 +1,7 @@
-myApp.controller('reportsController', ['factory', '$scope', '$http', function(factory, $scope, $http) {
+myApp.controller('reportsController', ['factory', '$scope', '$http','$location', function(factory, $scope, $http, $location) {
     console.log('in reportsController');
-
+    $location.url('/');
+    
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
         factory.getAllEmployees().then(function(results) {

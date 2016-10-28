@@ -32,10 +32,10 @@
         <nav class="nav main__nav">
             <ul class="menu menu__main">
                 <li>Projects</li>
-                <li>Reports</li>
+                <li><a ng-href="#reports">Reports</a></li>
                 <!-- <li>Settings</li> For Admin Only? Maybe different now that we changed the views. -->
                 <li><button ng-click="logOut()">Logout</button></li>
-                <!-- <li><button ng-click="logIn()">Login</button></li> For Logged Out Only -->
+                <li><button ng-click="logIn()">Login</button></li> 
             </ul>
         </nav>
     </header>
@@ -43,6 +43,6 @@
       <!-- This is where the ng-view -->
     </main>
   </body>
-=======
+
 
 </html>
