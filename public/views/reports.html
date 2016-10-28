@@ -1,4 +1,4 @@
-        <div class="report">
+      <div class="report">
             <section>
                 <h2 class="entity-title">Reports</h2>
                 <!-- The Project's Name -->
@@ -16,16 +16,9 @@
 
                         <div class="description">
                             <label>Client</label>
-                            <select style=""> <!-- This list should populate with all clients. -->
-                                <option>Ecolab</option>
-                                <option>Regis</option>
-                                <option>Fake Client Person</option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
+                            <select ng-change="client(selectedClient)" ng-model="selectedClient" ng-options="client as client.clientname for client in allClients"></select>
                         </div>
+                        
                         <div class="description">
                             <label>Project</label>
                             <select style=""> <!-- After a client is selected, the projects for that client should populate here. -->

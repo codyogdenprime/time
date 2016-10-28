@@ -1,5 +1,5 @@
 <div class="projects cards">
-    <div class="card" ng-repeat="project in allMyProjects">
+    <div class="card" ng-repeat="project in allMyProjects track by $index">
         <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
         <a ng-click="showProject()" class="card__link project__title">{{project.projectname}}</a>
     </div>

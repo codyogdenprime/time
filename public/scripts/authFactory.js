@@ -1,7 +1,7 @@
 myApp.factory('authFactory', ['$http', function($http) {
     console.log('in authFactory');
-
     var idToken = sessionStorage.getItem('userAuth');
+
 
     var getUserInfo = function(objectToSend, idToken) {
         return $http({

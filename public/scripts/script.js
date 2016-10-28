@@ -122,6 +122,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
         }
     }).
     otherwise({
-        redirectTo: "/userHome"
+        redirectTo: "/"
     });
 }]);
