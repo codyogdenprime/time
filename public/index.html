@@ -4,10 +4,10 @@
     <base href="/" />
     <meta charset="utf-8">
     <title>Cimarron Winter</title>
+    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://unpkg.com/normalize.css@5.0.0/normalize.css" />
     <link rel="stylesheet" href="files/style.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
     <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
@@ -30,12 +30,12 @@
     <header class="header"><!-- This header is the same on every page. -->
         <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
-            <ul class="menu menu__main">
+            <ul class="menu menu__main" ng-controller = "homeController">
                 <li>Projects</li>
                 <li>Reports</li>
                 <!-- <li>Settings</li> For Admin Only? Maybe different now that we changed the views. -->
-                <li><button ng-click="logOut()">Logout</button></li>
-                <!-- <li><button ng-click="logIn()">Login</button></li> For Logged Out Only -->
+                <li><button ng-show="loggedIn" ng-click="logOut()">Logout</button></li>
+                <li><button ng-show="loggedOut" ng-click="logIn()">Login</button></li> <!-- For Logged Out Only -->
             </ul>
         </nav>
     </header>
