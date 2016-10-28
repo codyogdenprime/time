@@ -1,73 +1,70 @@
 myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
     console.log('in userHomeController');
 
-    $scope.allMyProjects = [];
-    $scope.allMyTime = [];
+  $scope.allMyProjects = [];
+  $scope.allMyTime = [];
+  $scope.myCurrentProject = '';
 
     var userUID = sessionStorage.getItem('userGoogleId');
     var userDisplayName = sessionStorage.getItem('userDisplayName');
     var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
+  //get all projects for the user
+  $scope.getMyProjects = function () {
+    factory.getMyProjects(userUID).then(function (results) {
+     $scope.allMyProjects = results.data;
+    });
+  };
+  //
+  // //if project is clicked get time for that projects
+  $scope.getAllTime = function (project) {
+    console.log('in getAllTime click');
+    factory.getAllMyTime(project).then(function (results) {
+      $scope.allMyTime = results.data;
+    });
+  };
+  //add new time
+  $scope.newTime = function (projectId, empid) {
+    var objectToSend = {
+      date: '16-5-6',//$scope.timeDate,
+      hours: 4, //$scope.timeHours,
+      description: 'none', //$scope.timeDescription,
+      projectid: projectId,
+      empid: empid
+    };//end object
 
-    // $scope.checkUserDB = function (id, name, photo) {
-    //   factory.checkUserDB(id, name, photo);
-    //   //.then(function (results) {
-    //     //console.log(results);
-    //   //   if(results){
-    //   //     //if user get all user projects
-    //   //   }else if{
-    //   //     //if not user, user setup, get projects, if no projects none assigned
-    //   //   }else{
-    //   //     //if admin, get projects, change view to admin view
-    //   //   }
-    //
-    //   //});
-    //   //$scope.getMyProjects(id);
-    //   //$scope.getAllTime();
-    // };
-    //get all projects for the user
-    $scope.getMyProjects = function(arg) {
-        factory.getMyProjects(arg).then(function(results) {
-            $scope.allMyProjects = results.data;
-        });
-    };
-    //
-    // //if project is clicked get time for that projects
-    $scope.getAllTime = function(project) {
-        console.log('in getAllTime click');
-        factory.getAllMyTime(project).then(function(results) {
-            $scope.allMyTime = results.data;
-        });
-    };
-    //add new time
-    $scope.newTime = function(projectId, empid) {
-        var objectToSend = {
-            date: '16-5-6', //$scope.timeDate,
-            hours: 4, //$scope.timeHours,
-            description: 'none', //$scope.timeDescription,
-            projectid: projectId,
-            empid: empid
-        }; //end object
 
         factory.addTime(objectToSend).then(function() {
             console.log('new time worked!');
         });
     };
 
-    // $scope.deleteTimeEntry = function () {
-    //
-    // }
+  $scope.showProject = function () {
+    console.log('in showProject');
+    console.log(this.project);
+    $scope.myCurrentProject = this.project;
+    $scope.getMyTimeForThisProject();
+    //console.log($scope.myCurrentProject);
+    console.log('jquery projects', $('.projects'));
+    $('.projects').fadeOutToLeft(function() {
+        $('.single-project').fadeInFromRight();
+    });
+  };
 
-    // $scope.editTimeEntry = function (type) {
-    //   var objectToSend = {
-    //     type: type,
-    //     timeId: timeId,
-    //
-    //   };
-    //
-    //
-    //   }
-    // };
+  $scope.showProjects = function () {
+    console.log('in showProjects');
+    $('.single-project').fadeOutToRight(function() {
+        $('.projects').show();
+        $('.projects').fadeInFromLeft();
+    });
+  };
+
+  $scope.getMyTimeForThisProject = function () {
+    console.log('in getMyTimeForThisProject');
+    factory.getMyTimeForThisProject(userUID, $scope.myCurrentProject.projectid);
+  };
+
+  $scope.getMyProjects();
 
     //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
     //$scope.newTime(2, 4);
