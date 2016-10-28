@@ -1,5 +1,5 @@
 
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', function($scope, $http, $firebaseArray, $firebaseAuth, $location) {
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory',function($scope, $http, $firebaseArray, $firebaseAuth, $location,authFactory) {
 
     console.log('in homeController');
 
