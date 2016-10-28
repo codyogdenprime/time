@@ -52,9 +52,9 @@ myApp.factory('factory', ['$http', function($http){
     return $http({
       method:'PUT',
       url:'/api/users',
+      data: objectToSend,
       headers :{
-        id_token: idToken},
-        data: objectToSend
+        id_token: idToken}
       });//end http
     };//end changeIsAdmin
 
@@ -87,9 +87,9 @@ myApp.factory('factory', ['$http', function($http){
     return $http({
       method: 'POST',
       url: 'api/time',
+      data: objectToSend,
       headers: {
-        id_token: idToken},
-      data: objectToSend
+        id_token: idToken}
     });
   };
   var editTime = function (type, value,id) {
@@ -198,12 +198,22 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
+  var getClients = function(){
+      return $http({
+      method:'GET',
+      url: 'api/clients',
+      headers:{
+        id_token: idToken}
+  });//end http
+};//end get Clients
+
   return {
     getAllEmployees: getAllEmployees,
     checkUserDB: checkUserDB,
     isAdmin: function () {
       return isAdmin;
     },
+    getClients : getClients,
     changeIsAdmin: changeIsAdmin,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
