@@ -43,8 +43,9 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                 };
                 authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
                     $scope.secretData = results.data;
+                    sessionStorage.userAuth = idToken;
                     console.log($scope.secretData, 'response from server');
-                    console.log(firebaseUser);
+                    console.log(firebaseUser, 'firebaseUser User');
                     //store google profile info in session storage
                     sessionStorage.userGoogleId = firebaseUser.uid;
                     sessionStorage.userDisplayName = firebaseUser.displayName;
