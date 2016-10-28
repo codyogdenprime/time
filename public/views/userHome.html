@@ -1,15 +1,15 @@
 <div class="projects cards">
     <div class="card" ng-repeat="project in allMyProjects">
         <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
-        <a onClick="showProject()" class="card__link project__title" href="#">{{project.projectname}}</a>
+        <a ng-click="showProject()" class="card__link project__title">{{project.projectname}}</a>
     </div>
 </div>
 <div class="single-project">
     <div class="return-link">
-        <a onClick="showProjects()" href="#">&lt; All Projects</a>
+        <a ng-click="showProjects()">&lt; All Projects</a>
     </div>
     <section>
-        <h2 class="entity-title">Some Project Name Goes Here It Could Be Quite Long</h2>
+        <h2 class="entity-title">{{myCurrentProject.projectname}}</h2>
         <!-- The Project's Name -->
         <div>
             <!-- ng-show if the project is active. -->

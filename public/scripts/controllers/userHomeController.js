@@ -3,6 +3,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
 
   $scope.allMyProjects = [];
   $scope.allMyTime = [];
+  $scope.myCurrentProject = '';
 
   var userUID = sessionStorage.getItem('userGoogleId');
   var userDisplayName = sessionStorage.getItem('userDisplayName');
@@ -35,6 +36,31 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
     factory.addTime(objectToSend).then(function () {
       console.log('new time worked!');
     });
+  };
+
+  $scope.showProject = function () {
+    console.log('in showProject');
+    console.log(this.project);
+    $scope.myCurrentProject = this.project;
+    $scope.getMyTimeForThisProject();
+    //console.log($scope.myCurrentProject);
+    console.log('jquery projects', $('.projects'));
+    $('.projects').fadeOutToLeft(function() {
+        $('.single-project').fadeInFromRight();
+    });
+  };
+
+  $scope.showProjects = function () {
+    console.log('in showProjects');
+    $('.single-project').fadeOutToRight(function() {
+        $('.projects').show();
+        $('.projects').fadeInFromLeft();
+    });
+  };
+
+  $scope.getMyTimeForThisProject = function () {
+    console.log('in getMyTimeForThisProject');
+    factory.getMyTimeForThisProject(userUID, $scope.myCurrentProject.projectid);
   };
 
   $scope.getMyProjects();

@@ -183,6 +183,21 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
+  var getMyTimeForThisProject = function (empId, projId) {
+    console.log('made it to getMyTimeForThisProject', empId, projId);
+    var objectToSend = {
+      empid: empID,
+      projectid: projId,
+    };
+    return $http({
+      method: 'POST',
+      url: 'api/projects/users',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}
+    });
+  };
+
   return {
     getAllEmployees: getAllEmployees,
     checkUserDB: checkUserDB,
@@ -200,7 +215,8 @@ myApp.factory('factory', ['$http', function($http){
     addProject: addProject,
     editTime:editTime,
     deleteTimeEntry: deleteTimeEntry,
-    addEmpToProject: addEmpToProject
+    addEmpToProject: addEmpToProject,
+    getMyTimeForThisProject: getMyTimeForThisProject
   };
 
 }]);
