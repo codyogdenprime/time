@@ -7,6 +7,7 @@ var firebase = require('firebase');
 router.route('/users')
     //selecting all users who are not admins from employees table
     .get(function(req, res) {
+
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('users get route hit');
             pg.connect(connectionString, function(err, client, done) {
