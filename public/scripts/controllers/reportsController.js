@@ -7,6 +7,7 @@ myApp.controller('reportsController', ['authFactory', 'factory', '$scope', '$htt
                         console.log(results, 'Clients');
                     });
                 };
+                
                 // get all projects
                 //
 
