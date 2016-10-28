@@ -1,3 +1,98 @@
-<p>in reports view</p>
-<!-- run export button -->
-<button type="button" ng-click="exportCSV()" name="button"></button>
+        <div class="report">
+            <section>
+                <h2 class="entity-title">Reports</h2>
+                <!-- The Project's Name -->
+                <div>
+                    <!-- ng-show if the project is active. -->
+                    <form class="report-form">
+                        <div class="date">
+                            <label>Start Date</label><!-- We need an angular date selector for this field. -->
+                            <input class="date-input" type="text" value="2016-10-23" />
+                        </div>
+                        <div class="date">
+                            <label>End Date</label><!-- We need an angular date selector for this field. -->
+                            <input class="date-input" type="text" value="2016-10-23" />
+                        </div>
+
+                        <div class="description">
+                            <label>Client</label>
+                            <select style=""> <!-- This list should populate with all clients. -->
+                                <option>Ecolab</option>
+                                <option>Regis</option>
+                                <option>Fake Client Person</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="description">
+                            <label>Project</label>
+                            <select style=""> <!-- After a client is selected, the projects for that client should populate here. -->
+                            	<option>Some Project Name Goes Here It Could Be Quite Long</option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            </select>
+                        </div>
+                         <div><!-- This only shows if there is an administrator present. -->
+                            <label>Person</label>
+                            <select class="person-input"><!--  -->
+                                <option>Von Masterdom Con Winderbottom III</option>
+                                <option>Cody Ogden</option>
+                                <option>Lisa Cook</option>
+                                <option>Jazzy Cordaro</option>
+                                <option>Matt Callahan</option>
+                                <option>John Arkema</option>
+                                <option>Millicent Walsh</option>
+                                <option>Huckleberry Brock</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="submit">
+                            <button>Run Report</button>
+                            <!-- This button should save the time entry to the server. -->
+                        </div>
+                    </form>
+                </div>
+                <div class="sheet">
+                    <div class="row titles">
+                        <div class="date">Date</div>
+                        <div class="time">Time</div>
+                        <div class="description">Description</div>
+                        <!--<div class="actions">Actions</div>--><!-- ng-show if the project is active -->
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row">
+                        <!-- ng-repeat would go here -->
+                        <div class="date">Oct 23</div>
+                        <div class="time">2.25</div>
+                        <div class="description">Worked on something for some client somewhere.</div>
+                    </div>
+                    <div class="row totals">
+                        <div class="total"><b>Total:</b></div>
+                        <div class="total-time">6.75</div>
+                        <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                        <div class="actions">
+                            <button class="btn-export">Export to CSV</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>

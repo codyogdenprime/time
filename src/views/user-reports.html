@@ -30,7 +30,7 @@
                 <!-- The Project's Name -->
                 <div>
                     <!-- ng-show if the project is active. -->
-                    <form class="add-time">
+                    <form class="report-form">
                         <div class="date">
                             <label>Start Date</label>
                             <input class="date-input" type="text" value="2016-10-23" />
@@ -39,11 +39,35 @@
                             <label>End Date</label>
                             <input class="date-input" type="text" value="2016-10-23" />
                         </div>
+
+                        <div class="description">
+                            <label>Client</label>
+                            <select style=""> <!-- This list should populate with all clients. -->
+                                <option>Ecolab</option>
+                                <option>Regis</option>
+                                <option>Fake Client Person</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="description">
+                            <label>Project</label>
+                            <select style=""> <!-- After a client is selected, the projects for that client should populate here. -->
+                            	<option>Some Project Name Goes Here It Could Be Quite Long</option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            	<option></option>
+                            </select>
+                        </div>
                         <!-- This only shows if there is an administrator present. -->
-                        <!--<div>
-                            
+                         <div>
                             <label>Person</label>
-                            <select class="person-input">
+                            <select class="person-input"><!--  -->
                                 <option>Von Masterdom Con Winderbottom III</option>
                                 <option>Cody Ogden</option>
                                 <option>Lisa Cook</option>
@@ -55,18 +79,6 @@
                                 <option></option>
                                 <option></option>
                                 <option></option>
-                            </select>
-                        </div>-->
-                        <div class="description">
-                            <label>Project</label>
-                            <select style="">
-                            	<option>Some Project Name Goes Here It Could Be Quite Long</option>
-                            	<option></option>
-                            	<option></option>
-                            	<option></option>
-                            	<option></option>
-                            	<option></option>
-                            	<option></option>
                             </select>
                         </div>
                         <div class="submit">

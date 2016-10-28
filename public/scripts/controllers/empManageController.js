@@ -13,16 +13,16 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
         });
 
         //get all Active employees including Admin's
-        factory.getActiveEmp().then(function(results){
-          $scope.allActiveEmp = results.data;
-          console.log($scope.allActiveEmp, 'All Active Emp');
-        });//end getActiveEmp
+        factory.getActiveEmp().then(function(results) {
+            $scope.allActiveEmp = results.data;
+            console.log($scope.allActiveEmp, 'All Active Emp');
+        }); //end getActiveEmp
 
         //Get In active employees
-        factory.getInActiveEmp().then(function(results){
-          $scope.InActiveEmp = results.data;
-          console.log($scope.InActiveEmp, 'All Inactive Emp');
-        });//end getInActiveEmp
+        factory.getInActiveEmp().then(function(results) {
+            $scope.InActiveEmp = results.data;
+            console.log($scope.InActiveEmp, 'All Inactive Emp');
+        }); //end getInActiveEmp
     };
 
     //set emp status active/admin

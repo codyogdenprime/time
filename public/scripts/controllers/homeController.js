@@ -1,4 +1,6 @@
+
 myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', function($scope, $http, $firebaseArray, $firebaseAuth, $location) {
+
     console.log('in homeController');
 
     var auth = $firebaseAuth();
@@ -15,7 +17,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                 $scope.logOut();
                 //change to @cimarronwinter.com to only allow cimarron emp's
                 alert("Only Users with a @gmail.com account");
-            }//end if
+            } //end if
         }).catch(function(error) {
             console.log("Authentication failed: ", error);
         }); //end catch
@@ -28,28 +30,19 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             // This is where we make our call to our server
             firebaseUser.getToken().then(function(idToken) {
 
-              //google profile information to add to the database
-              //admin default to false & active to true
-              //can change these in emp Manage
-              var objectToSend = {
-                name:firebaseUser.displayName,
-                admin: false,
-                status: true,
-                id:firebaseUser.uid,
-                pic: firebaseUser.photoURL,
-                email:firebaseUser.email
-              };
-              //store idToken in sessionStorage
-              sessionStorage.userAuth = idToken;
-                $http({
-                    method: 'POST',
-                    url: '/api/users/verify',
-                    data: objectToSend,
-                    headers: {
-                        id_token: idToken
-                    } //end headers
-                }).then(function(response) {
-                    $scope.secretData = response.data;
+                //google profile information to add to the database
+                //admin default to false & active to true
+                //can change these in emp Manage
+                var objectToSend = {
+                    name: firebaseUser.displayName,
+                    admin: false,
+                    status: true,
+                    id: firebaseUser.uid,
+                    pic: firebaseUser.photoURL,
+                    email: firebaseUser.email
+                };
+                authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
+                    $scope.secretData = results.data;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser);
                     //store google profile info in session storage
@@ -63,8 +56,8 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             console.log('Not logged in.');
             //if null firebaseUser
             $scope.secretData = "Login Required";
-        } //end else
-    }); //end auth on status change
+        }
+    });
 
 
     // This code runs when the user logs out

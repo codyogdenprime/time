@@ -1,13 +1,13 @@
-myApp.controller('userHomeController', ['$scope', '$http', 'factory', function ($scope, $http, factory){
-  console.log('in userHomeController');
+myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
+    console.log('in userHomeController');
 
   $scope.allMyProjects = [];
   $scope.allMyTime = [];
   $scope.myCurrentProject = '';
 
-  var userUID = sessionStorage.getItem('userGoogleId');
-  var userDisplayName = sessionStorage.getItem('userDisplayName');
-  var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
+    var userUID = sessionStorage.getItem('userGoogleId');
+    var userDisplayName = sessionStorage.getItem('userDisplayName');
+    var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
   //get all projects for the user
   $scope.getMyProjects = function () {
@@ -33,10 +33,11 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
       empid: empid
     };//end object
 
-    factory.addTime(objectToSend).then(function () {
-      console.log('new time worked!');
-    });
-  };
+
+        factory.addTime(objectToSend).then(function() {
+            console.log('new time worked!');
+        });
+    };
 
   $scope.showProject = function () {
     console.log('in showProject');
@@ -65,8 +66,8 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function (
 
   $scope.getMyProjects();
 
-  //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
-  //$scope.newTime(2, 4);
-  //$scope.getMyProjects(2);
-  //$scope.getAllTime(2);
+    //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
+    //$scope.newTime(2, 4);
+    //$scope.getMyProjects(2);
+    //$scope.getAllTime(2);
 }]);
