@@ -9,12 +9,13 @@ router.route('/time')
     .get(function(req, res) {
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('time get route hit');
+            var data = req.query;
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM time');
+                    var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[data.empid, data.projid]);
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
