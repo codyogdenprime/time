@@ -5,7 +5,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
-var urlencodedParser = bodyParser.urlencoded({extended: false});
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
 var pg = require('pg');
 
 //use public folder
@@ -17,13 +19,13 @@ app.use(bodyParser.json());
 //listen and port decision
 app.listen(process.env.PORT, function() {
     console.log('listening on', process.env.PORT);
-});//end app.listen
+}); //end app.listen
 
 //firebase init
 firebase.initializeApp({
-serviceAccount:"./server/firebase-service-account.json",
-databaseURL:"https://cimarron-1d0ea.firebaseio.com"
-});//end firebase initializeApp
+    serviceAccount: "./server/firebase-service-account.json",
+    databaseURL: "https://cimarron-1d0ea.firebaseio.com"
+}); //end firebase initializeApp
 
 //index route
 var index = require('./routes/index');
