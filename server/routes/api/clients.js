@@ -40,7 +40,7 @@ router.route('/clients')
 //add an employee
 .post(function(req, res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
-  console.log('projects post route hit');
+  console.log('clients post route hit');
   var data = req.body;
   console.log('data which is also req.body',data);
   pg.connect(connectionString, function(err, client, done){
