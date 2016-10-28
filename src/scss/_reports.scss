@@ -1,0 +1,32 @@
+.report-form {
+	label {
+		display:inline-block;
+		width: 100px;
+	}
+	& > div {
+		padding: 0.5em 0;
+	}
+	.date {
+		box-sizing: border-box;
+		float:left;
+		width: 50%;
+		background-color: pink;
+	}
+	.description {
+		background-color: lightblue;
+		padding: 0.5em 0;
+	}
+}
+
+@media screen and ( max-width: $sb-md ) {
+	.report-form label {
+		display: block;
+	}
+	.report-form input[type="text"] {
+		width: 100%;
+		box-sizing: border-box;
+	}
+	.report-form select {
+		width: 100%;
+	}
+}
