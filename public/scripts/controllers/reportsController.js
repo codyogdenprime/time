@@ -1,13 +1,16 @@
-myApp.controller('reportsController', ['authFactory', 'factory', '$scope', '$http', '$location', function(factory, $scope, $http, $location, authFactory) {
+myApp.controller('reportsController', ['factory', '$scope', '$http', '$location', function(factory,$scope, $http, $location) {
             console.log('in reportsController');
+            $scope.allClients = [];
 
             // get all clients
             $scope.init = function(){
-                    factory.getClients().then(function(results) {
-                        console.log(results, 'Clients');
-                    });
+              console.log('in get clients ');
+                  factory.getAllClients().then(function(results){
+                    console.log(results.data);
+                  });
+
                 };
-                
+
                 // get all projects
                 //
 
@@ -24,6 +27,5 @@ myApp.controller('reportsController', ['authFactory', 'factory', '$scope', '$htt
                             }); //end catch
                     }); //end factory
                 }; //end scope
-
                 $scope.init();
             }]);

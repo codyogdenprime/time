@@ -198,14 +198,15 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
-  var getClients = function(){
-      return $http({
+  var getAllClients = function(){
+    console.log('Getting All Clients');
+    return $http({
       method:'GET',
-      url: 'api/clients',
-      headers:{
+      url:'api/clients',
+      headers: {
         id_token: idToken}
-  });//end http
-};//end get Clients
+    });
+  };
 
   return {
     getAllEmployees: getAllEmployees,
@@ -213,13 +214,13 @@ myApp.factory('factory', ['$http', function($http){
     isAdmin: function () {
       return isAdmin;
     },
-    getClients : getClients,
     changeIsAdmin: changeIsAdmin,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,
     getAllMyTime: getAllMyTime,
     addTime: addTime,
+    getAllClients : getAllClients,
     getProjectUsers: getProjectUsers,
     editProject: editProject,
     addProject: addProject,
