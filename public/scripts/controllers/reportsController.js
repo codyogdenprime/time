@@ -1,30 +1,35 @@
 myApp.controller('reportsController', ['factory', '$scope', '$http', '$location', function(factory, $scope, $http, $location) {
     console.log('in reportsController');
     $scope.allClients = [];
+    $scope.allClientProjects = [];
+    $scope.usersOnProject = [];
 
     // get all clients
     $scope.init = function() {
-        console.log('in get clients ');
         factory.getAllClients().then(function(results) {
-            console.log(results.data);
             $scope.allClients = results.data;
-        });
-    };
-    $scope.client = function(selectedClient){
-      console.log(selectedClient.clientid,'clientid');
-      var objectToSend = {
-        cID: selectedClient.clientid
-      };
-      var id = $scope.selectedClient.clientid;
-      console.log(objectToSend, 'send this');
-      console.log(id,'ididi');
-      factory.getClientProjects(id,objectToSend).then(function(results){
-          console.log(results.data, 'client projects');
-      });
-    };
+        }); //get all clients
+    }; //end scope dot init
 
-    // get all projects
-    //
+    //get all projects based on selected client from above function
+    $scope.client = function(selectedClient) {
+        var id = $scope.selectedClient.clientid;
+        factory.getClientProjects(id).then(function(results) {
+            $scope.allClientProjects = results.data;
+        }); //end get client projects by client_id
+    }; //end scope dot client
+
+    //this should only show if admin = true
+    $scope.project = function(selectedProject) {
+        var projectId = $scope.selectedProject.projectid;
+        factory.getProjectUsers(projectId).then(function(results) {
+            $scope.usersOnProject = results.data;
+        }); //end get project users
+    }; //end scope people on project
+
+
+
+
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {

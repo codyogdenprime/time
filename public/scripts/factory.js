@@ -209,12 +209,11 @@ myApp.factory('factory', ['$http', function($http){
     });
   };//end get all clients
 
-  var getClientProjects = function(id,objectToSend){
+  var getClientProjects = function(id){
     //get client projects based on clien_ids
     return $http({
       method: 'GET',
       url: 'api/projects/?clientUID=' + id,
-      data: objectToSend,
       headers: {
         id_token: idToken
       }
