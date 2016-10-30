@@ -18,12 +18,12 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
             console.log($scope.allActiveEmp, 'All Active Emp');
         }); //end getActiveEmp
 
-        //Get In active employees
+        //Get Inactive employees
         factory.getInActiveEmp().then(function(results) {
             $scope.InActiveEmp = results.data;
             console.log($scope.InActiveEmp, 'All Inactive Emp');
         }); //end getInActiveEmp
-    };
+    };//end scope dot init
 
     //set emp status active/admin
     $scope.empStatus = function() {

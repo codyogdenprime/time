@@ -1,4 +1,4 @@
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory',function($scope, $http, $firebaseArray, $firebaseAuth, $location,authFactory) {
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory', function($scope, $http, $firebaseArray, $firebaseAuth, $location, authFactory) {
 
     console.log('in homeController');
 
@@ -67,20 +67,20 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             location.reload();
             console.log('Logging the user out!');
             $scope.ifFirebaseUser();
-        });//auth sign out
-    };//end scope dot logOut
+        }); //auth sign out
+    }; //end scope dot logOut
 
     //if user is logged in, show log out button and change views
-    $scope.ifFirebaseUser = function (fbu) {
-      if (fbu){
-        $scope.loggedIn = true;
-        $scope.loggedOut = false;
-        // $location.url('/userHome');
-      }else {
-        $scope.loggedIn = false;
-        $scope.loggedOut = true;
-        $location.url('/');
-      }
+    $scope.ifFirebaseUser = function(fbu) {
+        if (fbu) {
+            $scope.loggedIn = true;
+            $scope.loggedOut = false;
+            $location.url('/userHome');
+        } else {
+            $scope.loggedIn = false;
+            $scope.loggedOut = true;
+            $location.url('/');
+        }
     };
 
 }]); //end controller

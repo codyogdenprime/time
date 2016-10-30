@@ -1,8 +1,12 @@
 myApp.controller('reportsController', ['factory', '$scope', '$http', '$location', function(factory, $scope, $http, $location) {
     console.log('in reportsController');
+
+    //global arrays
     $scope.allClients = [];
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
+
+    //CHECK ADMIN STATUS ?
 
     // get all clients
     $scope.init = function() {
@@ -13,19 +17,31 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
 
     //get all projects based on selected client from above function
     $scope.client = function(selectedClient) {
-        var id = $scope.selectedClient.clientid;
-        factory.getClientProjects(id).then(function(results) {
+        var clientid = $scope.selectedClient.clientid;
+        factory.getClientProjects(clientid).then(function(results) {
             $scope.allClientProjects = results.data;
         }); //end get client projects by client_id
     }; //end scope dot client
 
-    //this should only show if admin = true
+
+    //*********** this should only show if admin = true ************************
+    //get user for project selected from above function
     $scope.project = function(selectedProject) {
         var projectId = $scope.selectedProject.projectid;
         factory.getProjectUsers(projectId).then(function(results) {
             $scope.usersOnProject = results.data;
         }); //end get project users
     }; //end scope people on project
+
+    //get selected user from DOM
+    $scope.user = function(selectedUser){
+      console.log(selectedUser.empid);
+    };
+
+    //run report
+    $scope.runReport = function(){
+
+    };
 
 
 

@@ -28,8 +28,10 @@
                             <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject"></select>
                         </div>
 
+
+                        <!--  everything above this is connected -->
                         <div class="submit">
-                            <button>Run Report</button>
+                          <button  ng-click="runReport()"> Run Report </button>
                             <!-- This button should save the time entry to the server. -->
                         </div>
                     </form>
