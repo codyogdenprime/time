@@ -206,7 +206,19 @@ myApp.factory('factory', ['$http', function($http){
       headers: {
         id_token: idToken}
     });
-  };
+  };//end get all clients
+
+  var getClientProjects = function(objectToSend){
+    //get client projects based on clien_ids
+    return $http({
+      method: 'GET',
+      url: 'api/projects',
+      data: objectToSend,
+      headers: {
+        id_token: idToken
+      }
+    });//end http
+  };//end get client projects
 
   return {
     getAllEmployees: getAllEmployees,
@@ -215,6 +227,7 @@ myApp.factory('factory', ['$http', function($http){
       return isAdmin;
     },
     changeIsAdmin: changeIsAdmin,
+    getClientProjects: getClientProjects,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,

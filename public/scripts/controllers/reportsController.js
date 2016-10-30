@@ -12,6 +12,13 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     };
     $scope.client = function(selectedClient){
       console.log(selectedClient.clientid,'clientid');
+      var objectToSend = {
+        cID: selectedClient.clientid
+      };
+      console.log(objectToSend, 'send this');
+      factory.getClientProjects(objectToSend).then(function(results){
+          console.log(results.data, 'client projects');
+      });
     };
 
     // get all projects
