@@ -5,9 +5,7 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     $scope.allClients = [];
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
-    var clientid,
-    projectId,
-    empId;
+  
 
     //CHECK ADMIN STATUS ?
 
