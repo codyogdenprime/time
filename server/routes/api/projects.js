@@ -13,7 +13,8 @@ router.route('/projects')
 
             console.log('projects get route hit');
             pg.connect(connectionString, function(err, client, done) {
-                var data = client.query;
+                //req.query pulls client id from query paramaters
+                var data = req.query;
                 console.log(data, 'dataatatat');
                 if (err) {
                     console.log(err);

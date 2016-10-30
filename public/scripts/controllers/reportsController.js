@@ -15,8 +15,10 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
       var objectToSend = {
         cID: selectedClient.clientid
       };
+      var id = $scope.selectedClient.clientid;
       console.log(objectToSend, 'send this');
-      factory.getClientProjects(objectToSend).then(function(results){
+      console.log(id,'ididi');
+      factory.getClientProjects(id,objectToSend).then(function(results){
           console.log(results.data, 'client projects');
       });
     };
