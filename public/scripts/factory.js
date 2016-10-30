@@ -72,6 +72,18 @@ myApp.factory('factory', ['$http', function($http){
       }
   };
 
+  //get time based on employees is and project id
+  var getTime = function(empid, projid){
+    return $http({
+      method:'GET',
+      url: 'api/timebyprojemp/?empid=' + empid + '&projid=' + projid,
+      headers: {
+        id_token: idToken
+      }
+    });
+  };//end getTime by empid projectid
+
+
   var getAllMyTime = function (project) {
     console.log('made it to getAllMyTime');
     return $http({
@@ -240,6 +252,7 @@ myApp.factory('factory', ['$http', function($http){
     editTime:editTime,
     deleteTimeEntry: deleteTimeEntry,
     addEmpToProject: addEmpToProject,
+    getTime:getTime,
     getMyTimeForThisProject: getMyTimeForThisProject
   };
 

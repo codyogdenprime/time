@@ -45,7 +45,11 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     //run report
     $scope.runReport = function() {
         console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
-        
+        var projid = $scope.selectedProject.projectid;
+        var empid = $scope.selectedUser.empid;
+        factory.getTime(projid,empid).then(function(results){
+          console.log(results,'run report');
+        });
     };
 
 
