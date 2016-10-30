@@ -5,6 +5,9 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     $scope.allClients = [];
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
+    var clientid,
+    projectId,
+    empId;
 
     //CHECK ADMIN STATUS ?
 
@@ -34,13 +37,15 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     }; //end scope people on project
 
     //get selected user from DOM
-    $scope.user = function(selectedUser){
-      console.log(selectedUser.empid);
+    $scope.user = function(selectedUser) {
+        var empId = $scope.selectedUser.empid;
+        console.log(empId);
     };
 
     //run report
-    $scope.runReport = function(){
-
+    $scope.runReport = function() {
+        console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+        
     };
 
 

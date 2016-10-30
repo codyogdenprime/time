@@ -42,7 +42,7 @@ router.route('/time')
                         console.log(err);
                     } else {
                         var resultsArray = [];
-                        var clientID = client.query('')
+                        var clientID = client.query('');
                         var queryResults = client.query('SELECT * FROM time');
                         queryResults.on('row', function(row) {
                             resultsArray.push(row);
