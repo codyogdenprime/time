@@ -1,5 +1,21 @@
-myApp.controller('reportsController', ['factory', '$scope', '$http', function(factory, $scope, $http) {
+myApp.controller('reportsController', ['factory', '$scope', '$http', '$location', function(factory, $scope, $http, $location) {
     console.log('in reportsController');
+    $scope.allClients = [];
+
+    // get all clients
+    $scope.init = function() {
+        console.log('in get clients ');
+        factory.getAllClients().then(function(results) {
+            console.log(results.data);
+            $scope.allClients = results.data;
+        });
+    };
+    $scope.client = function(selectedClient){
+      console.log(selectedClient.clientid,'clientid');
+    };
+
+    // get all projects
+    //
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
@@ -14,4 +30,5 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', function(fa
                 }); //end catch
         }); //end factory
     }; //end scope
+    $scope.init();
 }]);
