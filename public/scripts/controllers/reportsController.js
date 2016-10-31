@@ -39,12 +39,21 @@ myApp.controller('reportsController', ['factory','authFactory', '$scope', '$http
         factory.getProjectUsers(projectId).then(function(results) {
             $scope.usersOnProject = results.data;
         }); //end get project users
+        $scope.addAllHours();
     }; //end scope people on project
 
     //get selected user from DOM
     $scope.user = function(selectedUser) {
         var empId = $scope.selectedUser.empid;
         console.log(empId);
+    };
+    $scope.addAllHours = function(){
+      $scope.addAllHoursAdded = 0;
+      for (var i = 0; i < $scope.selectedProject.length; i++) {
+        console.log(Number($scope.selectedProject[i].hours));
+        $scope.allHoursAdded += Number($scope.selectedProject[i].hours);
+      }
+      console.log('ADDDDDDDDD', $scope.allHoursAdded);
     };
 
     //run report
