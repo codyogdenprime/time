@@ -58,6 +58,15 @@ myApp.factory('factory', ['$http', function($http){
       });//end http
     };//end changeIsAdmin
 
+  var adminStatus = function(authid){
+      return $http({
+        method:'GET',
+        url: 'api//users/admin/?authid=' + empid,
+        headers:{
+          id_token: idToken}
+      });
+  };
+
 
 
   var getMyProjects = function (empid) {
@@ -71,6 +80,18 @@ myApp.factory('factory', ['$http', function($http){
         });
       }
   };
+
+  //get time based on employees id and project id
+  var getTime = function(empid, projid){
+    return $http({
+      method:'GET',
+      url: 'api/timebyprojemp/?empid=' + empid + '&projid=' + projid,
+      headers: {
+        id_token: idToken
+      }
+    });
+  };//end getTime by empid projectid
+
 
   var getAllMyTime = function (project) {
     console.log('made it to getAllMyTime');
@@ -213,6 +234,7 @@ myApp.factory('factory', ['$http', function($http){
   };//toggleAdminStatus
 
   var getAllClients = function(){
+    //get all clients
     console.log('Getting All Clients');
 
     return $http({
@@ -221,7 +243,18 @@ myApp.factory('factory', ['$http', function($http){
       headers: {
         id_token: idToken}
     });
-  };
+  };//end get all clients
+
+  var getClientProjects = function(clientid){
+    //get client projects based on clien_ids
+    return $http({
+      method: 'GET',
+      url: 'api/projects/?clientUID=' + clientid,
+      headers: {
+        id_token: idToken
+      }
+    });//end http
+  };//end get client projects
 
 
   return {
@@ -231,6 +264,7 @@ myApp.factory('factory', ['$http', function($http){
       return isAdmin;
     },
     changeIsAdmin: changeIsAdmin,
+    getClientProjects: getClientProjects,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,
@@ -243,8 +277,10 @@ myApp.factory('factory', ['$http', function($http){
     editTime:editTime,
     deleteTimeEntry: deleteTimeEntry,
     addEmpToProject: addEmpToProject,
+    getTime:getTime,
     getMyTimeForThisProject: getMyTimeForThisProject,
     toggleStatus:toggleStatus
+
   };
 
 }]);

@@ -4,23 +4,28 @@ var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
-router.route('/time')
-    //selecting all from time table
+router.route('/timebyprojemp')
+    //get time by projectid and empid
     .get(function(req, res) {
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('time get route hit');
-            var data = req.query;
+            var projid = req.query.projid;
+            var empid = req.query.empid;
+
+            console.log(projid,empid,'dataaatatatatatata');
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[data.empid, data.projid]);
+                    var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[projid, empid]);
+                    console.log(queryResults, 'query resultssss');
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
                     queryResults.on('end', function() {
                         done();
+                        console.log(resultsArray,'resultssssss');
                         return res.send(resultsArray);
                     }); //on end function
                 } //else
@@ -31,8 +36,8 @@ router.route('/time')
             res.send("Sorry your Auth-Token was incorrect");
         }); //end catch
     }); //router.get
-//get time by projectid and empid
-    router.route('/timebyprojemp')
+    //selecting all from time table
+    router.route('/time')
         //selecting all from time table
         .get(function(req, res) {
             firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
@@ -42,7 +47,7 @@ router.route('/time')
                         console.log(err);
                     } else {
                         var resultsArray = [];
-                        var clientID = client.query('')
+                        var clientID = client.query('');
                         var queryResults = client.query('SELECT * FROM time');
                         queryResults.on('row', function(row) {
                             resultsArray.push(row);
