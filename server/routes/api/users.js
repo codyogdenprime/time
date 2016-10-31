@@ -15,7 +15,7 @@ router.route('/users')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM employee WHERE isadmin = false');
+                    var queryResults = client.query('SELECT * FROM employee');
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
