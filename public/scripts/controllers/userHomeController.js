@@ -1,9 +1,19 @@
-myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
+myApp.constant('moment', moment);
+
+var app = angular.module("app", ["xeditable"]);
+
+myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', function($scope, $http, factory, moment) {
     console.log('in userHomeController');
+
 
   $scope.allMyProjects = [];
   $scope.allMyTime = [];
   $scope.myCurrentProject = '';
+
+  // var a = moment('2016-01-01');
+  // var b = a.add(1, 'week');
+  // a.format();
+  // console.log(a);
 
     var userUID = sessionStorage.getItem('userGoogleId');
     var userDisplayName = sessionStorage.getItem('userDisplayName');
@@ -24,15 +34,15 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($
     });
   };
   //add new time
-  $scope.newTime = function (projectId, empid) {
+  $scope.newTime = function () {
     var objectToSend = {
-      date: '16-5-6',//$scope.timeDate,
-      hours: 4, //$scope.timeHours,
-      description: 'none', //$scope.timeDescription,
-      projectid: projectId,
-      empid: empid
+      date: $scope.dateInputModel,
+      hours: $scope.timeInputModel,
+      description: $scope.descriptionInputModel,
+      projectid: $scope.myCurrentProject.projectid,
+      empid: userUID
     };//end object
-
+    console.log('in newTime', objectToSend);
 
         factory.addTime(objectToSend).then(function() {
             console.log('new time worked!');
@@ -61,7 +71,25 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', function($
 
   $scope.getMyTimeForThisProject = function () {
     console.log('in getMyTimeForThisProject');
-    factory.getMyTimeForThisProject(userUID, $scope.myCurrentProject.projectid);
+    factory.getMyTimeForThisProject(userUID, $scope.myCurrentProject.projectid).then(function (response) {
+      $scope.allMyTime = response.data;
+      $scope.allMyTime = $scope.allMyTime.map(function (index) {
+        console.log(index);
+        var m = moment(index.duedate).format('M/D/YY');
+        console.log(m);
+        return ({timeid: index.timeid , date: m, hours: index.hours , description: index.description , empid: index.empid});
+      });
+      console.log('in getMyTimeForThisProject', response, $scope.allMyTime);
+    });
+  };
+
+  $scope.deleteTimeEntry = function(timeId) {
+      console.log('in deleteTimeEntry', timeId);
+      factory.deleteTimeEntry(timeId).then(function () {
+        $scope.getMyTimeForThisProject();
+        console.log($scope.myCurrentProject);
+      });
+      //rerun get all time
   };
 
   $scope.getMyProjects();

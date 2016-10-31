@@ -86,12 +86,13 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'POST',
-      url: 'api/time',
+      url: 'api/timebyprojemp',
       headers: {
         id_token: idToken},
       data: objectToSend
     });
   };
+
   var editTime = function (type, value,id) {
     console.log('made it to edit time factory');
     var objectToSend = {
@@ -161,7 +162,7 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'DELETE',
-      url: '/api/time',
+      url: '/api/timebyprojemp',
       data: {timeid: timeId},
       headers: {id_token: idToken,
         "Content-Type": "application/json;charset=utf-8"}

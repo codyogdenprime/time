@@ -1,3 +1,5 @@
+myApp.constant('moment', moment);
+
 myApp.controller('reportsController', ['factory', '$scope', '$http', function(factory, $scope, $http) {
     console.log('in reportsController');
 

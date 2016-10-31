@@ -16,7 +16,7 @@
             <form class="add-time">
                 <div class="date">
                     <label>Date</label>
-                    <input class="date-input" type="text" value="2016-10-23" />
+                    <input class="date-input" type="text" ng-model="dateInputModel"/>
                 </div>
                 <!-- This only shows if there is an administrator present. -->
                 <!--<div>
@@ -38,14 +38,14 @@
                         </div>-->
                 <div class="time">
                     <label>Time</label>
-                    <input class="time-input" type="text" value="2.25" />
+                    <input class="time-input" type="text" ng-model="timeInputModel" />
                 </div>
                 <div class="description">
                     <label>Description</label>
-                    <input type="text" value="I ate pizza and watched Netflix" />
+                    <input type="text" ng-model="descriptionInputModel" />
                 </div>
                 <div class="submit">
-                    <button>Add Time</button>
+                    <button ng-click="newTime()">Add Time</button>
                     <!-- This button should save the time entry to the server. -->
                 </div>
             </form>
@@ -63,7 +63,7 @@
                 <div class="description">{{time.description}}</div>
                 <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
                     <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
-                    <button class="btn-delete">Delete</button>
+                    <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
                 </div>
             </div>
             <div class="row totals">
