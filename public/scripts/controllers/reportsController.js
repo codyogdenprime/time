@@ -6,10 +6,11 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
     $scope.reports = [];
-    
+
+
     $scope.userProfile = authFactory.get_user();
     console.log($scope.userProfile, 'in reports');
-
+console.log(userProfile.isadmin);
 
     //CHECK ADMIN STATUS ?
 
