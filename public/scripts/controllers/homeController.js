@@ -1,4 +1,9 @@
+
+
+myApp.constant('moment', moment);
+
 myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory', function($scope, $http, $firebaseArray, $firebaseAuth, $location, authFactory) {
+
 
     console.log('in homeController');
 

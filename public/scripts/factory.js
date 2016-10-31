@@ -70,7 +70,7 @@ myApp.factory('factory', ['$http', function($http){
 
 
   var getMyProjects = function (empid) {
-    console.log('into factory getMyProjects');
+    console.log('into factory getMyProjects', idToken);
       if(isAdmin){
         return $http({
           method: 'GET',
@@ -107,12 +107,13 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'POST',
-      url: 'api/time',
+      url: 'api/timebyprojemp',
       data: objectToSend,
       headers: {
         id_token: idToken}
     });
   };
+
   var editTime = function (type, value,id) {
     console.log('made it to edit time factory');
     var objectToSend = {
@@ -182,7 +183,7 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'DELETE',
-      url: '/api/time',
+      url: '/api/timebyprojemp',
       data: {timeid: timeId},
       headers: {id_token: idToken,
         "Content-Type": "application/json;charset=utf-8"}
@@ -207,13 +208,12 @@ myApp.factory('factory', ['$http', function($http){
   var getMyTimeForThisProject = function (empId, projId) {
     console.log('made it to getMyTimeForThisProject', empId, projId);
     var objectToSend = {
-      empid: empID,
+      empid: empId,
       projectid: projId,
     };
     return $http({
-      method: 'POST',
-      url: 'api/projects/users',
-      data: objectToSend,
+      method: 'GET',
+      url: 'api/time/?empid=' + empId + '&projectid=' + projId,
       headers: {
         id_token: idToken}
     });
