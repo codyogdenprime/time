@@ -7,7 +7,7 @@
             <div class="isactive">Active?</div>
         </div>
     </div>
-    <div class="row user" ng-repeat="emp in allEmployees">
+    <div class="row user" ng-repeat="emp in allEmployees | orderBy: '-empname'">
         <div class="photo"><img ng-src= {{emp.authpic}} alt = "No Photo Found" /></div><!-- Employee's Photo URL -->
         <div class="name">{{emp.empname}}</div>
         <div class="email">{{emp.authemail}}</div><!-- Employee's Email Address, mabye? -->
@@ -16,8 +16,8 @@
         <div class="isactive">
             <!-- This <i> tag should be clickable. It should trigger an API call to toggle the user active or inactive. -->
             <!-- Inactive users will not show up in admin interfaces for employee selection, etc. -->
-            <i ng-click = "toggleStatus(emp.empid,'activeStatus')" ng-show = "emp.isactive == true" class="fa fa-toggle-on"></i> <!-- If user is active -->
-            <i ng-click = "toggleStatus(emp.empid,'activeStatus')" ng-show = "emp.isactive == false" class="fa fa-toggle-off"></i>  <!-- If user is not active.
+            <i ng-click = "toggleStatus(emp.empid,'activeStatus')" ng-class = "(emp.isactive == true) ? 'fa fa-toggle-on' : 'fa fa-toggle-off'"></i> <!-- If user is active -->
+            <!-- <i ng-click = "toggleStatus(emp.empid,'activeStatus')" ng-show = "emp.isactive == false" class="fa fa-toggle-off"></i>  <!-- If user is not active. -->
             <!-- Admin should be able to click this similar to a checkbox. When clicked, it should trigger turning the specific user on or off. -->
         </div>
     </div>

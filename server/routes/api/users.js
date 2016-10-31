@@ -71,6 +71,7 @@ router.route('/users')
                     //toggle isactive
                     case 'activeStatus':
                         client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1', [data.empid]);
+                        done();
                         res.send({
                             success: true
                         })(202);
@@ -78,6 +79,7 @@ router.route('/users')
                         //toggle isadmin
                     case 'adminStatus':
                         client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1', [data.empid]);
+                        done();
                         res.send({
                             success: true
                         });
@@ -246,6 +248,7 @@ router.get('/users/byProject', function(req, res) {
                 }); //on row function
                 queryResults.on('end', function() {
                     if (verbose) console.log('end!!!!!');
+                    done();
                     return res.send(resultsArray);
                 }); //on end function
             } //else

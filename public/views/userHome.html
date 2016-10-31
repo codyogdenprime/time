@@ -68,9 +68,9 @@
             </div>
             <div class="row totals">
                 <div class="total"><b>Total:</b></div>
-                <div class="total-time">6.75</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                <div class="total-time">{{allHoursAdded}}</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
                 <div class="actions">
-                    <button class="btn-export">Export to CSV</button>
+                    <button class="btn-export" ng-click="exportCSV()">Export to CSV</button>
                 </div>
             </div>
         </div>
