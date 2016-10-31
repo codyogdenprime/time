@@ -218,10 +218,25 @@ myApp.factory('factory', ['$http', function($http){
         id_token: idToken}
     });
   };
+  var toggleStatus = function(empid, type){
+    var objectToSend = {
+      type:type,
+      empid:empid
+    };
+    console.log('in toggleStatus factory');
+    return $http({
+      method:'PUT',
+      url:'api/users',
+      data:objectToSend,
+      headers: {
+        id_token: idToken}
+    });//http call
+  };//toggleAdminStatus
 
   var getAllClients = function(){
     //get all clients
     console.log('Getting All Clients');
+
     return $http({
       method:'GET',
       url:'api/clients',
@@ -240,6 +255,7 @@ myApp.factory('factory', ['$http', function($http){
       }
     });//end http
   };//end get client projects
+
 
   return {
     getAllEmployees: getAllEmployees,
@@ -262,7 +278,9 @@ myApp.factory('factory', ['$http', function($http){
     deleteTimeEntry: deleteTimeEntry,
     addEmpToProject: addEmpToProject,
     getTime:getTime,
-    getMyTimeForThisProject: getMyTimeForThisProject
+    getMyTimeForThisProject: getMyTimeForThisProject,
+    toggleStatus:toggleStatus
+
   };
 
 }]);
