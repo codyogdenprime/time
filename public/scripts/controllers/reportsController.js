@@ -1,5 +1,5 @@
 myApp.constant('moment', moment);
-myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$http', '$location', '$filter', function(factory, authFactory, $scope, $http, $location, $filter) {
+myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$http', '$location', function(factory, authFactory, $scope, $http, $location) {
     console.log('in reportsController');
 
     //global arrays
@@ -7,9 +7,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
     $scope.reports = [];
-    var userStatus;
-    var idToken = sessionStorage.getItem('userAuth');
-    var authid = sessionStorage.getItem('userGoogleId');
+
+    //get user status
+    var userProfile = authFactory.get_user();
+    console.log(userProfile.isadmin);
+
+
     // get all clients
     $scope.init = function(isadmin) {
         factory.getAllClients().then(function(results) {
@@ -70,26 +73,15 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }
 
     };
-    $scope.userStatus = function(){
-    $http({
-        method: 'GET',
-        url: 'api/userstatus/?authid=' + authid,
-        headers: {
-            id_token: idToken
+    $scope.userStatus = function() {
+        //if user is not admin hide
+        if (userProfile.isadmin === true) {
+            $scope.selectEmp = false;
+        } else {
+            //if user IS admin show forms
+            $scope.selectEmp = true;
         }
-    }).then(function(results) {
-        console.log('userProfile in reports', results.data);
-        var userStatus = results.data;
-        console.log(userStatus);
-        var userProfile = "";
-        var x;
-        for (x in userStatus) {
-          userProfile = userStatus[x];
-        }
-        console.log(userProfile.isactive, userProfile.isadmin,userProfile.empname);
-
-    });
-  };
+    };
 
 
 

@@ -23,7 +23,7 @@
                             <label>Project</label>
                             <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects"></select>
                         </div>
-                         <div><!-- This only shows if there is an administrator present. -->
+                         <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
                             <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject"></select>
                         </div>
