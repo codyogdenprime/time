@@ -1,4 +1,8 @@
+
+myApp.constant('moment', moment);
+
 myApp.controller('reportsController', ['factory', '$scope', '$http', '$location','authFactory', function(factory, $scope, $http, $location, authFactory) {
+
     console.log('in reportsController');
 
     //global arrays
