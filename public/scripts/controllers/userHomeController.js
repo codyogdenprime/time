@@ -103,6 +103,17 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     console.log('added all hours:', $scope.allHoursAdded);
   };
 
+  //this exports to CSV! see html for more
+  $scope.exportCSV = function() {
+          var data = $scope.allMyTime;
+          alasql.promise('SELECT * INTO XLSX("my4.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+              .then(function() {
+                  console.log('DATA SAVED');
+              }).catch(function(err) {
+                  console.log('ERROR', err);
+              }); //end catch
+  }; //end scope
+
   $scope.getMyProjects();
 
     //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
