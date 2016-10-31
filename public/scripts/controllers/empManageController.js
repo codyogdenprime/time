@@ -23,7 +23,10 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
 
        factory.toggleStatus(empid,type).then(function(results){
          console.log('this is in the .then function');
-         location.reload();
+         factory.getAllEmployees().then(function(results) {
+             $scope.allEmployees = results.data;
+             console.log('all employee array coming from the update function',$scope.allEmployees);
+         });
     });//.then function
   };//toggleAdminStatus
 
