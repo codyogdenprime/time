@@ -1,4 +1,4 @@
-myApp.controller('reportsController', ['factory', '$scope', '$http', '$location', function(factory, $scope, $http, $location) {
+myApp.controller('reportsController', ['factory', '$scope', '$http', '$location','authFactory', function(factory, $scope, $http, $location, authFactory) {
     console.log('in reportsController');
 
     //global arrays
@@ -6,8 +6,9 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
     $scope.reports = [];
-
     
+    $scope.userProfile = authFactory.get_user();
+    console.log($scope.userProfile, 'in reports');
 
 
     //CHECK ADMIN STATUS ?

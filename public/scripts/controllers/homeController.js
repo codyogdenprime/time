@@ -38,11 +38,20 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     pic: firebaseUser.photoURL,
                     email: firebaseUser.email
                 };
-                authFactory.user(objectToSend, idToken).then(function(results) {
-                    $scope.secretData = results;
-                    console.log($scope.secretData, 'asdasdasdasda');
+                $http({
+                    method: 'POST',
+                    url: '/api/users/verify',
+                    data: objectToSend,
+                    headers: {
+                        id_token: idToken
+                    } //end headers
+                }).then(function(results) {
+                    var user = results.data;
+                    $scope.userProfile = authFactory.userProfile;
+                    authFactory.store_users(user);
+                    $scope.userProfile = authFactory.get_user();
+                    console.log($scope.userProfile);
                     sessionStorage.userAuth = idToken;
-                    console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser, 'firebaseUser User');
                     //store google profile info in session storage
                     sessionStorage.userGoogleId = firebaseUser.uid;
