@@ -35,6 +35,10 @@
 	}
 }
 
+.card__link + div {
+	padding: 1em;
+	background-color: pink;
+}
 @media screen and ( max-width: $sb-md ) {
 	.card {
 		flex: 0 0 100%;

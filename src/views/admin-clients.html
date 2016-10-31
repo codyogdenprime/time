@@ -7,7 +7,83 @@
     <title>User Reports</title>
     <link rel="stylesheet" href="../../node_modules/normalize.css/normalize.css" />
     <link rel="stylesheet" href="../../public/files/style.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1"></script>
+    <script>
+(function($) {
+
+            $.fn.fadeOutToLeft = function(callback) {
+                $(this).animate({
+                    opacity: 0,
+                    left: "-200px"
+                }, 300, function() {
+                    $(this).hide();
+                    if (callback) {
+                        callback();
+                    }
+                });
+                return this;
+            };
+
+            $.fn.fadeInFromRight = function(callback) {
+                $(this).show().animate({
+                    opacity: 1,
+                    left: "0px"
+                }, 200);
+                return this;
+            };
+
+            $.fn.fadeOutToRight = function(callback) {
+                $(this).animate({
+                    opacity: 0,
+                    left: "200px"
+                }, 300, function() {
+                    $(this).hide();
+                    if (callback) {
+                        callback();
+                    }
+                });
+                return this;
+            };
+
+            $.fn.fadeInFromLeft = function(callback) {
+                $(this).show().animate({
+                    opacity: 1,
+                    left: "0px"
+                }, 200, function(){
+                    if (callback) {
+                        callback();
+                    }
+                });
+                
+            };
+
+        })(jQuery);
+
+
+        var showSingleClient = function() {
+            $('.cards').fadeOutToLeft(function(){
+                $('.single-client').fadeInFromRight();
+            });
+        };
+
+        var showClients = function(button) {
+            $(button).parent().fadeOutToRight(function(){
+                $('.clients').fadeInFromLeft();
+                $('.single-client').css('left', '200px');
+            });
+        };
+        var showSingleProject = function() {
+            $('.single-client').fadeOutToLeft(function(){
+                $('.single-project').fadeInFromRight();
+            });
+        };
+        var backToSingleClient = function() {
+            $('.single-project').fadeOutToRight(function(){
+                $('.single-client').fadeInFromLeft();
+            });
+        };
+    </script>
 </head>
 
 <body>
@@ -24,15 +100,19 @@
         </nav>
     </header>
     <main><!-- This is the ng-view -->
-    	<div class="clients">
-    	`
-    	</div>
-    	<div class="single-client">
-
-    	</div>
-    	<div class="single-project">
-
-    	</div>
+    	<section class="clients cards">
+    	   <div class="card">
+            <a onclick="showSingleClient()" class="card__link">Client Name</a>
+           </div>
+    	</section>
+    	<section class="single-client" style="background-color: pink;height:40vh;opacity:0;position:relative;left:200px;">
+            <button onclick="showClients(this)">Clients</button>
+            <button onclick="showSingleProject()">SingleProject</button>
+    	</section>
+    	<section class="single-project" style="background-color: lightblue;height:40vh;opacity:0;position:relative;left:200px;">
+            <button onclick="showClients(this)">Clients</button>
+            <button onclick="backToSingleClient()">Back to !!CLIENT!!</button>
+    	</section>
     </main>
 </body>
 
