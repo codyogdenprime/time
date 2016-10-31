@@ -70,26 +70,30 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }
 
     };
-    $scope.userStatus = function(){
-    $http({
-        method: 'GET',
-        url: 'api/userstatus/?authid=' + authid,
-        headers: {
-            id_token: idToken
-        }
-    }).then(function(results) {
-        console.log('userProfile in reports', results.data);
-        var userStatus = results.data;
-        console.log(userStatus);
-        var userProfile = "";
-        var x;
-        for (x in userStatus) {
-          userProfile = userStatus[x];
-        }
-        console.log(userProfile.isactive, userProfile.isadmin,userProfile.empname);
-
-    });
-  };
+    $scope.userStatus = function() {
+        $http({
+            method: 'GET',
+            url: 'api/userstatus/?authid=' + authid,
+            headers: {
+                id_token: idToken
+            }
+        }).then(function(results) {
+            console.log('userProfile in reports', results.data);
+            var userStatus = results.data;
+            console.log(userStatus);
+            var userProfile = "";
+            var x;
+            for (x in userStatus) {
+                userProfile = userStatus[x];
+            }
+            console.log(userProfile.isactive, userProfile.isadmin, userProfile.empname);
+            if (userProfile.isadmin === true) {
+                $scope.selectEmp = false;
+            } else {
+                $scope.selectEmp = true;
+            }
+        });
+    };
 
 
 
