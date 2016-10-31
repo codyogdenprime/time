@@ -81,7 +81,7 @@ router.route('/timebyprojemp')
                   empID.on('end', function () {
                     //console.log( 'sdfghjk-------' + empID._result.rows[0].empid );
                     var thisisEmpId = empID._result.rows[0].empid;
-                    var queryResults = client.query('INSERT INTO time (date, hours, description, empid, projid) VALUES ($1,$2,$3,$4,$5)', [data.date, data.hours, data.description, thisisEmpId, data.projectid]);
+                    var queryResults = client.query('INSERT INTO time (date, hours, description, empid, projid) VALUES ($1,$2,$3,$4,$5)', [data.date, Number(data.hours), data.description, thisisEmpId, data.projectid]);
                   queryResults.on('end', function() {
                       done();
                       return res.send({success: true});
