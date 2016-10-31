@@ -1,19 +1,16 @@
 var router = require('express').Router();
 var path = require('path');
 var pg = require('pg');
-var connectionString = 'postgres://localhost:5432/cimaron-winter';
+var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
 
 router.route('/clients')
-    //selecting all projects
     .get(function(req, res) {
-        //verify idToken sent in headers
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
-
             console.log('clients get route hit');
             pg.connect(connectionString, function(err, client, done) {
-                var data = client.query;
+                // var data = client.query;
                 if (err) {
                     console.log(err);
                 } else {

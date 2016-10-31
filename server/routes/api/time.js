@@ -4,8 +4,8 @@ var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
 
-router.route('/time')
-    //selecting all from time table
+router.route('/timebyprojemp')
+    //get time by projectid and empid
     .get(function(req, res) {
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('time get route hit', req.query.empid, req.query.projectid);
@@ -26,6 +26,7 @@ router.route('/time')
                       }); //on row function
                     queryResults.on('end', function() {
                         done();
+                        console.log(resultsArray,'resultssssss');
                         return res.send(resultsArray);
                     }); //on end function
                   });
@@ -37,8 +38,8 @@ router.route('/time')
             res.send("Sorry your Auth-Token was incorrect");
         }); //end catch
     }); //router.get
-//get time by projectid and empid
-    router.route('/timebyprojemp')
+    //selecting all from time table
+    router.route('/time')
         //selecting all from time table
         .get(function(req, res) {
             firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
@@ -48,7 +49,7 @@ router.route('/time')
                         console.log(err);
                     } else {
                         var resultsArray = [];
-                        var clientID = client.query('')
+                        var clientID = client.query('');
                         var queryResults = client.query('SELECT * FROM time');
                         queryResults.on('row', function(row) {
                             resultsArray.push(row);

@@ -15,7 +15,7 @@ router.route('/users')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM employee WHERE isadmin = false');
+                    var queryResults = client.query('SELECT * FROM employee');
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
@@ -228,7 +228,6 @@ router.get('/users/byProject', function(req, res) {
     var verbose = true;
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         var data = req.query;
-        console.log(req.query);
         console.log('users/byProject get route hit');
         pg.connect(connectionString, function(err, client, done) {
             if (err) {

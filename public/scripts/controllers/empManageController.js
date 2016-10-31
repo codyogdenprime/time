@@ -11,21 +11,36 @@ myApp.controller('empManageController', ['$scope', '$http', 'factory', function(
     $scope.init = function() {
         factory.getAllEmployees().then(function(results) {
             $scope.allEmployees = results.data;
-            console.log($scope.allEmployees);
+            console.log('all employee array',$scope.allEmployees);
         });
 
-        //get all Active employees including Admin's
-        factory.getActiveEmp().then(function(results) {
-            $scope.allActiveEmp = results.data;
-            console.log($scope.allActiveEmp, 'All Active Emp');
-        }); //end getActiveEmp
+    };//init function
 
-        //Get In active employees
-        factory.getInActiveEmp().then(function(results) {
-            $scope.InActiveEmp = results.data;
-            console.log($scope.InActiveEmp, 'All Inactive Emp');
-        }); //end getInActiveEmp
-    };
+    //toggles adminStatus or active status for clicked employee
+    //usable for toggling active and inactive status, just send empid and 'activestatus' as type
+    $scope.toggleStatus = function(empid,type){
+      console.log('Status clicked');
+
+       factory.toggleStatus(empid,type).then(function(results){
+         console.log('this is in the .then function');
+         location.reload();
+    });//.then function
+  };//toggleAdminStatus
+
+    // get all Active employees including Admin's
+    $scope.getActiveEmp = function(){factory.getActiveEmp().then(function(results) {
+        $scope.allActiveEmp = results.data;
+        console.log($scope.allActiveEmp, 'All Active Emp');
+      }); //.then function
+    };//end getActiveEmp
+
+    // Get Inactive employees
+    $scope.getInActiveEmp = function(){
+      factory.getInActiveEmp().then(function(results) {
+        $scope.InActiveEmp = results.data;
+        console.log($scope.InActiveEmp, 'All Inactive Emp');
+      });//.then function
+    }; //end getInActiveEmp
 
     //set emp status active/admin
     $scope.empStatus = function() {

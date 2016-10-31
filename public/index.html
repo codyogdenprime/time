@@ -8,6 +8,7 @@
     <script src="vendors/moment.js"></script>
     <script src="xeditable.min.js"></script>
     <link rel=stylesheet" href="xeditable.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/normalize.css@5.0.0/normalize.css" />
     <link rel="stylesheet" href="files/style.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
@@ -34,11 +35,13 @@
         <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main" ng-controller = "homeController">
-                <li>Projects</li>
-                <li>Reports</li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#reports">Reports</a></li>
                 <!-- <li>Settings</li> For Admin Only? Maybe different now that we changed the views. -->
+
                 <li><button ng-show="loggedIn" ng-click="logOut()">Logout</button></li>
                 <li><button ng-show="loggedOut" ng-click="logIn()">Login</button></li> <!-- For Logged Out Only -->
+
             </ul>
         </nav>
     </header>
@@ -46,4 +49,5 @@
       <!-- This is where the ng-view -->
     </main>
   </body>
+
 </html>

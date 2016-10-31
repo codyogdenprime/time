@@ -52,11 +52,20 @@ myApp.factory('factory', ['$http', function($http){
     return $http({
       method:'PUT',
       url:'/api/users',
+      data: objectToSend,
       headers :{
-        id_token: idToken},
-        data: objectToSend
+        id_token: idToken}
       });//end http
     };//end changeIsAdmin
+
+  var adminStatus = function(authid){
+      return $http({
+        method:'GET',
+        url: 'api//users/admin/?authid=' + empid,
+        headers:{
+          id_token: idToken}
+      });
+  };
 
 
 
@@ -71,6 +80,18 @@ myApp.factory('factory', ['$http', function($http){
         });
       }
   };
+
+  //get time based on employees id and project id
+  var getTime = function(empid, projid){
+    return $http({
+      method:'GET',
+      url: 'api/timebyprojemp/?empid=' + empid + '&projid=' + projid,
+      headers: {
+        id_token: idToken
+      }
+    });
+  };//end getTime by empid projectid
+
 
   var getAllMyTime = function (project) {
     console.log('made it to getAllMyTime');
@@ -87,9 +108,9 @@ myApp.factory('factory', ['$http', function($http){
     return $http({
       method: 'POST',
       url: 'api/timebyprojemp',
+      data: objectToSend,
       headers: {
-        id_token: idToken},
-      data: objectToSend
+        id_token: idToken}
     });
   };
 
@@ -197,6 +218,44 @@ myApp.factory('factory', ['$http', function($http){
         id_token: idToken}
     });
   };
+  var toggleStatus = function(empid, type){
+    var objectToSend = {
+      type:type,
+      empid:empid
+    };
+    console.log('in toggleStatus factory');
+    return $http({
+      method:'PUT',
+      url:'api/users',
+      data:objectToSend,
+      headers: {
+        id_token: idToken}
+    });//http call
+  };//toggleAdminStatus
+
+  var getAllClients = function(){
+    //get all clients
+    console.log('Getting All Clients');
+
+    return $http({
+      method:'GET',
+      url:'api/clients',
+      headers: {
+        id_token: idToken}
+    });
+  };//end get all clients
+
+  var getClientProjects = function(clientid){
+    //get client projects based on clien_ids
+    return $http({
+      method: 'GET',
+      url: 'api/projects/?clientUID=' + clientid,
+      headers: {
+        id_token: idToken
+      }
+    });//end http
+  };//end get client projects
+
 
   return {
     getAllEmployees: getAllEmployees,
@@ -205,18 +264,23 @@ myApp.factory('factory', ['$http', function($http){
       return isAdmin;
     },
     changeIsAdmin: changeIsAdmin,
+    getClientProjects: getClientProjects,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
     getMyProjects: getMyProjects,
     getAllMyTime: getAllMyTime,
     addTime: addTime,
+    getAllClients : getAllClients,
     getProjectUsers: getProjectUsers,
     editProject: editProject,
     addProject: addProject,
     editTime:editTime,
     deleteTimeEntry: deleteTimeEntry,
     addEmpToProject: addEmpToProject,
-    getMyTimeForThisProject: getMyTimeForThisProject
+    getTime:getTime,
+    getMyTimeForThisProject: getMyTimeForThisProject,
+    toggleStatus:toggleStatus
+
   };
 
 }]);
