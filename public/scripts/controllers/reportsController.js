@@ -1,7 +1,7 @@
 
 myApp.constant('moment', moment);
 
-myApp.controller('reportsController', ['factory', '$scope', '$http', '$location','authFactory', function(factory, $scope, $http, $location, authFactory) {
+myApp.controller('reportsController', ['factory','authFactory', '$scope', '$http', '$location','$filter', function(factory, authFactory,$scope, $http, $location, $filter) {
 
     console.log('in reportsController');
 
@@ -14,12 +14,10 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
 
     $scope.userProfile = authFactory.get_user();
     console.log($scope.userProfile, 'in reports');
-console.log(userProfile.isadmin);
-
     //CHECK ADMIN STATUS ?
 
     // get all clients
-    $scope.init = function() {
+    $scope.init = function(isadmin) {
         factory.getAllClients().then(function(results) {
             $scope.allClients = results.data;
         }); //get all clients
@@ -54,7 +52,7 @@ console.log(userProfile.isadmin);
         console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
         var projid = $scope.selectedProject.projectid;
         var empid = $scope.selectedUser.empid;
-        factory.getTime(projid,empid).then(function(results){
+        factory.getMyTimeForThisProject(projid,empid).then(function(results){
           $scope.reports = results.data;
           console.log($scope.reports, ' reports');
         });
