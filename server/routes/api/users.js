@@ -260,4 +260,30 @@ router.get('/users/byProject', function(req, res) {
     }); //end catch
 }); //users by project get call
 
+router.get('/userstatus',function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+  var data = req.query;
+  console.log(data.authid, 'AUTHIDDDDD');
+  pg.connect(connectionString, function(err,client,done){
+    if (err) {
+      console.log(err);
+    }else {
+      var resultsArray = [];
+      var query = client.query('SELECT * FROM employee WHERE authid = $1', [data.authid]);
+      query.on('row', function(row) {
+          resultsArray.push(row);
+      }); //query on row function
+      query.on('end', function() {
+          done();
+          return res.send(resultsArray);
+      }); //.on end function
+    }//end else
+  });//end pg connect
+}).catch(function(error) {
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+}); //end catch
+});
+
 module.exports = router;

@@ -8,7 +8,6 @@ myApp.factory('authFactory', ['$http', function($http) {
          return userProfile;
       },
       store_users: function (user) {
-          //  userProfile.push(user);
            userProfile = user;
       }
    };
