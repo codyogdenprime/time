@@ -23,19 +23,18 @@
                             <label>Project</label>
                             <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects"></select>
                         </div>
-                         <div><!-- This only shows if there is an administrator present. -->
+                         <div ng-if="isAdmin"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
                             <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject"></select>
                         </div>
-
-
-                        <!--  everything above this is connected -->
                         <div class="submit">
                           <button  ng-click="runReport()"> Run Report </button>
                             <!-- This button should save the time entry to the server. -->
                         </div>
                     </form>
                 </div>
+
+
                 <div class="sheet">
                     <div class="row titles">
                         <div class="date">Date</div>
@@ -43,27 +42,24 @@
                         <div class="description">Description</div>
                         <!--<div class="actions">Actions</div>--><!-- ng-show if the project is active -->
                     </div>
-                    <div class="row">
-                        <!-- ng-repeat would go here -->
-                        <div class="date">Oct 23</div>
-                        <div class="time">2.25</div>
-                        <div class="description">Worked on something for some client somewhere.</div>
+                    <div class="row" ng-repeat="rep in reports">
+                        <div class="date">{{rep.date | date}}</div>
+                        <div class="hours">{{rep.hours}}</div>
+                        <div class="description">{{rep.description}}</div>
                     </div>
-                    <div class="row">
-                        <!-- ng-repeat would go here -->
-                        <div class="date">Oct 23</div>
-                        <div class="time">2.25</div>
-                        <div class="description">Worked on something for some client somewhere.</div>
+                    <!-- <div class="row" ng-repeat="rep in reports">
+                        <div class="date"> {{ rep.date | date }}</div>
+                        <div class="hours">{{rep.hours}}</div>
+                        <div class="description">{{rep.description}}</div>
                     </div>
-                    <div class="row">
-                        <!-- ng-repeat would go here -->
-                        <div class="date">Oct 23</div>
-                        <div class="time">2.25</div>
-                        <div class="description">Worked on something for some client somewhere.</div>
-                    </div>
+                    <div class="row" ng-repeat="rep in reports">
+                        <div class="date">{{ rep.date | date }}</div>
+                        <div class="time">{{rep.hours}}</div>
+                        <div class="description">{{rep.description}}</div>
+                    </div> -->
                     <div class="row totals">
                         <div class="total"><b>Total:</b></div>
-                        <div class="total-time">6.75</div>
+                        <div class="total-time">{{sum}}</div>
                         <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
                         <div class="actions">
                             <button class="btn-export">Export to CSV</button>

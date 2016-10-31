@@ -38,8 +38,9 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     pic: firebaseUser.photoURL,
                     email: firebaseUser.email
                 };
-                authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
-                    $scope.secretData = results.data;
+                authFactory.user(objectToSend, idToken).then(function(results) {
+                    $scope.secretData = results;
+                    console.log($scope.secretData, 'asdasdasdasda');
                     sessionStorage.userAuth = idToken;
                     console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser, 'firebaseUser User');

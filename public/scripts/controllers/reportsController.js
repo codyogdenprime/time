@@ -5,7 +5,9 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
     $scope.allClients = [];
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
+    $scope.reports = [];
 
+    
 
 
     //CHECK ADMIN STATUS ?
@@ -47,7 +49,8 @@ myApp.controller('reportsController', ['factory', '$scope', '$http', '$location'
         var projid = $scope.selectedProject.projectid;
         var empid = $scope.selectedUser.empid;
         factory.getTime(projid,empid).then(function(results){
-          console.log(results,'run admin report');
+          $scope.reports = results.data;
+          console.log($scope.reports, ' reports');
         });
     };
 

@@ -58,6 +58,15 @@ myApp.factory('factory', ['$http', function($http){
       });//end http
     };//end changeIsAdmin
 
+  var adminStatus = function(authid){
+      return $http({
+        method:'GET',
+        url: 'api//users/admin/?authid=' + empid,
+        headers:{
+          id_token: idToken}
+      });
+  };
+
 
 
   var getMyProjects = function (empid) {
@@ -72,7 +81,7 @@ myApp.factory('factory', ['$http', function($http){
       }
   };
 
-  //get time based on employees is and project id
+  //get time based on employees id and project id
   var getTime = function(empid, projid){
     return $http({
       method:'GET',
