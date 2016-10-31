@@ -23,12 +23,10 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
     }; //end scope dot login
 
     auth.$onAuthStateChanged(function(firebaseUser) {
-
         // firebaseUser will be null if not logged in
         if (firebaseUser) {
             // This is where we make our call to our server
             firebaseUser.getToken().then(function(idToken) {
-
                 //google profile information to add to the database
                 //admin default to false & active to true
                 //can change these in emp Manage
