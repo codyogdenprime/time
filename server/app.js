@@ -13,6 +13,8 @@ var pg = require('pg');
 //use public folder
 app.use(express.static(path.resolve('public')));
 
+app.use('/inc', express.static(path.resolve('./node_modules/angularjs-datepicker/dist')));
+
 //.json body parser
 app.use(bodyParser.json());
 
