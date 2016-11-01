@@ -8,9 +8,24 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     $('single-project').hide();
 
     //all projects
-    $scope.allMyProjects = [];
-    $scope.allEmployees = [];
-    $scope.allProjectUsers = [];
+    // $scope.allMyProjects = [];
+    // $scope.allEmployees = [];
+    // $scope.allProjectUsers = [];
+
+$scope.getClients = function(){
+  factory.getAllClients().then(function(results) {
+      $scope.clients = results.data;
+      console.log('data in getClients',$scope.clients);
+  });//factory call
+};//getClients
+
+
+
+
+
+
+
+
 
     //get all projects
     $scope.getMyProjects = function() {
@@ -96,5 +111,6 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     //$scope.editProject('isactive', false, 2);
     //$scope.deleteTimeEntry(3);
     // $scope.addEmpToProject(2, 4);
+    $scope.getClients();
 
 }]);

@@ -4,18 +4,18 @@
             <div class="modal__close" style="position:fixed; top:0; right: 5%;color:#FFF;font-size: 4em;" onclick="modalReset();"><i class="fa fa-times"></i></div>
             <div class="modal__add-client">
                 <label>Add Client</label>
-                <input type="text" ng-model="" /><!-- New Client Input Field -->
+                <input type="text" /><!-- New Client Input Field -->
                 <input type="submit" onclick="addProjectToNewClient()" value="+" />
             </div>
             <div class="modal__add-project">
-                <label>Create New Project for {{ Client Name }}</label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
+                <label>Create New Project for Client Name </label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
                 <input type="text" /><!-- The Project Name Input Field -->
                 <input type="submit" value="+" />
             </div>
         </div>
-        <section class="clients cards">
-            <div class="card"><!-- ng-repeat -->
-                <a onclick="showSingleClient()" class="card__link">Client Name</a><!-- Client's Name -->
+        <section  class="clients cards">
+            <div ng-repeat = "client in clients" class="card">{{client}}<!-- ng-repeat -->
+                <a onclick="showSingleClient()" class="card__link">{{client.clientname}}</a><!-- Client's Name -->
             </div>
             <div class="card card-top"><!-- This should stay. -->
                 <a onclick="showAddClient()" class="card__new">Add Client</a><!-- This triggers the add a client process. -->
@@ -40,7 +40,7 @@
                 <div>
                     <select>
                         <!-- List of ACTIVE employees -->
-                        <option disabled selected>--</option> 
+                        <option disabled selected>--</option>
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
