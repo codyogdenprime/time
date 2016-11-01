@@ -276,6 +276,16 @@ myApp.factory('factory', ['$http', function($http){
     });//end http
   };//end get client projects
 
+  var getUserProjects = function(empid){
+    return $http({
+      method:'GET',
+      url: 'api/userprojects/?empid=' + empid,
+      headers: {
+        id_token:idToken
+      }
+    });
+  };
+
 
   return {
     getAllEmployees: getAllEmployees,
@@ -299,6 +309,7 @@ myApp.factory('factory', ['$http', function($http){
     deleteTimeEntry: deleteTimeEntry,
     addEmpToProject: addEmpToProject,
     getTime:getTime,
+    getUserProjects:getUserProjects,
     getMyTimeForThisProject: getMyTimeForThisProject,
     toggleStatus:toggleStatus,
     addClient:addClient
