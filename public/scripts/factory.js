@@ -107,7 +107,7 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'POST',
-      url: 'api/timebyprojemp',
+      url: 'api/time',
       data: objectToSend,
       headers: {
         id_token: idToken}
@@ -183,7 +183,7 @@ myApp.factory('factory', ['$http', function($http){
 
     return $http({
       method: 'DELETE',
-      url: '/api/timebyprojemp',
+      url: '/api/time',
       data: {timeid: timeId},
       headers: {id_token: idToken,
         "Content-Type": "application/json;charset=utf-8"}
@@ -213,7 +213,7 @@ myApp.factory('factory', ['$http', function($http){
     };
     return $http({
       method: 'GET',
-      url: 'api/time/?empid=' + empId + '&projectid=' + projId,
+      url: 'api/timebyprojemp/?empid=' + empId + '&projectid=' + projId,
       headers: {
         id_token: idToken}
     });

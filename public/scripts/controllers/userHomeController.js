@@ -1,6 +1,7 @@
 myApp.constant('moment', moment);
 
-var app = angular.module("app", ["xeditable"]);
+var app = angular.module("app", ["xeditable", '720kb.datepicker']);
+
 
 myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', function($scope, $http, factory, moment) {
     console.log('in userHomeController');
@@ -47,6 +48,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
 
         factory.addTime(objectToSend).then(function() {
             console.log('new time worked!');
+            $scope.getMyTimeForThisProject();
         });
     };
 
