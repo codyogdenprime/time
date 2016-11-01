@@ -7,6 +7,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
     $scope.reports = [];
+    $scope.userProjects = [];
 
     //get user status
     var userProfile = authFactory.get_user();
@@ -21,6 +22,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         factory.getAllClients().then(function(results) {
             $scope.allClients = results.data;
         }); //get all clients
+        if (userProfile.isadmin === false) {
+            var empid = userProfile.empid;
+            factory.getUserProjects(empid).then(function(results) {
+                console.log(results, 'if not admin get projects for current user');
+                $scope.userProjects = results.data;
+            });
+        }
         $scope.userStatus();
     }; //end scope dot init
 
@@ -42,6 +50,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }); //end get project users
     }; //end scope people on project
 
+    
+
     //get selected user from DOM
     $scope.user = function(selectedUser) {
         var empId = $scope.selectedUser.empid;
@@ -50,23 +60,34 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //run report
     $scope.runReport = function() {
-      //this will get reports for selected user above
-      console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
-      var projid = $scope.selectedProject.projectid;
-      var empid = $scope.selectedUser.empid;
-      factory.getTimebyselected(empid, projid).then(function(results) {
-          $scope.reports = results.data;
-          console.log($scope.reports, ' reports');
-      });
-    };
+        if (userProfile.isadmin === true) {
+            //this will get reports for selected user from drop down list -- only for admins
+            console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+            var projid = $scope.selectedProject.projectid;
+            var empid = $scope.selectedUser.empid;
+            factory.getTimebyselected(empid, projid).then(function(results) {
+                $scope.reports = results.data;
+                console.log($scope.reports, ' reports');
+            }); //end factory get
+        } else {
+            ///this gets
+            var empId = userUID;
+            var projId = $scope.selectedProject.projectid;
+            factory.getMyTimeForThisProject(empId, projId).then(function(results) {
+                console.log(results, 'if not admin');
+            }); //end factory get
+        } //end else
+    }; //end run report
 
     $scope.userStatus = function() {
-        //if user is not admin hide
+        //if user is  admin hide
         if (userProfile.isadmin === true) {
             $scope.selectEmp = false;
+            $scope.clientSelect = false;
         } else {
-            //if user IS admin show forms
+            //if user IS NOT admin show forms
             $scope.selectEmp = true;
+            $scope.clientSelect = true;
         }
     };
 

@@ -14,14 +14,15 @@
                             <input class="date-input" type="text" value="2016-10-23" />
                         </div>
 
-                        <div class="description">
+                        <div class="description" ng-hide="clientSelect">
                             <label>Client</label>
                             <select ng-change="client(selectedClient)" ng-model="selectedClient" ng-options="client as client.clientname for client in allClients"></select>
                         </div>
 
                         <div class="description">
                             <label>Project</label>
-                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects"></select>
+                            <select ng-if="userProfile.isadmin===false" ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects"></select>
+                            <select ng-if="userProfile.isadmin===true" ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects"></select>
                         </div>
                          <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
