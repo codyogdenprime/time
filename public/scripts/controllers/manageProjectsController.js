@@ -11,7 +11,8 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     // $scope.allMyProjects = [];
     // $scope.allEmployees = [];
     // $scope.allProjectUsers = [];
-
+    $scope.clients = [];
+    $scope.index = '';
 $scope.getClients = function(){
   factory.getAllClients().then(function(results) {
       $scope.clients = results.data;
@@ -29,8 +30,8 @@ $scope.addClient = function(){
 //gets all projects for a single client
 $scope.showSingleClient = function(data){
   console.log('showSingleClient() clicked clientid is ',data);
+    $scope.index = data;
   factory.getClientProjects(data).then(function(results){
-
     $scope.clientProjects = results.data;
     console.log('back from showSingleClient', $scope.clientProjects);
       showSingleClient();
@@ -41,6 +42,42 @@ $scope.showSingleClient = function(data){
 $scope.showAddClient = function(){
     showAddClient();
 };
+
+$scope.addProjectToNewClient = function(data){
+  console.log('client name in', data);
+  factory.addClient(data).then(function(response) {
+
+    addProjectToNewClient();
+  });//
+};//addProjectToNewClient
+
+$scope.showClients = function(){
+  showClients();
+};//showClients
+
+$scope.addProjectToClient = function() {
+  factory.addProject($scope.projectIn,$scope.index).then(function() {
+console.log('scope.projectIn',$scope.projectIn+' scope.index',$scope.index);
+  $scope.projectIn = undefined;
+    addProjectToClient();
+    factory.getClientProjects($scope.index).then(function(results){
+      $scope.clientProjects = results.data;
+      console.log('back from showSingleClient', $scope.clientProjects);
+        showSingleClient();
+    addProjectToNewClient();
+    modalReset();
+  });
+  });
+
+};//addProjectToClient
+
+
+
+
+
+
+
+
 
 
 
@@ -134,16 +171,60 @@ $scope.showAddClient = function(){
     // $scope.addEmpToProject(2, 4);
     $scope.getClients();
 
-    var showSingleClient = function() {
-        // Transition from all client cards to a single client
-        $('section.cards').fadeOutToLeft(function() {
-            $('section.single-client').fadeInFromRight();
-        });
-    };//showSingleClient
 
-    var showAddClient = function() {
-        $('.modal').addClass('modal-show');
-        $('.modal__add-client input[type="text"]').focus();
-    };//showAddClient
+
+
 
 }]);
+var showSingleClient = function() {
+    // Transition from all client cards to a single client
+    $('section.cards').fadeOutToLeft(function() {
+        $('section.single-client').fadeInFromRight();
+    });
+};//showSingleClient
+
+
+var showAddClient = function() {
+    $('.modal').addClass('modal-show');
+    $('.modal__add-client input[type="text"]').focus();
+};//showAddClient
+
+var addProjectToNewClient = function() {
+    $('.modal__add-client').animate({
+        top: "-200px",
+        opacity: 0
+    }, 300, function() {
+        $(this).hide();
+        $('.modal__add-project').show().css("opacity", 0).animate({
+            opacity: 1
+        }, 400);
+        $('.modal__add-project input[type="text"]').focus();
+    });
+};//add project to new client
+
+var showClients = function() {
+    // Transition back to all the clients
+    $('section.single-client').fadeOutToRight(function() {
+    	$('section.clients').show().fadeInFromLeft();
+    	$('section.single-client').css('left', '200px');
+    });
+};
+var modalReset = function() {
+    if ($('.modal').hasClass('modal-show')) {
+        $('.modal').removeClass('modal-show');
+    }
+    $('.modal__add-project').css('opacity', 0).hide();
+    $('.modal__add-client').show().css('top', '0px').css('opacity', 1);
+};
+var addProjectToClient = function() {
+    $('.modal__add-client').hide();
+    $('.modal__add-project').show().css('opacity', 1);
+    $('.modal').addClass('modal-show');
+};
+
+var showSingleProject = function() {
+    // Transition to single client.
+    $('section.single-client').fadeOutToLeft(function() {
+        $('section.single-project').fadeInFromRight();
+    });
+};

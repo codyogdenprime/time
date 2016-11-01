@@ -160,14 +160,12 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
-  var addProject = function (name, start, end, client, active) {
-    console.log('made it to addProject', name, start, end, client);
+  var addProject = function (name,client) {
+    console.log('made it to addProject', name, client);
     var objectToSend = {
       projectname: name,
-      startdate: start,
-      enddate: end,
       client_id: client,
-      isactive: active
+      isactive: true
     };
     return $http({
       method: 'POST',
