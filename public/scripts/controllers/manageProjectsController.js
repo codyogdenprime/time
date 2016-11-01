@@ -19,7 +19,28 @@ $scope.getClients = function(){
   });//factory call
 };//getClients
 
+$scope.addClient = function(){
+  factory.addClient().then(function(results) {
+      $scope.confirmation = results.data;
+      console.log('confirmation from addClient',$scope.confirmation);
+  });//factory call
+};//addClient
 
+//gets all projects for a single client
+$scope.showSingleClient = function(data){
+  console.log('showSingleClient() clicked clientid is ',data);
+  factory.getClientProjects(data).then(function(results){
+
+    $scope.clientProjects = results.data;
+    console.log('back from showSingleClient', $scope.clientProjects);
+      showSingleClient();
+        // Transition from all client cards to a single client
+  });//.then factory call
+};//showSingleClient
+
+$scope.showAddClient = function(){
+    showAddClient();
+};
 
 
 
@@ -112,5 +133,17 @@ $scope.getClients = function(){
     //$scope.deleteTimeEntry(3);
     // $scope.addEmpToProject(2, 4);
     $scope.getClients();
+
+    var showSingleClient = function() {
+        // Transition from all client cards to a single client
+        $('section.cards').fadeOutToLeft(function() {
+            $('section.single-client').fadeInFromRight();
+        });
+    };//showSingleClient
+
+    var showAddClient = function() {
+        $('.modal').addClass('modal-show');
+        $('.modal__add-client input[type="text"]').focus();
+    };//showAddClient
 
 }]);
