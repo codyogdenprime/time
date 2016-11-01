@@ -26,7 +26,7 @@
             <h2 ng-repeat = "client in clients" ng-show = "client.clientid == index">{{client.clientname}}</h2><!-- Selected Client's Name -->
             <div class="cards">
                 <div class="card" ng-repeat = "project in clientProjects"><!-- ng-repeat goes here - It shows all the projects for the selected client -->
-                    <a onclick="showSingleProject()" class="card__link">{{project.projectname}}</a><!-- Project's Name -->
+                    <a ng-click="getAllEmployees()" class="card__link">{{project.projectname}}</a><!-- Project's Name -->
                 </div>
                 <div class="card card-top"><!-- This must remain. -->
                     <a onclick="addProjectToClient()" class="card__new">Add Project</a>
@@ -37,16 +37,14 @@
             <button class="back-button" onclick="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> Client Name</button><!-- Current Client's Name -->
             <h2 style="display:inline-block;">Project Name</h2><!-- Current Project's Name -->
             <div>
-                <div>
-                    <select>
+                <div >
+                    <select ng-change = "employees(empDrop)" ng-model = "empDrop" ng-options = "emp as emp.empname for emp in allEmployees">
+
+                      <!-- <option ng-repeat = "emp in allEmployees" ng-model = "emp.empid">{{emp.empname}}</option> -->
                         <!-- List of ACTIVE employees -->
-                        <option disabled selected>--</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <!-- <option disabled selected>--</option> -->
                     </select>
-                    <button>Add Contractor</button><!-- This should assign the contractor to the selected project. -->
+                    <button ng-click = "addEmpToProject()">Add Contractor</button><!-- This should assign the contractor to the selected project. -->
                 </div>
                 <!-- <div class="no-contractors">No Contractors Assigned</div> -->
                 <!-- This shows if there are no contractors assigned to a project. -->
