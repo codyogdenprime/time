@@ -1,6 +1,7 @@
 <div class="users">
     <div class="sheet">
         <div class="row titles">
+            <div class="photo"></div>
             <div class="name">Name</div>
             <div class="email">Email Address</div>
             <div class="isadmin">Admin?</div>
@@ -8,11 +9,10 @@
         </div>
     </div>
     <div class="row user" ng-repeat="emp in allEmployees | orderBy: '-empname'">
-        <div class="photo"><img ng-src= {{emp.authpic}} alt = "No Photo Found" /></div><!-- Employee's Photo URL -->
+        <div class="photo"><img ng-src= {{emp.authpic}} alt="{{ }}" /></div><!-- Employee's Photo URL -->
         <div class="name">{{emp.empname}}</div>
         <div class="email">{{emp.authemail}}</div><!-- Employee's Email Address, mabye? -->
-        <div class="isadmin"><input ng-click = "toggleStatus(emp.empid,'adminStatus')" ng-show = "emp.isadmin==false"  type="checkbox" /></div>
-        <div class="isadmin"><input ng-click = "toggleStatus(emp.empid,'adminStatus')" ng-show = "emp.isadmin==true" checked = "checked" type="checkbox" /></div>
+        <div class="isadmin"><input ng-click = "toggleStatus(emp.empid,'adminStatus')" ng-checked="emp.isadmin"  type="checkbox" /></div>
         <div class="isactive">
             <!-- This <i> tag should be clickable. It should trigger an API call to toggle the user active or inactive. -->
             <!-- Inactive users will not show up in admin interfaces for employee selection, etc. -->
