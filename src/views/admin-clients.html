@@ -68,10 +68,10 @@
         });
     };
 
-    var showClients = function(button) {
+    var showClients = function() {
         // Transition back to all the clients
-        $(button).parent().fadeOutToRight(function() {
-            $('section.clients').fadeInFromLeft();
+        $('section.single-client').fadeOutToRight(function() {
+            $('section.clients').show().fadeInFromLeft();
             $('section.single-client').css('left', '200px');
         });
     };

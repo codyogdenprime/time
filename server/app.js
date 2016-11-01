@@ -46,5 +46,3 @@ app.use('/api', projects);
 //clients route
 var clients = require('./routes/api/clients');
 app.use('/api', clients);
-//use public folder
-app.use(express.static(path.resolve('public')));

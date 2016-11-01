@@ -6,7 +6,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     $scope.allClients = [];
     $scope.allClientProjects = [];
     $scope.usersOnProject = [];
-    $scope.reports = [];
+    $scope.reports = null;
 
     //get user status
     var userProfile = authFactory.get_user();
