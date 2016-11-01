@@ -70,7 +70,7 @@ myApp.factory('factory', ['$http', function($http){
 
 
   var getMyProjects = function (empid) {
-    console.log('into factory getMyProjects', idToken);
+    console.log('into factory getMyProjects');
       if(isAdmin){
         return $http({
           method: 'GET',
