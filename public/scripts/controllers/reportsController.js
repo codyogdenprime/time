@@ -50,13 +50,14 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //run report
     $scope.runReport = function() {
-        console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
-        var projid = $scope.selectedProject.projectid;
-        var empid = $scope.selectedUser.empid;
-        factory.getMyTimeForThisProject(empid, projid).then(function(results) {
-            $scope.reports = results.data;
-            console.log($scope.reports, ' reports');
-        });
+      //this will get reports for selected user above
+      console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+      var projid = $scope.selectedProject.projectid;
+      var empid = $scope.selectedUser.empid;
+      factory.getMyTimeForThisProject(empid, projid).then(function(results) {
+          $scope.reports = results.data;
+          console.log($scope.reports, ' reports');
+      });
     };
 
     $scope.userStatus = function() {
