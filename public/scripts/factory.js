@@ -218,6 +218,15 @@ myApp.factory('factory', ['$http', function($http){
         id_token: idToken}
     });
   };
+  var getTimebyselected = function(empid, projid){
+    return $http({
+      method: 'GET',
+      url: 'api/timebyemp/?empid=' + empid +'&projid=' + projid,
+      headers:{
+        id_token: idToken
+      }
+    });
+  };
   var toggleStatus = function(empid, type){
     var objectToSend = {
       type:type,
@@ -264,6 +273,7 @@ myApp.factory('factory', ['$http', function($http){
       return isAdmin;
     },
     changeIsAdmin: changeIsAdmin,
+    getTimebyselected:getTimebyselected,
     getClientProjects: getClientProjects,
     getActiveEmp: getActiveEmp,
     getInActiveEmp: getInActiveEmp,
