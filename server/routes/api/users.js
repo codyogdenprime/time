@@ -15,7 +15,7 @@ router.route('/users')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM employee WHERE isadmin = false');
+                    var queryResults = client.query('SELECT * FROM employee');
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
@@ -71,6 +71,7 @@ router.route('/users')
                     //toggle isactive
                     case 'activeStatus':
                         client.query('UPDATE employee SET isactive = NOT isactive WHERE empid = $1', [data.empid]);
+                        done();
                         res.send({
                             success: true
                         })(202);
@@ -78,6 +79,7 @@ router.route('/users')
                         //toggle isadmin
                     case 'adminStatus':
                         client.query('UPDATE employee SET isadmin = NOT isadmin WHERE empid = $1', [data.empid]);
+                        done();
                         res.send({
                             success: true
                         });
@@ -228,7 +230,6 @@ router.get('/users/byProject', function(req, res) {
     var verbose = true;
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         var data = req.query;
-        console.log(req.query);
         console.log('users/byProject get route hit');
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
@@ -247,6 +248,7 @@ router.get('/users/byProject', function(req, res) {
                 }); //on row function
                 queryResults.on('end', function() {
                     if (verbose) console.log('end!!!!!');
+                    done();
                     return res.send(resultsArray);
                 }); //on end function
             } //else
@@ -257,5 +259,31 @@ router.get('/users/byProject', function(req, res) {
         res.send("Sorry your Auth-Token was incorrect");
     }); //end catch
 }); //users by project get call
+
+router.get('/userstatus',function(req,res){
+  firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+  var data = req.query;
+  console.log(data.authid, 'AUTHIDDDDD');
+  pg.connect(connectionString, function(err,client,done){
+    if (err) {
+      console.log(err);
+    }else {
+      var resultsArray = [];
+      var query = client.query('SELECT * FROM employee WHERE authid = $1', [data.authid]);
+      query.on('row', function(row) {
+          resultsArray.push(row);
+      }); //query on row function
+      query.on('end', function() {
+          done();
+          return res.send(resultsArray);
+      }); //.on end function
+    }//end else
+  });//end pg connect
+}).catch(function(error) {
+    console.log(error);
+    // If the id_token isn't right, you end up in this callback function
+    res.send("Sorry your Auth-Token was incorrect");
+}); //end catch
+});
 
 module.exports = router;

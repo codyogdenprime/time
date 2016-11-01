@@ -1,4 +1,9 @@
-myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory',function($scope, $http, $firebaseArray, $firebaseAuth, $location,authFactory) {
+
+
+myApp.constant('moment', moment);
+
+myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$firebaseAuth', '$location', 'authFactory', function($scope, $http, $firebaseArray, $firebaseAuth, $location, authFactory) {
+
 
     console.log('in homeController');
 
@@ -23,12 +28,10 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
     }; //end scope dot login
 
     auth.$onAuthStateChanged(function(firebaseUser) {
-
         // firebaseUser will be null if not logged in
         if (firebaseUser) {
             // This is where we make our call to our server
             firebaseUser.getToken().then(function(idToken) {
-
                 //google profile information to add to the database
                 //admin default to false & active to true
                 //can change these in emp Manage
@@ -40,10 +43,20 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
                     pic: firebaseUser.photoURL,
                     email: firebaseUser.email
                 };
-                authFactory.getUserInfo(objectToSend, idToken).then(function(results) {
-                    $scope.secretData = results.data;
+                $http({
+                    method: 'POST',
+                    url: '/api/users/verify',
+                    data: objectToSend,
+                    headers: {
+                        id_token: idToken
+                    } //end headers
+                }).then(function(results) {
+                    var user = results.data;
+                    $scope.userProfile = authFactory.userProfile;
+                    authFactory.store_users(user);
+                    $scope.userProfile = authFactory.get_user();
+                    console.log($scope.userProfile);
                     sessionStorage.userAuth = idToken;
-                    console.log($scope.secretData, 'response from server');
                     console.log(firebaseUser, 'firebaseUser User');
                     //store google profile info in session storage
                     sessionStorage.userGoogleId = firebaseUser.uid;
@@ -67,20 +80,20 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
             location.reload();
             console.log('Logging the user out!');
             $scope.ifFirebaseUser();
-        });//auth sign out
-    };//end scope dot logOut
+        }); //auth sign out
+    }; //end scope dot logOut
 
     //if user is logged in, show log out button and change views
-    $scope.ifFirebaseUser = function (fbu) {
-      if (fbu){
-        $scope.loggedIn = true;
-        $scope.loggedOut = false;
-        // $location.url('/userHome');
-      }else {
-        $scope.loggedIn = false;
-        $scope.loggedOut = true;
-        $location.url('/');
-      }
+    $scope.ifFirebaseUser = function(fbu) {
+        if (fbu) {
+            $scope.loggedIn = true;
+            $scope.loggedOut = false;
+            $location.url('/userHome');
+        } else {
+            $scope.loggedIn = false;
+            $scope.loggedOut = true;
+            $location.url('/');
+        }
     };
 
 }]); //end controller

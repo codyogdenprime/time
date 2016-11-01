@@ -16,7 +16,7 @@
             <form class="add-time">
                 <div class="date">
                     <label>Date</label>
-                    <input class="date-input" type="text" value="2016-10-23" />
+                    <input class="date-input" type="text" ng-model="dateInputModel"/>
                 </div>
                 <!-- This only shows if there is an administrator present. -->
                 <!--<div>
@@ -38,14 +38,14 @@
                         </div>-->
                 <div class="time">
                     <label>Time</label>
-                    <input class="time-input" type="text" value="2.25" />
+                    <input class="time-input" type="text" ng-model="timeInputModel" />
                 </div>
                 <div class="description">
                     <label>Description</label>
-                    <input type="text" value="I ate pizza and watched Netflix" />
+                    <input type="text" ng-model="descriptionInputModel" />
                 </div>
                 <div class="submit">
-                    <button>Add Time</button>
+                    <button ng-click="newTime()">Add Time</button>
                     <!-- This button should save the time entry to the server. -->
                 </div>
             </form>
@@ -55,22 +55,22 @@
                 <div class="date">Date</div>
                 <div class="time">Time</div>
                 <div class="description">Description</div>
-                <div class="actions">Actions</div> <!-- ng-show if the project is active -->
+                <div class="actions" ng-show="myCurrentProject.isactive">Actions</div> <!-- ng-show if the project is active -->
             </div>
-            <div class="row"> <!-- ng-repeat would go here -->
-                <div class="date">Oct 23</div>
-                <div class="time">2.25</div>
-                <div class="description">Worked on something for some client somewhere.</div>
-                <div class="actions"><!-- ng-show if the project is active -->
+            <div class="row" ng-repeat="time in allMyTime"> <!-- ng-repeat would go here -->
+                <div class="date">{{time.date}}</div>
+                <div class="time">{{time.hours}}</div>
+                <div class="description">{{time.description}}</div>
+                <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
                     <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
-                    <button class="btn-delete">Delete</button>
+                    <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
                 </div>
             </div>
             <div class="row totals">
                 <div class="total"><b>Total:</b></div>
-                <div class="total-time">6.75</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                <div class="total-time">{{allHoursAdded}}</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
                 <div class="actions">
-                    <button class="btn-export">Export to CSV</button>
+                    <button class="btn-export" ng-click="exportCSV()">Export to CSV</button>
                 </div>
             </div>
         </div>

@@ -13,14 +13,16 @@ router.route('/projects')
 
             console.log('projects get route hit');
             pg.connect(connectionString, function(err, client, done) {
-                var data = client.query;
+                //req.query pulls client id from query paramaters
+                var data = req.query;
+                console.log(data, 'dataatatat');
                 if (err) {
                     console.log(err);
                 } else {
                     var resultsArray = [];
                     var queryResults;
                     if (data.clientUID !== undefined) {
-                        queryResults = client.query('SELECT * FROM projects WHERE authid = $1', [data.clientUID]);
+                        queryResults = client.query('SELECT * FROM projects WHERE client_id = $1', [data.clientUID]);
                     } else {
                         queryResults = client.query('SELECT * FROM projects');
                     }
