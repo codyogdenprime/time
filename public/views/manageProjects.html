@@ -4,29 +4,29 @@
             <div class="modal__close" style="position:fixed; top:0; right: 5%;color:#FFF;font-size: 4em;" onclick="modalReset();"><i class="fa fa-times"></i></div>
             <div class="modal__add-client">
                 <label>Add Client</label>
-                <input type="text" ng-model="" /><!-- New Client Input Field -->
-                <input type="submit" onclick="addProjectToNewClient()" value="+" />
+                <input type="text" ng-model = "clientNameIn"/><!-- New Client Input Field -->
+                <input type="submit" ng-click="addProjectToNewClient(clientNameIn)" value="+" />
             </div>
             <div class="modal__add-project">
-                <label>Create New Project for {{ Client Name }}</label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
-                <input type="text" /><!-- The Project Name Input Field -->
-                <input type="submit" value="+" />
+                <label>Create New Project for Client Name </label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
+                <input type="text" ng-model = "projectIn"/><!-- The Project Name Input Field -->
+                <input type="submit" value="+" ng-click = "addProjectToClient()" />
             </div>
         </div>
-        <section class="clients cards">
-            <div class="card"><!-- ng-repeat -->
-                <a onclick="showSingleClient()" class="card__link">Client Name</a><!-- Client's Name -->
+        <section  class="clients cards">
+            <div ng-repeat = "client in clients" class="card"><!-- ng-repeat -->
+                <a ng-click="showSingleClient(client.clientid)" class="card__link">{{client.clientname}}</a><!-- Client's Name -->
             </div>
             <div class="card card-top"><!-- This should stay. -->
-                <a onclick="showAddClient()" class="card__new">Add Client</a><!-- This triggers the add a client process. -->
+                <a  ng-click = "showAddClient()" class="card__new">Add Client</a><!-- This triggers the add a client process. -->
             </div>
         </section>
         <section class="single-client" style="height:40vh;opacity:0;position:relative;left:200px;">
-            <button onclick="showClients(this)">Clients</button><!-- This sends them back to all the clients. -->
-            <h2>Client Name</h2><!-- Selected Client's Name -->
+            <button ng-click="showClients()">Clients</button><!-- This sends them back to all the clients. -->
+            <h2 ng-repeat = "client in clients" ng-show = "client.clientid == index">{{client.clientname}}</h2><!-- Selected Client's Name -->
             <div class="cards">
-                <div class="card"><!-- ng-repeat goes here - It shows all the projects for the selected client -->
-                    <a onclick="showSingleProject()" class="card__link">Project Name</a><!-- Project's Name -->
+                <div class="card" ng-repeat = "project in clientProjects"><!-- ng-repeat goes here - It shows all the projects for the selected client -->
+                    <a ng-click="getAllEmployees()" class="card__link">{{project.projectname}}</a><!-- Project's Name -->
                 </div>
                 <div class="card card-top"><!-- This must remain. -->
                     <a onclick="addProjectToClient()" class="card__new">Add Project</a>
@@ -37,16 +37,14 @@
             <button class="back-button" onclick="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> Client Name</button><!-- Current Client's Name -->
             <h2 style="display:inline-block;">Project Name</h2><!-- Current Project's Name -->
             <div>
-                <div>
-                    <select>
+                <div >
+                    <select ng-change = "employees(empDrop)" ng-model = "empDrop" ng-options = "emp as emp.empname for emp in allEmployees">
+
+                      <!-- <option ng-repeat = "emp in allEmployees" ng-model = "emp.empid">{{emp.empname}}</option> -->
                         <!-- List of ACTIVE employees -->
-                        <option disabled selected>--</option> 
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <!-- <option disabled selected>--</option> -->
                     </select>
-                    <button>Add Contractor</button><!-- This should assign the contractor to the selected project. -->
+                    <button ng-click = "addEmpToProject()">Add Contractor</button><!-- This should assign the contractor to the selected project. -->
                 </div>
                 <!-- <div class="no-contractors">No Contractors Assigned</div> -->
                 <!-- This shows if there are no contractors assigned to a project. -->

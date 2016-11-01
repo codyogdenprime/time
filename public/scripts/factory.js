@@ -70,7 +70,7 @@ myApp.factory('factory', ['$http', function($http){
 
 
   var getMyProjects = function (empid) {
-    console.log('into factory getMyProjects');
+    console.log('in factory getMyProjects');
       if(isAdmin){
         return $http({
           method: 'GET',
@@ -160,14 +160,12 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
-  var addProject = function (name, start, end, client, active) {
-    console.log('made it to addProject', name, start, end, client);
+  var addProject = function (name,client) {
+    console.log('made it to addProject', name, client);
     var objectToSend = {
       projectname: name,
-      startdate: start,
-      enddate: end,
       client_id: client,
-      isactive: active
+      isactive: true
     };
     return $http({
       method: 'POST',
@@ -241,6 +239,19 @@ myApp.factory('factory', ['$http', function($http){
         id_token: idToken}
     });//http call
   };//toggleAdminStatus
+  var addClient = function (clientname) {
+    console.log('made it to addClient', clientname);
+    var objectToSend = {
+      clientname: clientname,
+    };
+    return $http({
+      method: 'POST',
+      url: 'api/clients',
+      data: objectToSend,
+      headers: {
+        id_token: idToken}
+    });
+  };
 
   var getAllClients = function(){
     //get all clients
@@ -289,7 +300,8 @@ myApp.factory('factory', ['$http', function($http){
     addEmpToProject: addEmpToProject,
     getTime:getTime,
     getMyTimeForThisProject: getMyTimeForThisProject,
-    toggleStatus:toggleStatus
+    toggleStatus:toggleStatus,
+    addClient:addClient
 
   };
 

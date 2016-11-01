@@ -46,6 +46,7 @@ router.route('/clients')
                 } else {
                     // clientname
                     var query = client.query('INSERT INTO clients (clientname) VALUES ($1)', [data.clientname]);
+                    done();
                     res.send({
                         success: true
                     });
@@ -68,6 +69,7 @@ router.route('/clients')
                 console.log(err);
             } else {
                 client.query('UPDATE clients SET clientname = $1 WHERE clientid = $2', [data.clientname, data.clientid]);
+                done();
                 res.send({
                     success: true
                 });
