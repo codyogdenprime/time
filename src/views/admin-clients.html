@@ -62,18 +62,21 @@
 
 
     var showSingleClient = function() {
+        // Transition from all client cards to a single client
         $('section.cards').fadeOutToLeft(function() {
             $('section.single-client').fadeInFromRight();
         });
     };
 
     var showClients = function(button) {
+        // Transition back to all the clients
         $(button).parent().fadeOutToRight(function() {
             $('section.clients').fadeInFromLeft();
             $('section.single-client').css('left', '200px');
         });
     };
     var showSingleProject = function() {
+        // Transition to single client.
         $('section.single-client').fadeOutToLeft(function() {
             $('section.single-project').fadeInFromRight();
         });
@@ -176,15 +179,15 @@
             <!-- Must pass `this` as a parameter. -->
             <h2>Client Name</h2>
             <div class="cards">
-                <div class="card">
-                    <a onclick="showSingleProject()" class="card__link">Project Name</a>
+                <div class="card"><!-- ng-repeat goes here -->
+                    <a onclick="showSingleProject()" class="card__link">Project Name</a><!-- Project's Name -->
                 </div>
-                <div class="card card-top">
+                <div class="card card-top"><!-- This must remain. -->
                     <a onclick="addProjectToClient()" class="card__new">Add Project</a>
                 </div>
             </div>
         </section>
-        <section class="single-project" style="">
+        <section class="single-project" style="height:40vh;opacity:0;position:relative;left:200px;">
             <button class="back-button" onclick="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> Client Name</button>
             <h2 style="display:inline-block;">Project Name</h2>
             <!-- <button onclick="">Client Name</button> -->
@@ -211,9 +214,9 @@
                     <div class="row">
                         <!-- ng-repeat goes here -->
                         <div class="photo"><img src="http://placehold.it/50" /></div> <!-- Employee's Photo Should Go Here. -->
-                        <div class="name">Cody Ogden</div>
+                        <div class="name">Cody Ogden</div><!-- Employee's Name -->
                         <div class="actions">
-                            <button>Remove</button>
+                            <button>Remove</button><!-- This should remove the employee from the project. -->
                         </div>
                     </div>
                     <div class="row">
