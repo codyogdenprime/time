@@ -32,12 +32,12 @@
     <script src="inc/angular-datepicker.min.js"></script>
     <link rel="stylesheet" href="inc/angular-datepicker.min.css">
   </head>
-  <body ng-app="myApp">
+  <body ng-app="myApp" ng-controller = "homeController">
     <header class="header"><!-- This header is the same on every page. -->
         <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
-            <ul class="menu menu__main" ng-controller = "homeController">
-                <li><a href="#userHome">Projects</a></li>
+            <ul class="menu menu__main">
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#reports">Reports</a></li>
                 <!-- <li>Settings</li> For Admin Only? Maybe different now that we changed the views. -->
 
@@ -47,7 +47,7 @@
             </ul>
         </nav>
     </header>
-    <main ng-view>
+    <main ng-view ng-if="loggedIn">
       <!-- This is where the ng-view -->
     </main>
   </body>

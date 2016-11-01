@@ -68,12 +68,20 @@ var showProjects = function() {
 
 };
 
-var myApp = angular.module('myApp', ['ngRoute','firebase']);
+$(document).keyup(function(e) {
+    // If a user hits `esc` and the modal is showing
+    if (e.keyCode === 27 && $('.modal-show')) {
+        // Get Rid of it and reset it.
+        modalReset();
+    }
+});
+
+var myApp = angular.module('myApp', ['ngRoute', 'firebase']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
     when('/', {
-        templateUrl: "/views/dash.html"
+        templateUrl: "/views/userHome.html"
     }).
     when('/addHours', {
         templateUrl: "/views/addHours.html",
@@ -106,15 +114,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
     when('/reports', {
         templateUrl: "views/reports.html",
         controller: "reportsController",
-        resolve: {
-            "firebaseUser": function($firebaseAuthService) {
-                return $firebaseAuthService.$requireSignIn();
-            }
-        }
-    }).
-    when('/userHome', {
-        templateUrl: "views/userHome.html",
-        controller: "userHomeController",
         resolve: {
             "firebaseUser": function($firebaseAuthService) {
                 return $firebaseAuthService.$requireSignIn();
