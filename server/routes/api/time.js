@@ -38,6 +38,32 @@ router.route('/timebyprojemp')
             res.send("Sorry your Auth-Token was incorrect");
         }); //end catch
     }); //router.get
+    //get time based on selected user from DOM
+    router.route('/timebyemp')
+      .get(function(req,res){
+        firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+        var data = req.query;
+        pg.connect(connectionString, function(err,client,done){
+          if (err) {
+            console.log(err);
+          }else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 and projid = $2', [data.empid, data.projid]);
+            queryResults.on('row',function(row){
+              resultsArray.push(row);
+            });//query results row
+            queryResults.on('end', function(){
+              done();
+              return res.send(resultsArray);
+            });//end queryResults end
+          }//end else
+        });//end pg connect
+      }).catch(function(error) {
+          console.log(error);
+          // If the id_token isn't right, you end up in this callback function
+          res.send("Sorry your Auth-Token was incorrect");
+      }); //end catch
+      });//end router get
     //selecting all from time table
     router.route('/time')
         //selecting all from time table
