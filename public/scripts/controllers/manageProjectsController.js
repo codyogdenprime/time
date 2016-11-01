@@ -3,6 +3,10 @@ myApp.constant('moment', moment);
 myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
     console.log('in manageProjectsController');
 
+    // Hides the transition views
+    $('.single-client').hide();
+    $('single-project').hide();
+
     //all projects
     $scope.allMyProjects = [];
     $scope.allEmployees = [];
