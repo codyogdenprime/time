@@ -205,15 +205,15 @@ myApp.factory('factory', ['$http', function($http){
     });
   };
 
-  var getMyTimeForThisProject = function (empId, projId) {
-    console.log('made it to getMyTimeForThisProject', empId, projId);
+  var getMyTimeForThisProject = function (userUID, projid) {
+    console.log('made it to getMyTimeForThisProject', userUID, projid);
     var objectToSend = {
-      empid: empId,
-      projectid: projId,
+      userUID: userUID,
+      projectid: projid,
     };
     return $http({
       method: 'GET',
-      url: 'api/time/?empid=' + empId + '&projectid=' + projId,
+      url: 'api/timebyprojemp/?userUID=' + userUID + '&projectid=' + projid,
       headers: {
         id_token: idToken}
     });

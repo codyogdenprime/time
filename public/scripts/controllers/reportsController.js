@@ -11,10 +11,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     //get user status
     var userProfile = authFactory.get_user();
     console.log(userProfile.isadmin);
+    var userUID = sessionStorage.getItem('userGoogleId');
+    var userDisplayName = sessionStorage.getItem('userDisplayName');
+    var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
 
     // get all clients
-    $scope.init = function(isadmin) {
+    $scope.init = function() {
         factory.getAllClients().then(function(results) {
             $scope.allClients = results.data;
         }); //get all clients
@@ -44,35 +47,18 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         var empId = $scope.selectedUser.empid;
         console.log(empId);
     };
-    // $scope.addAllHours = function(){
-    //   $scope.addAllHoursAdded = 0;
-    //   for (var i = 0; i < $scope.selectedProject.length; i++) {
-    //     console.log(Number($scope.selectedProject[i].hours));
-    //     $scope.allHoursAdded += Number($scope.selectedProject[i].hours);
-    //   }
-    //   console.log('ADDDDDDDDD', $scope.allHoursAdded);
-    // };
 
     //run report
     $scope.runReport = function() {
-
-        if ($scope.selectedProject === undefined && $scope.selectedUser === undefined) {
-            //reports will equal selected clients projects if only client selected
-            $scope.reports = $scope.allClientProjects;
-            console.log($scope.reports);
-        } else if ($scope.selectedUser === undefined) {
-
-        } {
-            console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
-            var projid = $scope.selectedProject.projectid;
-            var empid = $scope.selectedUser.empid;
-            factory.getMyTimeForThisProject(projid, empid).then(function(results) {
-                $scope.reports = results.data;
-                console.log($scope.reports, ' reports');
-            });
-        }
-
+        console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+        var projid = $scope.selectedProject.projectid;
+        var empid = $scope.selectedUser.empid;
+        factory.getMyTimeForThisProject(empid, projid).then(function(results) {
+            $scope.reports = results.data;
+            console.log($scope.reports, ' reports');
+        });
     };
+
     $scope.userStatus = function() {
         //if user is not admin hide
         if (userProfile.isadmin === true) {

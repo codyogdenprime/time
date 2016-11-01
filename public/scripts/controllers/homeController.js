@@ -88,7 +88,7 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
         if (fbu) {
             $scope.loggedIn = true;
             $scope.loggedOut = false;
-            $location.url('/userHome');
+            // $location.url('/userHome');
         } else {
             $scope.loggedIn = false;
             $scope.loggedOut = true;
