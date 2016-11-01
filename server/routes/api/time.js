@@ -153,6 +153,7 @@ router.route('/timebyprojemp')
                     }
                     updatedInfo = data.value;
                     client.query('UPDATE time SET ' + column + ' = $1 WHERE timeid = $2', [updatedInfo, data.timeid]);
+                    done();
                     res.send({
                         success: true
                     });
@@ -175,6 +176,7 @@ router.route('/timebyprojemp')
                 console.log(err);
             } else {
                 var query = client.query('DELETE FROM time WHERE timeid = $1', [data.timeid]);
+                done();
                 res.send({
                     success: true
                 });

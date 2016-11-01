@@ -56,6 +56,7 @@ router.route('/projects')
                 } else {
                     var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)', [data.projectname, true, data.startdate, data.enddate, data.client_id]);
                     //need to assign employees to project via emp_proj join table
+                    done();
                     res.send({
                         success: true
                     });
@@ -103,6 +104,7 @@ router.route('/projects')
                     var clientQuery = 'UPDATE projects SET ' + column + ' = ' + updatedInfo + ' WHERE projectid = ' + data.projectid;
                     console.log(clientQuery);
                     client.query('UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [updatedInfo, data.projectid]);
+                    done();
                     res.send({
                         success: true
                     });
@@ -128,6 +130,7 @@ router.route('/projects/users')
                     console.log(err);
                 } else {
                     var query = client.query('INSERT INTO emp_proj (emp_id,project_id) VALUES ($1,$2)', [data.empid, data.projectid]);
+                    done();
                     res.send({
                         success: true
                     });
@@ -151,6 +154,7 @@ router.route('/projects/users')
                 console.log(err);
             } else {
                 var query = client.query('DELETE FROM emp_proj WHERE emp_id=$1 AND project_id=$2', [data.empid, data.projectid]);
+                done();
                 res.send({
                     success: true
                 });
