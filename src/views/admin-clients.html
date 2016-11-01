@@ -10,138 +10,146 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <script src="https://unpkg.com/jquery@3.1.1"></script>
     <script>
+    (function($) {
 
-        (function($) {
-
-            $.fn.fadeOutToLeft = function(callback) {
-                $(this).animate({
-                    opacity: 0,
-                    left: "-200px"
-                }, 300, function() {
-                    $(this).hide();
-                    if (callback) {
-                        callback();
-                    }
-                });
-                return this;
-            };
-
-            $.fn.fadeInFromRight = function(callback) {
-                $(this).show().animate({
-                    opacity: 1,
-                    left: "0px"
-                }, 200);
-                return this;
-            };
-
-            $.fn.fadeOutToRight = function(callback) {
-                $(this).animate({
-                    opacity: 0,
-                    left: "200px"
-                }, 300, function() {
-                    $(this).hide();
-                    if (callback) {
-                        callback();
-                    }
-                });
-                return this;
-            };
-
-            $.fn.fadeInFromLeft = function(callback) {
-                $(this).show().animate({
-                    opacity: 1,
-                    left: "0px"
-                }, 200, function(){
-                    if (callback) {
-                        callback();
-                    }
-                });
-                
-            };
-
-        })(jQuery);
-
-
-        var showSingleClient = function() {
-            $('section.cards').fadeOutToLeft(function(){
-                $('section.single-client').fadeInFromRight();
-            });
-        };
-
-        var showClients = function(button) {
-            $(button).parent().fadeOutToRight(function(){
-                $('section.clients').fadeInFromLeft();
-                $('section.single-client').css('left', '200px');
-            });
-        };
-        var showSingleProject = function() {
-            $('section.single-client').fadeOutToLeft(function(){
-                $('section.single-project').fadeInFromRight();
-            });
-        };
-        var backToSingleClient = function() {
-            $('section.single-project').fadeOutToRight(function(){
-                $('section.single-client').fadeInFromLeft();
-            });
-        };
-        var showAddClient = function() {
-            $('.modal').addClass('modal-show');
-            $('.modal__add-client input[type="text"]').focus();
-        };
-        var addProjectToNewClient = function() {
-            $('.modal__add-client').animate({top:"-200px",opacity:0}, 300, function(){
+        $.fn.fadeOutToLeft = function(callback) {
+            $(this).animate({
+                opacity: 0,
+                left: "-200px"
+            }, 300, function() {
                 $(this).hide();
-                $('.modal__add-project').show().css("opacity",0).animate({opacity:1}, 400);
-                $('.modal__add-project input[type="text"]').focus();
+                if (callback) {
+                    callback();
+                }
             });
+            return this;
         };
 
-        var addProjectToClient = function() {
-            $('.modal__add-client').hide();
-            $('.modal__add-project').show().css('opacity',1);
-            $('.modal').addClass('modal-show');
+        $.fn.fadeInFromRight = function(callback) {
+            $(this).show().animate({
+                opacity: 1,
+                left: "0px"
+            }, 200);
+            return this;
         };
 
-        var modalReset = function() {
-            if($('.modal').hasClass('modal-show')) {
-                $('.modal').removeClass('modal-show');
-            }
-            $('.modal__add-project').css('opacity', 0).hide();
-            $('.modal__add-client').show().css('top','0px').css('opacity',1);
+        $.fn.fadeOutToRight = function(callback) {
+            $(this).animate({
+                opacity: 0,
+                left: "200px"
+            }, 300, function() {
+                $(this).hide();
+                if (callback) {
+                    callback();
+                }
+            });
+            return this;
         };
 
-        $(document).keyup(function(e) {
-          // if (e.keyCode === 13) $('.save').click();     // enter
-          if (e.keyCode === 27) {
+        $.fn.fadeInFromLeft = function(callback) {
+            $(this).show().animate({
+                opacity: 1,
+                left: "0px"
+            }, 200, function() {
+                if (callback) {
+                    callback();
+                }
+            });
+
+        };
+
+    })(jQuery);
+
+
+    var showSingleClient = function() {
+        $('section.cards').fadeOutToLeft(function() {
+            $('section.single-client').fadeInFromRight();
+        });
+    };
+
+    var showClients = function(button) {
+        $(button).parent().fadeOutToRight(function() {
+            $('section.clients').fadeInFromLeft();
+            $('section.single-client').css('left', '200px');
+        });
+    };
+    var showSingleProject = function() {
+        $('section.single-client').fadeOutToLeft(function() {
+            $('section.single-project').fadeInFromRight();
+        });
+    };
+    var backToSingleClient = function() {
+        $('section.single-project').fadeOutToRight(function() {
+            $('section.single-client').fadeInFromLeft();
+        });
+    };
+    var showAddClient = function() {
+        $('.modal').addClass('modal-show');
+        $('.modal__add-client input[type="text"]').focus();
+    };
+    var addProjectToNewClient = function() {
+        $('.modal__add-client').animate({
+            top: "-200px",
+            opacity: 0
+        }, 300, function() {
+            $(this).hide();
+            $('.modal__add-project').show().css("opacity", 0).animate({
+                opacity: 1
+            }, 400);
+            $('.modal__add-project input[type="text"]').focus();
+        });
+    };
+
+    var addProjectToClient = function() {
+        $('.modal__add-client').hide();
+        $('.modal__add-project').show().css('opacity', 1);
+        $('.modal').addClass('modal-show');
+    };
+
+    var modalReset = function() {
+        if ($('.modal').hasClass('modal-show')) {
+            $('.modal').removeClass('modal-show');
+        }
+        $('.modal__add-project').css('opacity', 0).hide();
+        $('.modal__add-client').show().css('top', '0px').css('opacity', 1);
+    };
+
+    $(document).keyup(function(e) {
+        // If a user hits `esc` and the modal is showing
+        if (e.keyCode === 27 && $('.modal-show')) {
+            // Get Rid of it and reset it.
             modalReset();
-            
-          }   // esc
+        }
+    });
 
-        });
 
-        $(document).ready(function(){
-          $('.single-client').hide();
-          $('single-project').hide();
-        });
-
+    $(document).ready(function() {
+        // These two lines should be put into the CONTROLLER for this view.
+        $('.single-client').hide();
+        $('single-project').hide();
+    });
     </script>
 </head>
 
 <body>
-    <header class="header"><!-- This header is the same on every page. -->
+    <header class="header">
+        <!-- This header is the same on every page. -->
         <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main">
                 <li>Projects</li>
                 <li>Reports</li>
-                <li>Clients</li><!-- For Admin user only. -->
-                <li>Contractors</li><!-- For Admin user only. -->
+                <li>Clients</li>
+                <!-- For Admin user only. -->
+                <li>Contractors</li>
+                <!-- For Admin user only. -->
                 <li>Sign Out</li>
                 <!-- <li>Sign In</li> For Logged Out Only -->
             </ul>
         </nav>
     </header>
-    <main><!-- This is the ng-view -->
+    <main>
+        <!-- This is the ng-view -->
         <div class="modal modal__add ">
             <div class="modal__close" style="position:fixed; top:0; right: 5%;color:#FFF;font-size: 4em;" onclick="modalReset();"><i class="fa fa-times"></i></div>
             <div class="modal__add-client">
@@ -155,59 +163,65 @@
                 <input type="submit" value="+" />
             </div>
         </div>
-    	<section class="clients cards">
-    	   <div class="card">
+        <section class="clients cards">
+            <div class="card">
                 <a onclick="showSingleClient()" class="card__link">Client Name</a>
-           </div>
-           <div class="card card-top">
+            </div>
+            <div class="card card-top">
                 <a onclick="showAddClient()" class="card__new">Add Client</a>
-           </div>
-    	</section>
-    	<section class="single-client" style="height:40vh;opacity:0;position:relative;left:200px;">
-            <button onclick="showClients(this)">Clients</button><!-- Must pass `this` as a parameter. -->
+            </div>
+        </section>
+        <section class="single-client" style="height:40vh;opacity:0;position:relative;left:200px;">
+            <button onclick="showClients(this)">Clients</button>
+            <!-- Must pass `this` as a parameter. -->
             <h2>Client Name</h2>
             <div class="cards">
                 <div class="card">
                     <a onclick="showSingleProject()" class="card__link">Project Name</a>
-               </div>
-               <div class="card card-top">
+                </div>
+                <div class="card card-top">
                     <a onclick="addProjectToClient()" class="card__new">Add Project</a>
-               </div>
+                </div>
             </div>
-    	</section>
-    	<section class="single-project" style="height:40vh;opacity:0;position:relative;left:200px;">
-            <button onclick="showClients(this)">Clients</button><!-- Must pass `this` as a parameter. -->
-            <button onclick="backToSingleClient()">Client Name</button>
+        </section>
+        <section class="single-project" style="">
+            <button class="back-button" onclick="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> Client Name</button>
+            <h2 style="display:inline-block;">Project Name</h2>
+            <!-- <button onclick="">Client Name</button> -->
             <div>
-                <h2>Project Name</h2>
                 <div>
-                    <select> <!-- List of ACTIVE employees -->
+                    <select>
+                        <!-- List of ACTIVE employees -->
                         <option disabled selected>--</option>
                         <option>2</option>
                         <option>3</option>
+                        <option>4</option>
                         <option>5</option>
-                        <option></option>
                     </select>
                     <button>Add Contractor</button>
                 </div>
-                <div>No Contractors Assigned</div>
+                <!-- <div class="no-contractors">No Contractors Assigned</div> -->
+                <!-- This shows if there are no contractors assigned to a project. -->
                 <div class="sheet">
                     <div class="row titles">
-                        <div class="photo" style="width:50px;"></div>
+                        <div class="photo"></div><!-- Blank -->
                         <div class="name">Name</div>
                         <div class="actions">Actions</div>
                     </div>
-                    <div class="row"><!-- ng-repeat goes here -->
-                        <div class="photo" style="width:50px;"><img src="http://placehold.it/50" /></div>
+                    <div class="row">
+                        <!-- ng-repeat goes here -->
+                        <div class="photo"><img src="http://placehold.it/50" /></div> <!-- Employee's Photo Should Go Here. -->
                         <div class="name">Cody Ogden</div>
-                        <div class="actions"><button>Remove</button></div>
+                        <div class="actions">
+                            <button>Remove</button>
+                        </div>
                     </div>
-                    <div class="row"><!-- ng-repeat goes here -->
-
+                    <div class="row">
+                        <!-- Left Blank on Purpose -->
                     </div>
                 </div>
             </div>
-    	</section>
+        </section>
     </main>
 </body>
 
