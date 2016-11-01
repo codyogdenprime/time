@@ -91,6 +91,6 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     //$scope.getAllEmployees();
     //$scope.editProject('isactive', false, 2);
     //$scope.deleteTimeEntry(3);
-    $scope.addEmpToProject(2, 4);
+    // $scope.addEmpToProject(2, 4);
 
 }]);
