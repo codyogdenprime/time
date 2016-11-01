@@ -68,7 +68,73 @@ var showProjects = function() {
 
 };
 
-var myApp = angular.module('myApp', ['ngRoute','firebase']);
+
+
+var showSingleClient = function() {
+    // Transition from all client cards to a single client
+    $('section.cards').fadeOutToLeft(function() {
+        $('section.single-client').fadeInFromRight();
+    });
+};
+
+var showClients = function(button) {
+    // Transition back to all the clients
+    $(button).parent().fadeOutToRight(function() {
+        $('section.clients').fadeInFromLeft();
+        $('section.single-client').css('left', '200px');
+    });
+};
+var showSingleProject = function() {
+    // Transition to single client.
+    $('section.single-client').fadeOutToLeft(function() {
+        $('section.single-project').fadeInFromRight();
+    });
+};
+var backToSingleClient = function() {
+    $('section.single-project').fadeOutToRight(function() {
+        $('section.single-client').fadeInFromLeft();
+    });
+};
+var showAddClient = function() {
+    $('.modal').addClass('modal-show');
+    $('.modal__add-client input[type="text"]').focus();
+};
+var addProjectToNewClient = function() {
+    $('.modal__add-client').animate({
+        top: "-200px",
+        opacity: 0
+    }, 300, function() {
+        $(this).hide();
+        $('.modal__add-project').show().css("opacity", 0).animate({
+            opacity: 1
+        }, 400);
+        $('.modal__add-project input[type="text"]').focus();
+    });
+};
+
+var addProjectToClient = function() {
+    $('.modal__add-client').hide();
+    $('.modal__add-project').show().css('opacity', 1);
+    $('.modal').addClass('modal-show');
+};
+
+var modalReset = function() {
+    if ($('.modal').hasClass('modal-show')) {
+        $('.modal').removeClass('modal-show');
+    }
+    $('.modal__add-project').css('opacity', 0).hide();
+    $('.modal__add-client').show().css('top', '0px').css('opacity', 1);
+};
+
+$(document).keyup(function(e) {
+    // If a user hits `esc` and the modal is showing
+    if (e.keyCode === 27 && $('.modal-show')) {
+        // Get Rid of it and reset it.
+        modalReset();
+    }
+});
+
+var myApp = angular.module('myApp', ['ngRoute', 'firebase']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
