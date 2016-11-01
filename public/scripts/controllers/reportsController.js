@@ -50,7 +50,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }); //end get project users
     }; //end scope people on project
 
-    
+    $scope.userProject = function(selUserProject){
+      var selProjectid = $scope.selUserProject.projectid;
+      console.log(selProjectid, 'reportsssssss');
+    };
 
     //get selected user from DOM
     $scope.user = function(selectedUser) {
@@ -72,7 +75,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         } else {
             ///this gets
             var empId = userUID;
-            var projId = $scope.selectedProject.projectid;
+            // var projId = $scope.selUserProject.projectid;
             factory.getMyTimeForThisProject(empId, projId).then(function(results) {
                 console.log(results, 'if not admin');
             }); //end factory get

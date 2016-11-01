@@ -21,8 +21,8 @@
 
                         <div class="description">
                             <label>Project</label>
-                            <select ng-if="userProfile.isadmin===false" ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects"></select>
-                            <select ng-if="userProfile.isadmin===true" ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects"></select>
+                            <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-if="userProfile.isadmin===false"></select>
+                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-if="userProfile.isadmin===true" ></select>
                         </div>
                          <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
