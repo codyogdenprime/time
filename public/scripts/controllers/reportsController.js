@@ -17,11 +17,11 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
     $(function() {
-        $( "#datepicker" ).datepicker();
-      });
-      $(function() {
-          $( "#datepicker1" ).datepicker();
-        });
+        $("#datepicker").datepicker();
+    });
+    $(function() {
+        $("#datepicker1").datepicker();
+    });
 
     // get all clients
     $scope.init = function() {

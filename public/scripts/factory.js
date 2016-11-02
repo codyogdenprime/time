@@ -245,13 +245,13 @@ myApp.factory('factory', ['$http', function($http) {
         });
     };
 
-    var getTimeByProj = function(projId){
+    var getTimeByProj = function(projId) {
         return $http({
-          method: 'GET',
-          url: 'api/timebyproj/?projId=' + projId,
-          headers: {
-            id_token: idToken
-          }
+            method: 'GET',
+            url: 'api/timebyproj/?projId=' + projId,
+            headers: {
+                id_token: idToken
+            }
         });
     };
 
@@ -316,18 +316,18 @@ myApp.factory('factory', ['$http', function($http) {
             headers: {
                 id_token: idToken
             }
-        });//end http
-    };// end get user projects
+        }); //end http
+    }; // end get user projects
 
-    var getReports = function(empId,projectId,sDate,eDate){
-      return $http({
-        method: 'GET',
-        url: 'api/reports/?empId=' + empId + '&projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
-        headers:{
-          id_token: idToken
-        }
-      });//end http
-    };//end get reports
+    var getReports = function(empId, projectId, sDate, eDate) {
+        return $http({
+            method: 'GET',
+            url: 'api/reports/?empId=' + empId + '&projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
+            headers: {
+                id_token: idToken
+            }
+        }); //end http
+    }; //end get reports
 
 
     return {
@@ -337,7 +337,7 @@ myApp.factory('factory', ['$http', function($http) {
             return isAdmin;
         },
         changeIsAdmin: changeIsAdmin,
-        getReports:getReports,
+        getReports: getReports,
         getTimebyselected: getTimebyselected,
         getClientProjects: getClientProjects,
         getActiveEmp: getActiveEmp,
@@ -353,7 +353,7 @@ myApp.factory('factory', ['$http', function($http) {
         deleteTimeEntry: deleteTimeEntry,
         addEmpToProject: addEmpToProject,
         getTime: getTime,
-        getTimeByProj:getTimeByProj,
+        getTimeByProj: getTimeByProj,
         getUserProjects: getUserProjects,
         getMyTimeForThisProject: getMyTimeForThisProject,
         toggleStatus: toggleStatus,
