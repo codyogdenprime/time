@@ -14,6 +14,7 @@ var pg = require('pg');
 app.use(express.static(path.resolve('public')));
 
 app.use('/inc', express.static(path.resolve('./node_modules/angularjs-datepicker/dist')));
+app.use('/inc', express.static(path.resolve('./node_modules/angularjs-xeditable/dist')));
 
 //.json body parser
 app.use(bodyParser.json());
