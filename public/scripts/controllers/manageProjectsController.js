@@ -75,9 +75,11 @@ $scope.employees = function (empDrop) {
 };
 
 //add employees to project
-$scope.addEmpToProject = function(empId, projId) {
-    console.log('in addEmpToProject');
-    factory.addEmpToProject(empId, projId);
+$scope.addEmpToProject = function() {
+    console.log('in addEmpToProject', $scope.empDrop.empid, $scope.currentProject);
+    factory.addEmpToProject($scope.empDrop.empid, $scope.currentProject).then(function () {
+      $scope.getAllEmployeesNow();
+    });
 };
 
 
