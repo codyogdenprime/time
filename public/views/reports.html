@@ -7,11 +7,11 @@
                     <form class="report-form">
                         <div class="date">
                             <label>Start Date</label><!-- We need an angular date selector for this field. -->
-                            <input class="date-input" type="text" value="2016-10-23" />
+                            <input ng-model="startDate" class="date-input" type="text"/>
                         </div>
                         <div class="date">
                             <label>End Date</label><!-- We need an angular date selector for this field. -->
-                            <input class="date-input" type="text" value="2016-10-23" />
+                            <input ng-model="endDate" class="date-input" type="text"/>
                         </div>
 
                         <div class="description" ng-hide="clientSelect">
