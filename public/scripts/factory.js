@@ -220,27 +220,9 @@ myApp.factory('factory', ['$http', function($http) {
                 id_token: idToken
             }
         });
+      };
 
-    
-  var deleteTimeEntry = function (timeId) {
-    console.log('made it to deleteTimeEntry in factory');
 
-    return $http({
-      method: 'DELETE',
-      url: '/api/time',
-      data: {timeid: timeId},
-      headers: {id_token: idToken,
-        "Content-Type": "application/json;charset=utf-8"}
-    });
-  };
-
-  var addEmpToProject = function (empId, projId) {
-    console.log('made it to addEmpToProject');
-    var objectToSend = {
-      empid: empId,
-      projectid: projId,
-
-    };
 
     var getMyTimeForThisProject = function(empId, projId) {
         console.log('made it to getMyTimeForThisProject', empId, projId);
@@ -351,6 +333,22 @@ myApp.factory('factory', ['$http', function($http) {
     }; //end get reports
 
 
+    var removeEmpFromProject = function (empid, projectid) {
+      console.log('made it to removeEmpFromProject', empid, projectid);
+      var objectToSend = {
+        empid: empid,
+        projectid: projectid
+      };
+      return $http({
+        method: 'DELETE',
+        url: '/api/projects/users',
+        data: objectToSend,
+        headers: {id_token: idToken,
+          "Content-Type": "application/json;charset=utf-8"}
+      });
+    };
+
+
     return {
         getAllEmployees: getAllEmployees,
         checkUserDB: checkUserDB,
@@ -378,96 +376,8 @@ myApp.factory('factory', ['$http', function($http) {
         getUserProjects: getUserProjects,
         getMyTimeForThisProject: getMyTimeForThisProject,
         toggleStatus: toggleStatus,
-        addClient: addClient
+        addClient: addClient,
+        removeEmpFromProject: removeEmpFromProject
 
     };
-
-    return $http({
-      method: 'POST',
-      url: 'api/clients',
-      data: objectToSend,
-      headers: {
-        id_token: idToken}
-    });
-  };
-
-  var getAllClients = function(){
-    //get all clients
-    console.log('Getting All Clients');
-
-    return $http({
-      method:'GET',
-      url:'api/clients',
-      headers: {
-        id_token: idToken}
-    });
-  };//end get all clients
-
-  var getClientProjects = function(clientid){
-    //get client projects based on clien_ids
-    return $http({
-      method: 'GET',
-      url: 'api/projects/?clientUID=' + clientid,
-      headers: {
-        id_token: idToken
-      }
-    });//end http
-  };//end get client projects
-
-  var getUserProjects = function(empid){
-    return $http({
-      method:'GET',
-      url: 'api/userprojects/?empid=' + empid,
-      headers: {
-        id_token:idToken
-      }
-    });
-  };//end getUserProjects
-
-  var removeEmpFromProject = function (empid, projectid) {
-    console.log('made it to removeEmpFromProject', empid, projectid);
-    var objectToSend = {
-      empid: empid,
-      projectid: projectid
-    };
-    return $http({
-      method: 'DELETE',
-      url: '/api/projects/users',
-      data: objectToSend,
-      headers: {id_token: idToken,
-        "Content-Type": "application/json;charset=utf-8"}
-    });
-  };
-
-  return {
-    getAllEmployees: getAllEmployees,
-    checkUserDB: checkUserDB,
-    isAdmin: function () {
-      return isAdmin;
-    },
-    changeIsAdmin: changeIsAdmin,
-    getTimebyselected:getTimebyselected,
-    getClientProjects: getClientProjects,
-    getActiveEmp: getActiveEmp,
-    getInActiveEmp: getInActiveEmp,
-    getMyProjects: getMyProjects,
-    getAllMyTime: getAllMyTime,
-    addTime: addTime,
-    getAllClients : getAllClients,
-    getProjectUsers: getProjectUsers,
-    editProject: editProject,
-    addProject: addProject,
-    editTime:editTime,
-    deleteTimeEntry: deleteTimeEntry,
-    addEmpToProject: addEmpToProject,
-    getTime:getTime,
-    getUserProjects:getUserProjects,
-    getMyTimeForThisProject: getMyTimeForThisProject,
-    toggleStatus:toggleStatus,
-    addClient:addClient,
-    removeEmpFromProject: removeEmpFromProject
-
-  };
-
-
 }]);
