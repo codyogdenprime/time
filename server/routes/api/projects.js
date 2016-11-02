@@ -169,7 +169,7 @@ router.route('/projects/users')
 
 
 router.route('/userprojects')
-    //selecting all projects based on currently logged in user
+    //selecting all projects based on user currently logged in 
     .get(function(req, res) {
         //verify idToken sent in headers
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
