@@ -157,14 +157,25 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
         var data = $scope.reports;
+        if (userProfile.isadmin === true) {
+          var projectName = $scope.selectedProject.projectname;
+          var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+          alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+              .then(function() {
+                  console.log('DATA SAVED');
+              }).catch(function(err) {
+                  console.log('ERROR', err);
+              }); //end catch
+        }else {
         var projectName = $scope.selUserProject.projectname; // Project Name from Scope
         var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data, $scope.addAllHours])
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
             .then(function() {
                 console.log('DATA SAVED');
             }).catch(function(err) {
                 console.log('ERROR', err);
             }); //end catch
+          }
     }; //end scope
     $scope.init();
 }]);

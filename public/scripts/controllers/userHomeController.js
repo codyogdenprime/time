@@ -114,7 +114,9 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
         var data = $scope.allMyTime;
-        alasql.promise('SELECT * INTO XLSX("my4.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+        var projectName = $scope.myCurrentProject.projectname; // Project Name from Scope
+        var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
             .then(function() {
                 console.log('DATA SAVED');
             }).catch(function(err) {
