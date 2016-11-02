@@ -221,15 +221,7 @@ myApp.factory('factory', ['$http', function($http) {
             }
         });
 
-    return $http({
-      method: 'POST',
-      url: 'api/projects',
-      data: objectToSend,
-      headers: {
-        id_token: idToken}
-    });
-  };
-
+    
   var deleteTimeEntry = function (timeId) {
     console.log('made it to deleteTimeEntry in factory');
 
