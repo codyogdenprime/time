@@ -79,19 +79,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
             var empid = $scope.selectedUser.empid;
             factory.getTimebyselected(empid, projid).then(function(results) {
                 $scope.reports = results.data;
-                console.log($scope.reports, ' reports');
-            }); //end factory get
-        } else {
-            ///this gets projects based on currently logged in user
-            var empId = userUID;
-            var projId = $scope.selUserProject.projectid;
-            factory.getMyTimeForThisProject(empId, projId).then(function(results) {
-                console.log(results, 'if not admin');
-                $scope.reports = results.data;
                 $scope.reports = $scope.reports.map(function(index) {
-                    console.log(index, 'index');
                     var m = moment(index.date).format('M/D/YYYY');
-                    console.log(m);
                     return ({
                         timeid: index.timeid,
                         date: m,
@@ -100,7 +89,23 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                         empid: index.empid
                     });
                 });
-                console.log($scope.reports);
+            }); //end factory get
+        } else {
+            ///this gets projects based on currently logged in user
+            var empId = userUID;
+            var projId = $scope.selUserProject.projectid;
+            factory.getMyTimeForThisProject(empId, projId).then(function(results) {
+                $scope.reports = results.data;
+                $scope.reports = $scope.reports.map(function(index) {
+                    var m = moment(index.date).format('M/D/YYYY');
+                    return ({
+                        timeid: index.timeid,
+                        date: m,
+                        hours: index.hours,
+                        description: index.description,
+                        empid: index.empid
+                    });
+                });
                 $scope.addHours();
             }); //end factory get
         } //end else
@@ -122,13 +127,23 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         if (userProfile.isadmin === true) {
             var projId = $scope.selectedProject.projectid;
             factory.getTimeByProj(projId).then(function(results) {
-                console.log(results.data, 'proj only search');
                 $scope.reports = results.data;
+                $scope.reports = $scope.reports.map(function(index) {
+                    var m = moment(index.date).format('M/D/YYYY');
+                    return ({
+                        timeid: index.timeid,
+                        date: m,
+                        hours: index.hours,
+                        description: index.description,
+                        empid: index.empid
+                    });
+                });
             }); //end factory
         } //end if admin
+        $scope.addHours();
     }; //end scope src by project
 
-
+    // what to display for admin or user
     $scope.userStatus = function() {
         //if user is  admin hide
         if (userProfile.isadmin === true) {
@@ -141,6 +156,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         } //end else
     }; //end scope.userStatus
 
+    //add all hours worked and display
     $scope.addHours = function() {
         $scope.addAllHours = 0;
         for (var i = 0; i < $scope.reports.length; i++) {
