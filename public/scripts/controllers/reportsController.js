@@ -50,9 +50,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }); //end get project users
     }; //end scope people on project
 
-    $scope.userProject = function(selUserProject){
-      var selProjectid = $scope.selUserProject.projectid;
-      console.log(selProjectid, 'reportsssssss');
+    $scope.userProject = function(selUserProject) {
+        var selProjectid = $scope.selUserProject.projectid;
+        console.log(selProjectid, 'reportsssssss');
     };
 
     //get selected user from DOM
@@ -73,11 +73,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                 console.log($scope.reports, ' reports');
             }); //end factory get
         } else {
-            ///this gets
+            ///this gets projects based on currently logged in user
             var empId = userUID;
-            // var projId = $scope.selUserProject.projectid;
+            var projId = $scope.selUserProject.projectid;
             factory.getMyTimeForThisProject(empId, projId).then(function(results) {
                 console.log(results, 'if not admin');
+                $scope.reports = results.data;
             }); //end factory get
         } //end else
     }; //end run report
@@ -91,23 +92,20 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
             //if user IS NOT admin show forms
             $scope.selectEmp = true;
             $scope.clientSelect = true;
-        }
-    };
+        } //end else
+    }; //end scope.userStatus
 
 
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
-        factory.getAllEmployees().then(function(results) {
-            console.log(results.data, 'employees for CSVVVVVV');
-            var data = results.data;
-            alasql.promise('SELECT * INTO XLSX("my4.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
-                .then(function() {
-                    console.log('DATA SAVED');
-                }).catch(function(err) {
-                    console.log('ERROR', err);
-                }); //end catch
-        }); //end factory
+      console.log($scope.reports.date, 'date');
+        alasql.promise('SELECT * INTO XLSX("report.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [$scope.reports])
+            .then(function() {
+                console.log('DATA SAVED');
+            }).catch(function(err) {
+                console.log('ERROR', err);
+            }); //end catch
     }; //end scope
     $scope.init();
 }]);

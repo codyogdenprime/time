@@ -21,8 +21,10 @@
 
                         <div class="description">
                             <label>Project</label>
-                            <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-if="userProfile.isadmin===false"></select>
-                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-if="userProfile.isadmin===true" ></select>
+                            <!-- if user logged in -->
+                            <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-show="userProfile.isadmin===false"></select>
+                            <!-- if admin logged in -->
+                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true" ></select>
                         </div>
                          <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
@@ -57,13 +59,13 @@
                         <div class="date">{{ rep.date | date }}</div>
                         <div class="time">{{rep.hours}}</div>
                         <div class="description">{{rep.description}}</div>
-                    </div>
+                    </div> -->
                     <div class="row totals">
                         <div class="total"><b>Total:</b></div>
-                        <div class="total-time">{{sum}}</div> -->
+                        <div class="total-time">{{sum}}</div>
                         <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
                         <div class="actions">
-                            <button class="btn-export">Export to CSV</button>
+                            <button ng-click="exportCSV()">Export to CSV</button>
                         </div>
                     </div>
                 </div>
