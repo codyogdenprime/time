@@ -244,6 +244,17 @@ myApp.factory('factory', ['$http', function($http) {
             }
         });
     };
+
+    var getTimeByProj = function(projId){
+        return $http({
+          method: 'GET',
+          url: 'api/timebyproj/?projId=' + projId,
+          headers: {
+            id_token: idToken
+          }
+        });
+    };
+
     var toggleStatus = function(empid, type) {
         var objectToSend = {
             type: type,
@@ -342,6 +353,7 @@ myApp.factory('factory', ['$http', function($http) {
         deleteTimeEntry: deleteTimeEntry,
         addEmpToProject: addEmpToProject,
         getTime: getTime,
+        getTimeByProj:getTimeByProj,
         getUserProjects: getUserProjects,
         getMyTimeForThisProject: getMyTimeForThisProject,
         toggleStatus: toggleStatus,

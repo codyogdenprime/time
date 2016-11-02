@@ -7,11 +7,11 @@
                     <form class="report-form">
                         <div class="date">
                             <label>Start Date</label><!-- We need an angular date selector for this field. -->
-                            <input ng-model="startDate" class="date-input" type="text"/>
+                            <input ng-model="startDate"type="text" id="datepicker"/>
                         </div>
                         <div class="date">
                             <label>End Date</label><!-- We need an angular date selector for this field. -->
-                            <input ng-model="endDate" class="date-input" type="text"/>
+                            <input ng-model="endDate"type="text" id="datepicker1"/>
                         </div>
 
                         <div class="description" ng-hide="clientSelect">
@@ -46,20 +46,20 @@
                         <!--<div class="actions">Actions</div>--><!-- ng-show if the project is active -->
                     </div>
                     <div class="row" ng-repeat="rep in reports">
-                        <div class="date">{{rep.date | date}}</div>
-                        <div class="hours">{{rep.hours}}</div>
-                        <div class="description">{{rep.description}}</div>
+                        <div class="date"> {{rep.date | date}} </div>
+                        <div class="hours"> {{rep.hours}} </div>
+                        <div class="description"> {{rep.description}} </div>
                     </div>
-                    <div class="row" ng-repeat="client in reports">
-                        <div class="date"> {{ client.startdate | date }}</div>
-                        <div class="hours">{{client.enddate | date}}</div>
-                        <div class="description">{{client.projectname}}</div>
+                    <div class="row" >
+                        <div class="date"></div>
+                        <div class="hours"></div>
+                        <div class="description"></div>
                     </div>
-                    <!-- <div class="row" ng-repeat="rep in reports">
-                        <div class="date">{{ rep.date | date }}</div>
-                        <div class="time">{{rep.hours}}</div>
-                        <div class="description">{{rep.description}}</div>
-                    </div> -->
+                    <div class="row" >
+                        <div class="date"></div>
+                        <div class="time"></div>
+                        <div class="description"></div>
+                    </div>
                     <div class="row totals">
                         <div class="total"><b>Total:</b></div>
                         <div class="total-time">{{sum}}</div>
