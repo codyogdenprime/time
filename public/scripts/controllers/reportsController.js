@@ -16,6 +16,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     var userDisplayName = sessionStorage.getItem('userDisplayName');
     var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
+    //display date pickers for start and end dates
     $(function() {
         $("#datepicker").datepicker();
     });
@@ -87,6 +88,20 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
             factory.getMyTimeForThisProject(empId, projId).then(function(results) {
                 console.log(results, 'if not admin');
                 $scope.reports = results.data;
+                $scope.reports = $scope.reports.map(function(index) {
+                    console.log(index, 'index');
+                    var m = moment(index.date).format('M/D/YYYY');
+                    console.log(m);
+                    return ({
+                        timeid: index.timeid,
+                        date: m,
+                        hours: index.hours,
+                        description: index.description,
+                        empid: index.empid
+                    });
+                });
+                console.log($scope.reports);
+                $scope.addHours();
             }); //end factory get
         } //end else
 
@@ -126,7 +141,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         } //end else
     }; //end scope.userStatus
 
-
+    $scope.addHours = function() {
+        $scope.addAllHours = 0;
+        for (var i = 0; i < $scope.reports.length; i++) {
+            $scope.addAllHours += Number($scope.reports[i].hours);
+        } //end for loop
+    }; //scope add hours
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
