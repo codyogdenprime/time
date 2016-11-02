@@ -191,7 +191,7 @@ myApp.factory('factory', ['$http', function($http){
   var addEmpToProject = function (empId, projId) {
     console.log('made it to addEmpToProject');
     var objectToSend = {
-      empid: empID,
+      empid: empId,
       projectid: projId,
     };
     return $http({
@@ -284,8 +284,22 @@ myApp.factory('factory', ['$http', function($http){
         id_token:idToken
       }
     });
-  };
+  };//end getUserProjects
 
+  var removeEmpFromProject = function (empid, projectid) {
+    console.log('made it to removeEmpFromProject', empid, projectid);
+    var objectToSend = {
+      empid: empid,
+      projectid: projectid
+    };
+    return $http({
+      method: 'DELETE',
+      url: '/api/projects/users',
+      data: objectToSend,
+      headers: {id_token: idToken,
+        "Content-Type": "application/json;charset=utf-8"}
+    });
+  };
 
   return {
     getAllEmployees: getAllEmployees,
@@ -312,7 +326,8 @@ myApp.factory('factory', ['$http', function($http){
     getUserProjects:getUserProjects,
     getMyTimeForThisProject: getMyTimeForThisProject,
     toggleStatus:toggleStatus,
-    addClient:addClient
+    addClient:addClient,
+    removeEmpFromProject: removeEmpFromProject
 
   };
 
