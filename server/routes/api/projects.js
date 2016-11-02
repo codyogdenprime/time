@@ -20,21 +20,21 @@ router.route('/projects')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults;
-                    if (data.clientUID !== undefined) {
-                        queryResults = client.query('SELECT * FROM projects WHERE client_id = $1', [data.clientUID]);
-                    } else {
-                        queryResults = client.query('SELECT * FROM projects');
-                    }
-
-                    queryResults.on('row', function(row) {
+                    var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid]);
+                    empID.on('end', function () {
+                      //console.log( 'sdfghjk-------' + empID._result.rows[0].empid );
+                      var thisisEmpId = empID._result.rows[0].empid;
+                      var queryResults = client.query('SELECT * FROM projects JOIN emp_proj ON projectid=project_id WHERE emp_id = $1;',[thisisEmpId]);
+                      console.log(thisisEmpId, data.projectid);
+                      queryResults.on('row', function(row) {
                         resultsArray.push(row);
-
-                    }); //on row function
+                      }); //on row function
                     queryResults.on('end', function() {
                         done();
+                        console.log(resultsArray,'resultssssss');
                         return res.send(resultsArray);
                     }); //on end function
+                  });
                 } //else
             }); //pg.connect
         }).catch(function(error) {
@@ -169,7 +169,7 @@ router.route('/projects/users')
 
 
 router.route('/userprojects')
-    //selecting all projects based on user currently logged in 
+    //selecting all projects based on user currently logged in
     .get(function(req, res) {
         //verify idToken sent in headers
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
