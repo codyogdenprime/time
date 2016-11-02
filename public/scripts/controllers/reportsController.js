@@ -16,6 +16,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     var userDisplayName = sessionStorage.getItem('userDisplayName');
     var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
+    $(function() {
+        $("#datepicker").datepicker();
+    });
+    $(function() {
+        $("#datepicker1").datepicker();
+    });
 
     // get all clients
     $scope.init = function() {
@@ -50,6 +56,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         }); //end get project users
     }; //end scope people on project
 
+    //this gets project
     $scope.userProject = function(selUserProject) {
         var selProjectid = $scope.selUserProject.projectid;
         console.log(selProjectid, 'reportsssssss');
@@ -63,6 +70,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //run report
     $scope.runReport = function() {
+        $scope.srcByProject();
         if (userProfile.isadmin === true) {
             //this will get reports for selected user from drop down list -- only for admins
             console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
@@ -81,7 +89,30 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                 $scope.reports = results.data;
             }); //end factory get
         } //end else
+
+        //     var empId =  $scope.selectedUser.empid;
+        //     var projectId = $scope.selectedProject.projectid;
+        //     var sDate = $scope.startDate;
+        //     var eDate = $scope.endDate;
+        //
+        //
+        // factory.getReports(empId,projectId,sDate,eDate).then(function(results){
+        //   console.log(results, 'reports results');
+        //   $scope.reports = results.data;
+        // });
     }; //end run report
+
+    //search for all times on a project - only for admin
+    $scope.srcByProject = function() {
+        if (userProfile.isadmin === true) {
+            var projId = $scope.selectedProject.projectid;
+            factory.getTimeByProj(projId).then(function(results) {
+                console.log(results.data, 'proj only search');
+                $scope.reports = results.data;
+            }); //end factory
+        } //end if admin
+    }; //end scope src by project
+
 
     $scope.userStatus = function() {
         //if user is  admin hide
@@ -99,8 +130,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
-      console.log($scope.reports.date, 'date');
-        alasql.promise('SELECT * INTO XLSX("report.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [$scope.reports])
+        var data = $scope.reports;
+        var projectName = $scope.selUserProject.projectname; // Project Name from Scope
+        var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
             .then(function() {
                 console.log('DATA SAVED');
             }).catch(function(err) {
