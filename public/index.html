@@ -41,8 +41,8 @@
         <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main">
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#reports">Reports</a></li>
+                <li ng-if="userProfile"><a href="#projects">Projects</a></li>
+                <li ng-if="userProfile"><a href="#reports">Reports</a></li>
                 <li ng-if="userProfile.isadmin"><a href="#manageProjects">Clients</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
                 <li ng-if="userProfile.isadmin"><a href="#empManage">Contractors</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
 
