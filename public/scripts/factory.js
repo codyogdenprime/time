@@ -189,6 +189,30 @@ myApp.factory('factory', ['$http', function($http) {
         });
     };
 
+
+  var getAllClients = function(){
+    //get all clients
+    console.log('Getting All Clients');
+
+    return $http({
+      method:'GET',
+      url:'api/clients',
+      headers: {
+        id_token: idToken}
+    });
+  };//end get all clients
+
+  var getClientProjects = function(clientid){
+    //get client projects based on clien_ids
+    return $http({
+      method: 'GET',
+      url: 'api/projectsbyclient/?clientUID=' + clientid,
+      headers: {
+        id_token: idToken
+      }
+    });//end http
+  };//end get client projects
+
     var deleteTimeEntry = function(timeId) {
         console.log('made it to deleteTimeEntry in factory');
 
@@ -203,6 +227,7 @@ myApp.factory('factory', ['$http', function($http) {
                 "Content-Type": "application/json;charset=utf-8"
             }
         });
+
     };
 
 
@@ -288,29 +313,6 @@ myApp.factory('factory', ['$http', function($http) {
         });
     };
 
-    var getAllClients = function() {
-        //get all clients
-        console.log('Getting All Clients');
-
-        return $http({
-            method: 'GET',
-            url: 'api/clients',
-            headers: {
-                id_token: idToken
-            }
-        });
-    }; //end get all clients
-
-    var getClientProjects = function(clientid) {
-        //get client projects based on clien_ids
-        return $http({
-            method: 'GET',
-            url: 'api/projects/?clientUID=' + clientid,
-            headers: {
-                id_token: idToken
-            }
-        }); //end http
-    }; //end get client projects
 
     var getUserProjects = function(empid) {
         return $http({

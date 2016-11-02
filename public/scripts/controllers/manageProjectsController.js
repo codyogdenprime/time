@@ -43,6 +43,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
 
     $scope.currentProject = '';
     $scope.clientProjects = [];
+    $scope.newClient = '';
 
 
 $scope.getClients = function(){
@@ -79,20 +80,24 @@ $scope.showAddClient = function(){
 $scope.addProjectToNewClient = function(data){
   // console.log('client name in', data);
   factory.addClient(data).then(function(response) {
+    $scope.newClient = response.data.results[0].clientid;
+    console.log('in new client', $scope.newClient);
     addProjectToNewClient();
   });//
 };//addProjectToNewClient
 
 $scope.showClients = function(){
+  $scope.getClients();
   showClients();
 };//showClients
 
 $scope.addProjectToClient = function() {
-  factory.addProject($scope.projectIn,$scope.index).then(function() {
+  console.log('in addProjectToClient', $scope.newClient);
+  factory.addProject($scope.projectIn, $scope.newClient).then(function() {
 // console.log('scope.projectIn',$scope.projectIn+' scope.index',$scope.index);
   $scope.projectIn = undefined;
     addProjectToClient();
-    factory.getClientProjects($scope.index).then(function(results){
+    factory.getClientProjects($scope.newClient).then(function(results){
       $scope.clientProjects = results.data;
       // console.log('back from showSingleClient', $scope.clientProjects);
         showSingleClient();

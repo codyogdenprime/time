@@ -45,11 +45,21 @@ router.route('/clients')
                     console.log(err);
                 } else {
                     // clientname
-                    var query = client.query('INSERT INTO clients (clientname) VALUES ($1)', [data.clientname]);
-                    done();
-                    res.send({
-                        success: true
+                    var resultsArray = [];
+                    var query = client.query('INSERT INTO clients (clientname) VALUES ($1) RETURNING clientid', [data.clientname]);
+                    query.on('row', function (row) {
+
+                      resultsArray.push(row);
+                      console.log('resultsArray in post experimental call',resultsArray);
                     });
+                    query.on('end', function () {
+                      done();
+                      res.send({
+                          success: true,
+                          results: resultsArray
+                      });
+                    })
+
                 } //else bracket
             }); //pg.connect
         }).catch(function(error) {
