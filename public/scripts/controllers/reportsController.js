@@ -109,17 +109,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                 $scope.addHours();
             }); //end factory get
         } //end else
-
-        //     var empId =  $scope.selectedUser.empid;
-        //     var projectId = $scope.selectedProject.projectid;
-        //     var sDate = $scope.startDate;
-        //     var eDate = $scope.endDate;
-        //
-        //
-        // factory.getReports(empId,projectId,sDate,eDate).then(function(results){
-        //   console.log(results, 'reports results');
-        //   $scope.reports = results.data;
-        // });
     }; //end run report
 
     //search for all times on a project - only for admin
@@ -138,6 +127,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                         empid: index.empid
                     });
                 });
+                $scope.addHours();
             }); //end factory
         } //end if admin
         $scope.addHours();
@@ -169,7 +159,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         var data = $scope.reports;
         var projectName = $scope.selUserProject.projectname; // Project Name from Scope
         var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data, $scope.addAllHours])
             .then(function() {
                 console.log('DATA SAVED');
             }).catch(function(err) {
