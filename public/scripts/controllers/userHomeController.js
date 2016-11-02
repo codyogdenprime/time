@@ -1,6 +1,6 @@
 myApp.constant('moment', moment);
 
-var app = angular.module("app", ["xeditable", '720kb.datepicker']);
+var app = angular.module("app", ["xeditable"]);
 
 
 myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', function($scope, $http, factory, moment) {
