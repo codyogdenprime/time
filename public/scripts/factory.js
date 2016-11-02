@@ -269,7 +269,7 @@ myApp.factory('factory', ['$http', function($http){
     //get client projects based on clien_ids
     return $http({
       method: 'GET',
-      url: 'api/projects/?clientUID=' + clientid,
+      url: 'api/projectsbyclient/?clientUID=' + clientid,
       headers: {
         id_token: idToken
       }

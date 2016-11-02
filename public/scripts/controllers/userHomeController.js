@@ -118,8 +118,4 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
 
   $scope.getMyProjects();
 
-    //$scope.checkUserDB(userUID, userDisplayName, userPhotoURL);
-    //$scope.newTime(2, 4);
-    //$scope.getMyProjects(2);
-    //$scope.getAllTime(2);
 }]);
