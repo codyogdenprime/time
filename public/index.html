@@ -1,60 +1,72 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base href="/" />
-    <meta charset="utf-8">
-    <title>Cimarron Winter</title>
-    <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
-    <script src="vendors/moment.js"></script>
 
-    <!-- <script src="xeditable.min.js"></script> -->
-    <!-- <link rel="stylesheet" href="xeditable.min.css"> -->
+    <head>
+        <base href="/" />
+        <meta charset="utf-8">
+        <title>Cimarron Winter</title>
+        <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
+        <script src="vendors/moment.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/normalize.css@5.0.0/normalize.css" />
-    <link rel="stylesheet" href="files/style.min.css" />
+        <!-- <script src="xeditable.min.js"></script> -->
+        <!-- <link rel="stylesheet" href="xeditable.min.css"> -->
 
-    <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
-    <!-- alasql -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
-    <script src="config.js"></script>
-    <script src="scripts/script.js"></script>
-    <script src="scripts/controllers/addHoursController.js"></script>
-    <script src="scripts/controllers/manageProjectsController.js"></script>
-    <script src="scripts/controllers/empManageController.js"></script>
-    <script src="scripts/controllers/reportsController.js"></script>
-    <script src="scripts/controllers/userHomeController.js"></script>
-    <script src="scripts/controllers/homeController.js"></script>
-    <script src="scripts/authFactory.js"></script>
-    <script src="scripts/factory.js"></script>
-    <script src="inc/angular-datepicker.min.js"></script>
-    <link rel="stylesheet" href="inc/angular-datepicker.min.css">
-  </head>
-  <body ng-app="myApp" ng-controller="homeController">
-    <header class="header"><!-- This header is the same on every page. -->
-        <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
-        <nav class="nav main__nav">
-            <ul class="menu menu__main">
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#reports">Reports</a></li>
-                <li ng-if="userProfile.isadmin"><a href="#manageProjects">Clients</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
-                <li ng-if="userProfile.isadmin"><a href="#empManage">Contractors</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/normalize.css@5.0.0/normalize.css" />
+        <link rel="stylesheet" href="files/style.min.css" />
 
-                <li><button ng-show="loggedIn" ng-click="logOut()">Logout</button></li>
-                <li><button ng-show="loggedOut" ng-click="logIn()">Login</button></li> <!-- For Logged Out Only -->
+        <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
+        <script src="vendors/jquery-ui.js"></script>
+        <script src="vendors/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="vendors/jquery-ui.structure.min.css">
+        <link rel="stylesheet" href="vendors/jquery-ui.min.css">
+        <link rel="stylesheet" href="vendors/jquery-ui.theme.min.css">
 
-            </ul>
-        </nav>
-    </header>
-    <main ng-view ng-if="loggedIn">
-      <!-- This is where the ng-view -->
-    </main>
-  </body>
+
+        <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
+        <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
+        <!-- alasql -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.2.7/alasql.min.js"></script>
+        <script src="config.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/controllers/addHoursController.js"></script>
+        <script src="scripts/controllers/manageProjectsController.js"></script>
+        <script src="scripts/controllers/empManageController.js"></script>
+        <script src="scripts/controllers/reportsController.js"></script>
+        <script src="scripts/controllers/userHomeController.js"></script>
+        <script src="scripts/controllers/homeController.js"></script>
+        <script src="scripts/authFactory.js"></script>
+        <script src="scripts/factory.js"></script>
+        <script src="inc/angular-datepicker.min.js"></script>
+    </head>
+
+    <body ng-app="myApp" ng-controller="homeController">
+        <header class="header">
+            <!-- This header is the same on every page. -->
+            <h1 class="h1 header__title"><img src="http://www.do-goods.com/wptest/wp-content/uploads/2015/01/cw-logo.png" /></h1>
+            <nav class="nav main__nav">
+                <ul class="menu menu__main">
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#reports">Reports</a></li>
+                    <li ng-if="userProfile.isadmin"><a href="#manageProjects">Clients</a></li>
+                    <!-- For Admin Only? Maybe different now that we changed the views. -->
+                    <li ng-if="userProfile.isadmin"><a href="#empManage">Contractors</a></li>
+                    <!-- For Admin Only? Maybe different now that we changed the views. -->
+
+                    <li><button ng-show="loggedIn" ng-click="logOut()">Logout</button></li>
+                    <li><button ng-show="loggedOut" ng-click="logIn()">Login</button></li>
+                    <!-- For Logged Out Only -->
+
+                </ul>
+            </nav>
+        </header>
+        <main ng-view ng-if="loggedIn">
+            <!-- This is where the ng-view -->
+        </main>
+    </body>
 
 </html>
