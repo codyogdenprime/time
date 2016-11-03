@@ -45,21 +45,26 @@ router.route('/clients')
                 if (err) {
                     console.log(err);
                 } else {
-                    // clientname
+                  if(checkDataType('string',[data.clientname])){
+
                     var resultsArray = [];
                     var query = client.query('INSERT INTO clients (clientname) VALUES ($1) RETURNING clientid', [data.clientname]);
                     query.on('row', function (row) {
-
                       resultsArray.push(row);
                       console.log('resultsArray in post experimental call',resultsArray);
-                    });
+                    });//query on row funciton
                     query.on('end', function () {
                       done();
                       res.send({
                           success: true,
                           results: resultsArray
-                      });
-                    });
+                      });//res.send
+                    });//query on end function
+                  }else{
+                    res.send({
+                        success: false,
+                    });//res.send
+                  }//nested else bracket
                 } //else bracket
             }); //pg.connect
         }).catch(function(error) {
@@ -78,19 +83,13 @@ router.route('/clients')
             if (err) {
                 console.log(err);
             } else {
-              if(checkDataType.checkDataType('number',[data.clientid])&&checkDataType.checkDataType('string',[data.clientname])){
-                console.log('the if works!');
-              }
-
-
-              if(typeof(data.clientname)=='string' && typeof(data.clientid)=='number'){
+              if(checkDataType('number',[data.clientid])&& checkDataType('string',[data.clientname])){
                 client.query('UPDATE clients SET clientname = $1 WHERE clientid = $2', [data.clientname, data.clientid]);
                 done();
                 res.send({
                     success: true
                 });//res.send
               }else{
-                done();
                 res.send({
                     success: false
                 });//res.send
