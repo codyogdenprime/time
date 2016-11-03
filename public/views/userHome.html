@@ -1,77 +1,62 @@
-<div class="projects cards">
-    <div class="card" ng-repeat="project in allMyProjects track by $index">
-        <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
-        <a ng-click="showProject()" class="card__link project__title">{{project.projectname}}</a>
+<div ng-controller="userHomeController">
+    <div class="projects cards">
+        <div class="card" ng-repeat="project in allMyProjects track by $index">
+            <!-- ng-repeat: The project name should go into the content. Add an Angular click event to set the project and run the transition. -->
+            <a ng-click="showProject()" class="card__link project__title">{{project.projectname}}</a>
+        </div>
     </div>
-</div>
-<div class="single-project">
-    <div class="return-link">
-        <a ng-click="showProjects()">&lt; All Projects</a>
-    </div>
-    <section>
-        <h2 class="entity-title">{{myCurrentProject.projectname}}</h2>
-        <!-- The Project's Name -->
+    <div class="single-project">
         <div>
-            <!-- ng-show if the project is active. -->
-            <form class="add-time">
-                <div class="date">
-                    <label>Date</label>
-                      <input class="date-input" ng-model="dateInputModel" type="text"/>
-                </div>
-                <!-- This only shows if there is an administrator present. -->
-                <!--<div>
-                            <label>Person</label>
-                            <select class="person-input">
-                                <option>Von Masterdom Con Winderbottom III</option>
-                                <option>Cody Ogden</option>
-                                <option>Lisa Cook</option>
-                                <option>Jazzy Cordaro</option>
-                                <option>Matt Callahan</option>
-                                <option>John Arkema</option>
-                                <option>Millicent Walsh</option>
-                                <option>Huckleberry Brock</option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
-                        </div>-->
-                <div class="time">
-                    <label>Time</label>
-                    <input class="time-input" type="text" ng-model="timeInputModel" />
-                </div>
-                <div class="description">
-                    <label>Description</label>
-                    <input type="text" ng-model="descriptionInputModel" />
-                </div>
-                <div class="submit">
-                    <button ng-click="newTime()">Add Time</button>
-                    <!-- This button should save the time entry to the server. -->
-                </div>
-            </form>
+            <button class="back-button" ng-click="showProjects()">&lt; All Projects</button>
         </div>
-        <div class="sheet">
-            <div class="row titles">
-                <div class="date">Date</div>
-                <div class="time">Time</div>
-                <div class="description">Description</div>
-                <div class="actions" ng-show="myCurrentProject.isactive">Actions</div> <!-- ng-show if the project is active -->
+        <section>
+            <h2 class="entity-title">{{myCurrentProject.projectname}}</h2>
+            <!-- The Project's Name -->
+            <div>
+                <!-- ng-show if the project is active. -->
+                <form class="add-time">
+                    <div class="date">
+                        <label>Date</label>
+                          <input class="date-input" ng-model="dateInputModel" type="text"/>
+                    </div>
+                    <div class="time">
+                        <label>Time</label>
+                        <input class="time-input" type="text" ng-model="timeInputModel" />
+                    </div>
+                    <div class="description">
+                        <label>Description</label>
+                        <input type="text" ng-model="descriptionInputModel" />
+                    </div>
+                    <div class="submit">
+                        <button ng-click="newTime()">Add Time</button>
+                        <!-- This button should save the time entry to the server. -->
+                    </div>
+                </form>
             </div>
-            <div class="row" ng-repeat="time in allMyTime"> <!-- ng-repeat would go here -->
-                <div class="date">{{time.date}}</div>
-                <div class="time">{{time.hours}}</div>
-                <div class="description">{{time.description}}</div>
-                <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
-                    <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
-                    <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
+            <div class="sheet">
+                <div class="row titles">
+                    <div class="date">Date</div>
+                    <div class="time">Time</div>
+                    <div class="description">Description</div>
+                    <div class="actions" ng-show="myCurrentProject.isactive">Actions</div> <!-- ng-show if the project is active -->
+                </div>
+                <div class="row" ng-repeat="time in allMyTime"> <!-- ng-repeat would go here -->
+                    <div class="date">{{time.date}}</div>
+                    <div class="time">{{time.hours}}</div>
+                    <div class="description">{{time.description}}</div>
+                    <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
+                        <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
+                        <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
+                    </div>
+                </div>
+                <div class="row totals">
+                    <div class="total"><b>Total:</b></div>
+                    <div class="total-time">{{allHoursAdded}}</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                    <div class="actions">
+                        <button class="btn-export" ng-click="exportCSV()">Export to CSV</button>
+                    </div>
                 </div>
             </div>
-            <div class="row totals">
-                <div class="total"><b>Total:</b></div>
-                <div class="total-time">{{allHoursAdded}}</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
-                <div class="actions">
-                    <button class="btn-export" ng-click="exportCSV()">Export to CSV</button>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </div>
