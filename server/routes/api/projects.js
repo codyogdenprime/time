@@ -17,11 +17,16 @@ router.route('/projectsbyclient')
                //req.query pulls client id from query paramaters
                var data = req.query;
                console.log('data.clientUID type',typeof(data.clientUID));
+
+
                if (err) {
                    console.log(err);
                } else {
                    var resultsArray = [];
                    var queryResults;
+
+                 if(checkDataType('number',[data.clientUID]) || data.clientUID === undefined){
+                     console.log('if works here too!');
                    if (data.clientUID !== undefined) {
                        queryResults = client.query('SELECT * FROM projects WHERE client_id = $1', [data.clientUID]);
                    } else {
@@ -36,6 +41,11 @@ router.route('/projectsbyclient')
                        done();
                        return res.send(resultsArray);
                    }); //on end function
+                 }else {
+                   return res.send({
+                     success:false
+                   });//res.send
+                 }//nested else
                } //else
            }); //pg.connect
        }).catch(function(error) {
