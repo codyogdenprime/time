@@ -324,10 +324,10 @@ myApp.factory('factory', ['$http', function($http) {
         }); //end http
     }; // end get user projects
 
-    var getReports = function(empId, projectId, sDate, eDate) {
+    var getReports = function(projectId, sDate, eDate) {
         return $http({
             method: 'GET',
-            url: 'api/reports/?empId=' + empId + '&projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
+            url: 'api/reports/?projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
             headers: {
                 id_token: idToken
             }

@@ -34,8 +34,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
             factory.getUserProjects(empid).then(function(results) {
                 console.log(results, 'if not admin get projects for current user');
                 $scope.userProjects = results.data;
-            });
-        }
+            });//end factory get user projects
+        }//end if
         $scope.userStatus();
     }; //end scope dot init
 
@@ -61,16 +61,30 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     $scope.userProject = function(selUserProject) {
         var selProjectid = $scope.selUserProject.projectid;
         console.log(selProjectid, 'reportsssssss');
-    };
+    };//end user project
 
     //get selected user from DOM
     $scope.user = function(selectedUser) {
         var empId = $scope.selectedUser.empid;
         console.log(empId);
-    };
+    };//end get selected user
+
+    $scope.searchByDateUser = function(){
+      console.log($scope.startDate, 'start');
+      console.log($scope.endDate, 'end');
+
+        var projectId =$scope.selUserProject.projectid;
+        var sDate = $scope.startDate;
+        var eDate = $scope.endDat;
+
+    factory.getReports(projectId, sDate, eDate).then(function(results){
+      console.log(results, 'date search results');
+    });
+    };//end searchByDate
 
     //run report
     $scope.runReport = function() {
+        $scope.searchByDateUser();
         $scope.srcByProject();
         if (userProfile.isadmin === true) {
             //this will get reports for selected user from drop down list -- only for admins
@@ -89,6 +103,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                         empid: index.empid
                     });
                 });
+                $scope.addHours();
             }); //end factory get
         } else {
             ///this gets projects based on currently logged in user
@@ -157,6 +172,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
         var data = $scope.reports;
+        //if admin use these file names
         if (userProfile.isadmin === true) {
           var projectName = $scope.selectedProject.projectname;
           var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
@@ -167,6 +183,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
                   console.log('ERROR', err);
               }); //end catch
         }else {
+          //if user use these file names
         var projectName = $scope.selUserProject.projectname; // Project Name from Scope
         var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
         alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
@@ -175,7 +192,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
             }).catch(function(err) {
                 console.log('ERROR', err);
             }); //end catch
-          }
+          }//end else
     }; //end scope
     $scope.init();
 }]);

@@ -14,7 +14,6 @@ router.get('/reports', function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         console.log('/reports get route hit');
         var objectIn = {
-            empId: req.query.empId,
             projectId:req.query.projectId,
             sDate: req.query.sDate,
             eDate: req.query.eDate
@@ -30,11 +29,8 @@ router.get('/reports', function(req, res) {
                 //object properties expected req.query{userid,projectId,sDate,eDate}
 
                 if (objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
-                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
-                    // console.log('test thing one');
-                } else if (objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
-                    // console.log('test thing two');
+                    // console.log('test thing one');
                 } else {
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId]);
                     // console.log('test thing three');
