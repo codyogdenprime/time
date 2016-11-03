@@ -48,6 +48,9 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
 
         factory.addTime(objectToSend).then(function() {
             console.log('new time worked!');
+            $scope.dateInputModel = '';
+            $scope.timeInputModel = '';
+            $scope.descriptionInputModel = '';
             $scope.getMyTimeForThisProject();
         });
     };

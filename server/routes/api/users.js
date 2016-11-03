@@ -3,6 +3,7 @@ var path = require('path');
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
+var checkDataType = require('../modules/dataType');
 
 router.route('/users')
     //selecting all users who are not admins from employees table
