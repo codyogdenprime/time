@@ -6,6 +6,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
     // Hides the transition views
     $('.single-client').hide();
     $('single-project').hide();
+    $('.modal').hide();
 
     $scope.clients = [];
     $scope.index = '';
@@ -296,7 +297,7 @@ var showSingleClient = function() {
 
 
 var showAddClient = function() {
-    $('.modal').addClass('modal-show');
+    $('.modal').show().addClass('modal-show');
     $('.modal__add-client input[type="text"]').focus();
 }; //showAddClient
 
@@ -322,7 +323,7 @@ var showClients = function() {
 };
 var modalReset = function() {
     if ($('.modal').hasClass('modal-show')) {
-        $('.modal').removeClass('modal-show');
+        $('.modal').removeClass('modal-show').hide();
     }
     $('.modal__add-project').css('opacity', 0).hide();
     $('.modal__add-client').show().css('top', '0px').css('opacity', 1);
@@ -330,7 +331,7 @@ var modalReset = function() {
 var addProjectToClient = function() {
     $('.modal__add-client').hide();
     $('.modal__add-project').show().css('opacity', 1);
-    $('.modal').addClass('modal-show');
+    $('.modal').show().addClass('modal-show');
 };
 
 var showSingleProject = function() {
