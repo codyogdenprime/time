@@ -2,6 +2,7 @@
 <html>
   <head>
     <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>Cimarron Winter</title>
     <script src="https://unpkg.com/angular/angular.min.js" charset="utf-8"></script>
@@ -16,6 +17,11 @@
 
     <script src="https://unpkg.com/jquery@3.1.1/dist/jquery.min.js"></script>
     <script src="https://unpkg.com/angular-route/angular-route.min.js" charset="utf-8"></script>
+
+    <script src="vendors/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="vendors/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="vendors/jquery-ui.min.css">
+    <link rel="stylesheet" href="vendors/jquery-ui.theme.min.css">
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
     <!-- AngularFire -->
@@ -41,7 +47,7 @@
         <h1 class="h1 header__title"><img src="files/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main">
-                <li ng-if="userProfile"><a href="#projects">Projects</a></li>
+                <li ng-if="userProfile"><a href="#/">Projects</a></li>
                 <li ng-if="userProfile"><a href="#reports">Reports</a></li>
                 <li ng-if="userProfile.isadmin"><a href="#manageProjects">Clients</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
                 <li ng-if="userProfile.isadmin"><a href="#empManage">Contractors</a></li> <!-- For Admin Only? Maybe different now that we changed the views. -->
@@ -56,5 +62,8 @@
       <!-- This is where the ng-view -->
     </main>
   </body>
-
+        <main ng-view ng-if="loggedIn">
+            <!-- This is where the ng-view -->
+        </main>
+    </body>
 </html>

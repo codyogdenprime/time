@@ -10,8 +10,41 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
 
     $scope.clients = [];
     $scope.index = '';
+
+    $scope.getClients = function() {
+        factory.getAllClients().then(function(results) {
+            $scope.clients = results.data;
+            // console.log('data in getClients',$scope.clients);
+        }); //factory call
+    }; //getClients
+
+    $scope.addClient = function() {
+        factory.addClient().then(function(results) {
+            $scope.confirmation = results.data;
+            // console.log('confirmation from addClient',$scope.confirmation);
+        }); //factory call
+    }; //addClient
+
+    //gets all projects for a single client
+    $scope.showSingleClient = function(data) {
+        // console.log('showSingleClient() clicked clientid is ',data);
+        $scope.index = data;
+        factory.getClientProjects(data).then(function(results) {
+            $scope.clientProjects = results.data;
+            // console.log('back from showSingleClient', $scope.clientProjects);
+
+            showSingleClient();
+            // Transition from all client cards to a single client
+        }); //.then factory call
+    }; //showSingleClient
+
+    $scope.showAddClient = function() {
+        showAddClient();
+    };
+
     $scope.currentProject = '';
     $scope.clientProjects = [];
+    $scope.newClient = '';
 
 
 $scope.getClients = function(){
@@ -48,20 +81,24 @@ $scope.showAddClient = function(){
 $scope.addProjectToNewClient = function(data){
   // console.log('client name in', data);
   factory.addClient(data).then(function(response) {
+    $scope.newClient = response.data.results[0].clientid;
+    console.log('in new client', $scope.newClient);
     addProjectToNewClient();
   });//
 };//addProjectToNewClient
 
 $scope.showClients = function(){
+  $scope.getClients();
   showClients();
 };//showClients
 
 $scope.addProjectToClient = function() {
-  factory.addProject($scope.projectIn,$scope.index).then(function() {
+  console.log('in addProjectToClient', $scope.newClient);
+  factory.addProject($scope.projectIn, $scope.newClient).then(function() {
 // console.log('scope.projectIn',$scope.projectIn+' scope.index',$scope.index);
   $scope.projectIn = undefined;
     addProjectToClient();
-    factory.getClientProjects($scope.index).then(function(results){
+    factory.getClientProjects($scope.newClient).then(function(results){
       $scope.clientProjects = results.data;
       // console.log('back from showSingleClient', $scope.clientProjects);
         showSingleClient();
@@ -85,7 +122,41 @@ $scope.addEmpToProject = function() {
 
 
 
+    $scope.addProjectToNewClient = function(data) {
+        // console.log('client name in', data);
+        factory.addClient(data).then(function(response) {
+            addProjectToNewClient();
+        }); //
+    }; //addProjectToNewClient
 
+    $scope.showClients = function() {
+        showClients();
+    }; //showClients
+
+    $scope.addProjectToClient = function() {
+        factory.addProject($scope.projectIn, $scope.index).then(function() {
+            // console.log('scope.projectIn',$scope.projectIn+' scope.index',$scope.index);
+            $scope.projectIn = undefined;
+            addProjectToClient();
+            factory.getClientProjects($scope.index).then(function(results) {
+                $scope.clientProjects = results.data;
+                // console.log('back from showSingleClient', $scope.clientProjects);
+                showSingleClient();
+                addProjectToNewClient();
+                modalReset();
+            });
+        });
+    }; //addProjectToClient
+
+    $scope.employees = function(empDrop) {
+        console.log('in employees function', $scope.empDrop);
+    };
+
+    //add employees to project
+    $scope.addEmpToProject = function(empId, projId) {
+        console.log('in addEmpToProject');
+        factory.addEmpToProject(empId, projId);
+    };
 
 
 
@@ -128,13 +199,13 @@ $scope.addEmpToProject = function() {
           for (var i = 0; i < $scope.clientProjects.length; i++) {
             if($scope.clientProjects[i].projectid == projectid){
               $scope.currentProjectObject = $scope.clientProjects[i];
-            };
-          };
+            }
+          }
           console.log('got to then in getAllEmployees', $scope.allEmpsForThisProject);
           factory.getAllEmployees().then(function(response) {
             $scope.allEmployees = response.data;
             showSingleProject();
-            console.log('allEmployees',$scope.allEmployees);
+            console.log('allEmployees', $scope.allEmployees);
         });
       });
     };
@@ -216,19 +287,19 @@ $scope.addEmpToProject = function() {
 
 
 
-}]);//end manageProjectsController
+}]); //end manageProjectsController
 var showSingleClient = function() {
     // Transition from all client cards to a single client
     $('section.cards').fadeOutToLeft(function() {
         $('section.single-client').fadeInFromRight();
     });
-};//showSingleClient
+}; //showSingleClient
 
 
 var showAddClient = function() {
     $('.modal').show().addClass('modal-show');
     $('.modal__add-client input[type="text"]').focus();
-};//showAddClient
+}; //showAddClient
 
 var addProjectToNewClient = function() {
     $('.modal__add-client').animate({
@@ -241,13 +312,13 @@ var addProjectToNewClient = function() {
         }, 400);
         $('.modal__add-project input[type="text"]').focus();
     });
-};//add project to new client
+}; //add project to new client
 
 var showClients = function() {
     // Transition back to all the clients
     $('section.single-client').fadeOutToRight(function() {
-    	$('section.clients').show().fadeInFromLeft();
-    	$('section.single-client').css('left', '200px');
+        $('section.clients').show().fadeInFromLeft();
+        $('section.single-client').css('left', '200px');
     });
 };
 var modalReset = function() {

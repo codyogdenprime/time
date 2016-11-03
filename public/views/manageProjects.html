@@ -1,5 +1,5 @@
 
-        <div class="modal modal__add "> 
+        <div class="modal modal__add ">
         	<!-- This is where the user will add a new client and/or add a new project. -->
             <div class="modal__close" style="position:fixed; top:0; right: 5%;color:#FFF;font-size: 4em;" onclick="modalReset();"><i class="fa fa-times"></i></div>
             <div class="modal__add-client">
@@ -8,7 +8,7 @@
                 <input type="submit" ng-click="addProjectToNewClient(clientNameIn)" value="+" />
             </div>
             <div class="modal__add-project">
-                <label>Create New Project for Client Name </label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
+                <label>Create New Project for {{clientNameIn}} </label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
                 <input type="text" ng-model = "projectIn"/><!-- The Project Name Input Field -->
                 <input type="submit" value="+" ng-click = "addProjectToClient()" />
             </div>
