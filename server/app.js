@@ -22,6 +22,8 @@ app.use('/inc', express.static(path.resolve('./node_modules/firebase')));
 app.use('/inc', express.static(path.resolve('./node_modules/angularfire/dist')));
 app.use('/inc', express.static(path.resolve('./node_modules/alasql/dist')));
 app.use('/inc', express.static(path.resolve('./node_modules/alasql/node_modules/xlsx/dist')));
+app.use('/inc', express.static(path.resolve('./node_modules/xlsx/dist')));
+
 app.use('/inc', express.static(path.resolve('./node_modules/normalize.css')));
 app.use('/inc/fa', express.static(path.resolve('./node_modules/font-awesome/')));
 //.json body parser
