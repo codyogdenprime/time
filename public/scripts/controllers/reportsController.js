@@ -18,10 +18,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //display date pickers for start and end dates
     $(function() {
-        $("#datepicker").datepicker();
+        $("#datepickerStart").datepicker();
     });
     $(function() {
-        $("#datepicker1").datepicker();
+        $("#datepickerEnd").datepicker();
     });
 
     // get all clients
@@ -70,12 +70,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     };//end get selected user
 
     $scope.searchByDateUser = function(){
-      console.log($scope.startDate, 'start');
-      console.log($scope.endDate, 'end');
+      console.log($('#datepickerStart').val());
+      console.log($('#datepickerEnd').val());
 
         var projectId =$scope.selUserProject.projectid;
-        var sDate = $scope.startDate;
-        var eDate = $scope.endDat;
+        var sDate = $('#datepickerStart').val();
+        var eDate = $('#datepickerEnd').val();
 
     factory.getReports(projectId, sDate, eDate).then(function(results){
       console.log(results, 'date search results');
@@ -172,11 +172,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
         var data = $scope.reports;
+        var hourData = $scope.addAllHours;
         //if admin use these file names
         if (userProfile.isadmin === true) {
           var projectName = $scope.selectedProject.projectname;
           var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-          alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+          alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data,hourData])
               .then(function() {
                   console.log('DATA SAVED');
               }).catch(function(err) {
@@ -186,7 +187,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
           //if user use these file names
         var projectName = $scope.selUserProject.projectname; // Project Name from Scope
         var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data])
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ? ?', [data, hourData])
             .then(function() {
                 console.log('DATA SAVED');
             }).catch(function(err) {
