@@ -3,6 +3,7 @@ var path = require('path');
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
+var checkDataType = require('../modules/dataType');
 
 router.route('/timebyprojemp')
     //get time by projectid and empid

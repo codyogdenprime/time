@@ -3,6 +3,7 @@ var path = require('path');
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
+var checkDataType = require('../modules/dataType');
 
 
 router.route('/projectsbyclient')
@@ -15,7 +16,7 @@ router.route('/projectsbyclient')
            pg.connect(connectionString, function(err, client, done) {
                //req.query pulls client id from query paramaters
                var data = req.query;
-               console.log(data, 'dataatatat');
+               console.log('data.clientUID type',typeof(data.clientUID));
                if (err) {
                    console.log(err);
                } else {
