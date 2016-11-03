@@ -136,13 +136,15 @@ router.route('/projects')
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('put route');
     var data = req.body;
+    if(checkDataType('string',[data.type]) && checkDataType('number',[data.projectid])){
+
+
     console.log('req.body', req.body.type, req.body.value, req.body.projectid);
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
         console.log(err);
       } else {
         var column = '';
-        var updatedInfo = '';
         //build sql statement based on data in
         switch (data.type) {
           case 'projectname':
@@ -163,16 +165,28 @@ router.route('/projects')
           default:
           console.log('critical switch malfunction');
         }
-        updatedInfo = data.value;
-        var clientQuery = 'UPDATE projects SET ' + column + ' = ' + updatedInfo + ' WHERE projectid = ' + data.projectid;
-        console.log(clientQuery);
-        client.query('UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [updatedInfo, data.projectid]);
-        done();
-        res.send({
-          success: true
-        });
+        // var querystring = 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [data.value, data.projectid];
+        client.query('UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [data.value, data.projectid], function(err, response){
+          if(err){
+            console.log(err);
+            done();
+            res.send({
+              success:false
+            });//res.send
+          }else{
+            done();
+            res.send({
+              success: true
+            });//res.send
+          }//else
+        });//client.query
       } //else
     }); //pg.connect
+      }else{
+        res.send({
+          success:false
+        });//res.send
+      }//else
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function

@@ -14,7 +14,7 @@ var checkDataType = function(type, arrayIn){
     }//if type =='number'
 
     if( typeof(arrayIn[i]) !== type){
-      console.log( 'error in checkDataType! '+arrayIn[i]+' is not a '+type+'!');
+      console.log( 'error in checkDataType! "'+arrayIn[i]+'" is not a '+type+'!');
       return false;
     }else{
       return true;
