@@ -50,4 +50,27 @@ router.get('/reports', function(req, res) {
         res.send("Sorry your Auth-Token was incorrect");
     }); //end catch
 }); //get active users
+
+router.get('/reports/date', function(req,res){
+  var objectIn = {
+      projectId:req.query.projectId,
+      sDate: req.query.sDate,
+      eDate: req.query.eDate
+  };
+  console.log('this is the info sent', objectIn);
+  pg.connect(connectionString, function(err, client, done) {
+      if (err) {
+          console.log(err);
+      } else {
+          var resultsArray = [];
+          var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+          queryResults.on('row', function(row){
+            resultsArray.push(row);
+          });//queryResults on row
+          queryResults.on('end',function(){
+            return res.send(resultsArray);
+          });
+        }
+        });
+});//end get
 module.exports = router;

@@ -18,10 +18,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
 
     //display date pickers for start and end dates
     $(function() {
-        $("#datepickerStart").datepicker();
+        $("#datepickerStart").datepicker({"dataformat":"yy-mm-dd"});
     });
     $(function() {
-        $("#datepickerEnd").datepicker();
+        $("#datepickerEnd").datepicker({"dataformat":"yy-mm-dd"});
     });
 
     // get all clients
@@ -69,22 +69,24 @@ myApp.controller('reportsController', ['factory', 'authFactory', '$scope', '$htt
         console.log(empId);
     };//end get selected user
 
-    $scope.searchByDateUser = function(){
-      console.log($('#datepickerStart').val());
-      console.log($('#datepickerEnd').val());
 
+
+    $scope.searchByDateUser = function(){
         var projectId =$scope.selUserProject.projectid;
-        var sDate = $('#datepickerStart').val();
-        var eDate = $('#datepickerEnd').val();
+
+        var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+        var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+
 
     factory.getReports(projectId, sDate, eDate).then(function(results){
-      console.log(results, 'date search results');
+      console.log(results.data, 'date search results');
+      $scope.reports = results.data;
     });
     };//end searchByDate
 
     //run report
     $scope.runReport = function() {
-        $scope.searchByDateUser();
+        // $scope.searchByDateUser();
         $scope.srcByProject();
         if (userProfile.isadmin === true) {
             //this will get reports for selected user from drop down list -- only for admins
