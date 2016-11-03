@@ -1,6 +1,6 @@
 myApp.constant('moment', moment);
 
-myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
+myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'authFactory', function($scope, $http, factory, authFactory) {
     console.log('in manageProjectsController');
 
     // Hides the transition views
@@ -10,6 +10,8 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', func
 
     $scope.clients = [];
     $scope.index = '';
+    var userProfile = authFactory.get_user();
+    console.log(userProfile.isadmin);
 
     $scope.getClients = function() {
         factory.getAllClients().then(function(results) {
