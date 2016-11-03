@@ -16,26 +16,19 @@ router.route('/projectsbyclient')
            pg.connect(connectionString, function(err, client, done) {
                //req.query pulls client id from query paramaters
                var data = req.query;
-               console.log('data.clientUID type',typeof(data.clientUID));
-
-
                if (err) {
                    console.log(err);
                } else {
                    var resultsArray = [];
                    var queryResults;
-
                  if(checkDataType('number',[data.clientUID]) || data.clientUID === undefined){
-                     console.log('if works here too!');
                    if (data.clientUID !== undefined) {
                        queryResults = client.query('SELECT * FROM projects WHERE client_id = $1', [data.clientUID]);
                    } else {
                        queryResults = client.query('SELECT * FROM projects');
                    }
-
                    queryResults.on('row', function(row) {
                        resultsArray.push(row);
-
                    }); //on row function
                    queryResults.on('end', function() {
                        done();
@@ -65,14 +58,21 @@ router.route('/projects')
             pg.connect(connectionString, function(err, client, done) {
                 //req.query pulls client id from query paramaters
                 var data = req.query;
-                console.log(data, 'dataatatat');
                 if (err) {
                     console.log(err);
                 } else {
+                  if(checkDataType('string',[data.empid])){
+
                     var resultsArray = [];
                     var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid]);
                     empID.on('end', function () {
-                      //console.log( 'sdfghjk-------' + empID._result.rows[0].empid );
+                      //handles undefined error
+                      if( empID._result.rows[0]===undefined){
+                        done();
+                        return res.send({
+                          success:false
+                        });//res.send
+                      }//if
                       var thisisEmpId = empID._result.rows[0].empid;
                       var queryResults = client.query('SELECT * FROM projects JOIN emp_proj ON projectid=project_id WHERE emp_id = $1;',[thisisEmpId]);
                       console.log(thisisEmpId, data.projectid);
@@ -85,6 +85,11 @@ router.route('/projects')
                         return res.send(resultsArray);
                     }); //on end function
                   });
+                }else {
+                    return res.send({
+                      success:false
+                    });//res.send
+                }//error handling else
                 } //else
             }); //pg.connect
         }).catch(function(error) {
