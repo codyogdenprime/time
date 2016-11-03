@@ -324,15 +324,6 @@ myApp.factory('factory', ['$http', function($http) {
         }); //end http
     }; // end get user projects
 
-    var getReports = function(empId, projectId, sDate, eDate) {
-        return $http({
-            method: 'GET',
-            url: 'api/reports/?empId=' + empId + '&projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
-            headers: {
-                id_token: idToken
-            }
-        }); //end http
-    }; //end get reports
 
 
     var removeEmpFromProject = function (empid, projectid) {
@@ -358,7 +349,6 @@ myApp.factory('factory', ['$http', function($http) {
             return isAdmin;
         },
         changeIsAdmin: changeIsAdmin,
-        getReports: getReports,
         getTimebyselected: getTimebyselected,
         getClientProjects: getClientProjects,
         getActiveEmp: getActiveEmp,

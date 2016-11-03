@@ -14,8 +14,7 @@ router.get('/reports', function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         console.log('/reports get route hit');
         var objectIn = {
-            empId: req.query.empId,
-            projectId:req.query.projectId,
+            projectId: req.query.projectId,
             sDate: req.query.sDate,
             eDate: req.query.eDate
         };
@@ -30,11 +29,8 @@ router.get('/reports', function(req, res) {
                 //object properties expected req.query{userid,projectId,sDate,eDate}
 
                 if (objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
-                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
-                    // console.log('test thing one');
-                } else if (objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
-                    // console.log('test thing two');
+                    // console.log('test thing one');
                 } else {
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId]);
                     // console.log('test thing three');
@@ -54,4 +50,53 @@ router.get('/reports', function(req, res) {
         res.send("Sorry your Auth-Token was incorrect");
     }); //end catch
 }); //get active users
+
+//get reports for users
+router.get('/reports/date', function(req, res) {
+    var objectIn = {
+        projectId: req.query.projectId,
+        sDate: req.query.sDate,
+        eDate: req.query.eDate
+    };
+    console.log('this is the info sent', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
+
+//get reports for admins 
+router.get('/reports/admin', function(req, res) {
+    var objectIn = {
+        empId: req.query.empId,
+        projectId: req.query.projectId,
+        sDate: req.query.sDate,
+        eDate: req.query.eDate
+    };
+    console.log('this is the info sent', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
 module.exports = router;
