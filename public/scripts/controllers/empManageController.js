@@ -1,10 +1,11 @@
 myApp.constant('moment', moment);
 
-myApp.controller('empManageController', ['$scope', '$http', 'factory', function($scope, $http, factory) {
+myApp.controller('empManageController', ['$scope', '$http', 'factory', 'authFactory', function($scope, $http, factory, authFactory) {
     console.log('in empManageController');
 
     $scope.allEmployees = [];
-
+    var userProfile = authFactory.get_user();
+    console.log(userProfile.isadmin);
 
     //get all employees WHERE isadmin = false
     //happens on page load feel free to change.....
