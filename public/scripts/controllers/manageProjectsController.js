@@ -13,6 +13,8 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     $scope.currentProject = '';
     $scope.clientProjects = [];
     $scope.thisClient = '';
+    $scope.allProjectUsers = [];
+    $scope.allEmpsForThisProject = [];
 
     var userProfile = authFactory.get_user();
     console.log(userProfile.isadmin);
@@ -88,10 +90,20 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
 
   //add employees to project
   $scope.addEmpToProject = function() {
-      console.log('in addEmpToProject', $scope.empDrop.empid, $scope.currentProject);
+    var alreadyAssigned = false;
+    console.log('in addEmpToProject', $scope.allEmpsForThisProject);
+    for (var i = 0; i < $scope.allEmpsForThisProject.length; i++) {
+      console.log('in addEmpToProject', $scope.allEmpsForThisProject[i].empid, $scope.empDrop.empid);
+      if($scope.allEmpsForThisProject[i].empid == $scope.empDrop.empid){
+        alreadyAssigned = true;
+      }
+    }
+    if (alreadyAssigned== false){
+      //console.log('in addEmpToProject', $scope.empDrop.empid, $scope.currentProject);
       factory.addEmpToProject($scope.empDrop.empid, $scope.currentProject).then(function () {
         $scope.getAllEmployeesNow();
       });
+    }
   };
 
   //get all projects
