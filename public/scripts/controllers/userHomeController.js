@@ -20,6 +20,11 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     var userDisplayName = sessionStorage.getItem('userDisplayName');
     var userPhotoURL = sessionStorage.getItem('userPhotoUrl');
 
+    $(function() {
+        $("#datepicker").datepicker({
+            "dataformat": "yy-mm-dd"
+        });
+    });
     //get all projects for the user
     $scope.getMyProjects = function() {
         factory.getMyProjects(userUID).then(function(results) {

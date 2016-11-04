@@ -152,7 +152,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         }); //end factory get
     }; //end get all User info
 
-    //run report functions 
+    //run report functions
     $scope.runReport = function() {
         if (userProfile.isadmin === true) {
             if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
@@ -175,6 +175,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.srcByProject = function() {
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
+          console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -196,9 +197,11 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         if (userProfile.isadmin === true) {
             $scope.selectEmp = false;
             $scope.clientSelect = false;
+            $scope.actionBtn = false;
         } else {
             //if user IS NOT admin show forms
             $scope.selectEmp = true;
+              $scope.actionBtn = true;
             $scope.clientSelect = true;
         } //end else
     }; //end scope.userStatus
