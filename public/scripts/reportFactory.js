@@ -2,8 +2,9 @@ myApp.factory('reportFactory', ['$http', function($http) {
     console.log('in reportFactory');
 
     var idToken = sessionStorage.getItem('userAuth');
+
     //gets reports for users with date search
-    var getReports = function(projectId, sDate, eDate) {
+    var getUserReports = function(projectId, sDate, eDate) {
         return $http({
             method: 'GET',
             url: 'api/reports/date/?projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
@@ -13,10 +14,20 @@ myApp.factory('reportFactory', ['$http', function($http) {
         }); //end http
     }; //end get reports
 
-    var getAdminReports = function(projectId,empId,sDate,eDate){
+    var getReportsNoEmpId = function(projectId, sDate, eDate){
+      return $http({
+        method: 'GET',
+        url: 'api/reports/adminNoEmp/?projectId=' + projectId  +'&sDate=' + sDate + '&eDate=' + eDate,
+        headers: {
+          id_token: idToken
+        }
+      });
+  };//get Admin Reports
+
+    var getAdminReports = function(project_Id,empId,s_Date,e_Date){
         return $http({
           method: 'GET',
-          url: 'api/reports/admin/?projectId=' + projectId + '&empId='+ empId +'&sDate=' + sDate + '&eDate=' + eDate,
+          url: 'api/reports/admin/?projectId=' + project_Id + '&empId='+ empId +'&sDate=' + s_Date + '&eDate=' + e_Date,
           headers: {
             id_token: idToken
           }
@@ -28,8 +39,9 @@ myApp.factory('reportFactory', ['$http', function($http) {
 
 
     return{
-      getRports: getReports,
-      getAdminReports: getAdminReports
+      getUserReports: getUserReports,
+      getAdminReports: getAdminReports,
+      getReportsNoEmpId: getReportsNoEmpId
     };//end return
 
 }]);

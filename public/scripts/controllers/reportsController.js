@@ -73,80 +73,106 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         console.log(empId);
     }; //end get selected user
 
-    //search by date and projectId
+    //search by date and projectId for user
     $scope.searchByDateUser = function() {
-        if (userProfile.isadmin === true) {
-            var projectId = $scope.selectedProject.projectid;
-            var empId = $scope.selectedUser.empid;
-            var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-            var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
-            reportFactory.getAdminReports(projectId, empId, sDate, eDate).then(function(results) {
-                console.log(results.data, 'date search results');
-                $scope.reports = results.data;
-            });
-        } else {
-            var projectId = $scope.selUserProject.projectid;
-            var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-            var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
-            reportFactory.getReports(projectId, sDate, eDate).then(function(results) {
-                console.log(results.data, 'date search results');
-                $scope.reports = results.data;
-            });
-        }
+      var projectId = $scope.selUserProject.projectid;
+      var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+      var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+      reportFactory.getUserReports(projectId, sDate, eDate).then(function(results) {
+          console.log(results.data, 'date search results');
+          $scope.reports = results.data;
+          $scope.addHours();
+      });
+    }; //end searchByDate user
 
-    }; //end searchByDate
+    //search by date for admin
+    $scope.searchByDateAdmin = function (){
+      if ($scope.selectedUser === undefined) {
+        console.log('undefined');
+      var projectId = $scope.selectedProject.projectid;
+      var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+      var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+      reportFactory.getReportsNoEmpId(projectId, sDate, eDate).then(function(results) {
+          console.log(results.data, 'date search results');
+          $scope.reports = results.data;
+          $scope.addHours();
+        });//end factory
+      }else {
+        console.log('defined');
+      var empId = $scope.selectedUser.empid;
+      var project_Id = $scope.selectedProject.projectid;
+      var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+      var e_Date = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+      reportFactory.getAdminReports(project_Id, empId, s_Date, e_Date).then(function(results) {
+          console.log(results.data, 'date search results');
+          $scope.reports = results.data;
+          $scope.addHours();
+      });//end factorty get
+    }//end else
+    };  //search by date admin
 
-    //run report
+    ///this gets projects based on currently logged in user
+    $scope.currentUserProjects = function(){
+    var empId = userUID;
+    var projId = $scope.selUserProject.projectid;
+    factory.getMyTimeForThisProject(empId, projId).then(function(results) {
+        $scope.reports = results.data;
+        $scope.reports = $scope.reports.map(function(index) {
+            var m = moment(index.date).format('M/D/YYYY');
+            return ({
+                timeid: index.timeid,
+                date: m,
+                hours: index.hours,
+                description: index.description,
+                empid: index.empid
+            });
+        });
+        $scope.addHours();
+    }); //end factory get
+  };//end get current user Projects
+
+  //this will get reports for selected user from drop down list -- only for admins
+  $scope.getAllUserInfo = function(){
+  console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+  var projid = $scope.selectedProject.projectid;
+  var empid = $scope.selectedUser.empid;
+  factory.getTimebyselected(empid, projid).then(function(results) {
+      $scope.reports = results.data;
+      $scope.reports = $scope.reports.map(function(index) {
+          var m = moment(index.date).format('M/D/YYYY');
+          return ({
+              timeid: index.timeid,
+              date: m,
+              hours: index.hours,
+              description: index.description,
+              empid: index.empid
+          });
+      });
+      $scope.addHours();
+  }); //end factory get
+};//end get all User info
+
+    //run report functions 
     $scope.runReport = function() {
-
+      if (userProfile.isadmin === true) {
         if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
-            $scope.srcByProject();
-            if (userProfile.isadmin === true) {
-                //this will get reports for selected user from drop down list -- only for admins
-                console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
-                var projid = $scope.selectedProject.projectid;
-                var empid = $scope.selectedUser.empid;
-                factory.getTimebyselected(empid, projid).then(function(results) {
-                    $scope.reports = results.data;
-                    $scope.reports = $scope.reports.map(function(index) {
-                        var m = moment(index.date).format('M/D/YYYY');
-                        return ({
-                            timeid: index.timeid,
-                            date: m,
-                            hours: index.hours,
-                            description: index.description,
-                            empid: index.empid
-                        });
-                    });
-                    $scope.addHours();
-                }); //end factory get
-            } else {
-                ///this gets projects based on currently logged in user
-                var empId = userUID;
-                var projId = $scope.selUserProject.projectid;
-                factory.getMyTimeForThisProject(empId, projId).then(function(results) {
-                    $scope.reports = results.data;
-                    $scope.reports = $scope.reports.map(function(index) {
-                        var m = moment(index.date).format('M/D/YYYY');
-                        return ({
-                            timeid: index.timeid,
-                            date: m,
-                            hours: index.hours,
-                            description: index.description,
-                            empid: index.empid
-                        });
-                    });
-                    $scope.addHours();
-                }); //end factory get
-            } //end else
-        } else {
-            $scope.searchByDateUser();
+          $scope.srcByProject();
+          $scope.getAllUserInfo();
+          }else {
+            $scope.searchByDateAdmin();
+        }//end date picker empty if
+      }else {
+        if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "")  {
+          $scope.currentUserProjects();
+        }else {
+          $scope.searchByDateUser();
         }
+
+      }
     }; //end run report
 
     //search for all times on a project - only for admin
     $scope.srcByProject = function() {
-        if (userProfile.isadmin === true) {
             var projId = $scope.selectedProject.projectid;
             factory.getTimeByProj(projId).then(function(results) {
                 $scope.reports = results.data;
@@ -162,8 +188,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 });
                 $scope.addHours();
             }); //end factory
-        } //end if admin
-        $scope.addHours();
     }; //end scope src by project
 
     // what to display for admin or user
