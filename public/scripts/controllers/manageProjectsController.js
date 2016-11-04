@@ -9,10 +9,10 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     $('.modal').hide();
 
     $scope.clients = [];
-    $scope.index = '';
+    $scope.thisClient = '';
     $scope.currentProject = '';
     $scope.clientProjects = [];
-    $scope.newClient = '';
+    $scope.thisClient = '';
 
     var userProfile = authFactory.get_user();
     console.log(userProfile.isadmin);
@@ -34,7 +34,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
   //gets all projects for a single client
   $scope.showSingleClient = function(data){
     // console.log('showSingleClient() clicked clientid is ',data);
-      $scope.index = data;
+      $scope.thisClient = data;
     factory.getClientProjects(data).then(function(results){
       $scope.clientProjects = results.data;
       // console.log('back from showSingleClient', $scope.clientProjects);
@@ -45,14 +45,17 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
   };//showSingleClient
 
   $scope.showAddClient = function(){
-      showAddClient();
+    //get allClients again
+    $scope.getClients();
+    console.log($scope.getClients);
+    showAddClient();
   };
 
   $scope.addProjectToNewClient = function(data){
     // console.log('client name in', data);
     factory.addClient(data).then(function(response) {
-      $scope.newClient = response.data.results[0].clientid;
-      console.log('in new client', $scope.newClient, response.data);
+      $scope.thisClient = response.data.results[0].clientid;
+      console.log('in new client', $scope.thisClient, response.data);
       addProjectToNewClient();
     });//
   };//addProjectToNewClient
@@ -63,18 +66,19 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
   };//showClients
 
   $scope.addProjectToClient = function() {
-    console.log('in addProjectToClient', $scope.newClient);
-    factory.addProject($scope.projectIn, $scope.newClient).then(function() {
-  // console.log('scope.projectIn',$scope.projectIn+' scope.index',$scope.index);
+    console.log('in addProjectToClient', $scope.thisClient);
+    factory.addProject($scope.projectIn, $scope.thisClient).then(function() {
+  // console.log('scope.projectIn',$scope.projectIn+' scope.thisClient',$scope.thisClient);
     $scope.projectIn = undefined;
       addProjectToClient();
-      factory.getClientProjects($scope.newClient).then(function(results){
+      factory.getClientProjects($scope.thisClient).then(function(results){
         $scope.clientProjects = results.data;
         // console.log('back from showSingleClient', $scope.clientProjects);
-          showSingleClient();
-      addProjectToNewClient();
-      modalReset();
-    });
+        $scope.getClients();
+        showSingleClient();
+        addProjectToNewClient();
+        modalReset();
+      });
     });
   };//addProjectToClient
 
@@ -169,7 +173,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
 
   $scope.backToSingleClient = function () {
     console.log('in backToSingleClient click');
-    factory.getClientProjects($scope.index).then(function(results){
+    factory.getClientProjects($scope.thisClient).then(function(results){
       $scope.clientProjects = results.data;
       // console.log('back from showSingleClient', $scope.clientProjects);
 

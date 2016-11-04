@@ -8,7 +8,7 @@
                 <input type="submit" ng-click="addProjectToNewClient(clientNameIn)" value="+" />
             </div>
             <div class="modal__add-project">
-                <label>Create New Project for {{clientNameIn}} </label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
+                <label>Create New Project</label> <!-- The Client's Name (whether new or from a previous client, should show here) -->
                 <input type="text" ng-model = "projectIn"/><!-- The Project Name Input Field -->
                 <input type="submit" value="+" ng-click = "addProjectToClient()" />
             </div>
@@ -23,7 +23,7 @@
         </section>
         <section class="single-client" style="height:40vh;opacity:0;position:relative;left:200px;">
             <button ng-click="showClients()">Clients</button><!-- This sends them back to all the clients. -->
-            <h2 ng-repeat = "client in clients" ng-show = "client.clientid == index">{{client.clientname}}</h2><!-- Selected Client's Name -->
+            <h2 ng-repeat = "client in clients" ng-show = "client.clientid == thisClient">{{client.clientname}}</h2><!-- Selected Client's Name -->
             <div class="cards">
                 <div class="card" ng-repeat = "project in clientProjects"><!-- ng-repeat goes here - It shows all the projects for the selected client -->
                     <a ng-click="getAllEmployees(project.projectid)" class="card__link">{{project.projectname}}</a><!-- Project's Name -->
