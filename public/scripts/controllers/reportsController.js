@@ -72,12 +72,14 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var empId = $scope.selectedUser.empid;
         console.log(empId);
     }; //end get selected user
+    $scope.noEmp =
+
 
     //search by date and projectId
     $scope.searchByDateUser = function() {
         if (userProfile.isadmin === true) {
             var projectId = $scope.selectedProject.projectid;
-            var empId = $scope.selectedUser.empid;
+            // var empId = $scope.selectedUser.empid;
             var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
             var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
             reportFactory.getAdminReports(projectId, empId, sDate, eDate).then(function(results) {
@@ -93,7 +95,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 $scope.reports = results.data;
             });
         }
-
     }; //end searchByDate
 
     //run report
