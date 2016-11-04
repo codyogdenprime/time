@@ -55,11 +55,13 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
 
   $scope.addProjectToNewClient = function(data){
     // console.log('client name in', data);
-    factory.addClient(data).then(function(response) {
-      $scope.thisClient = response.data.results[0].clientid;
-      console.log('in new client', $scope.thisClient, response.data);
-      addProjectToNewClient();
-    });//
+    if (data !== undefined){
+      factory.addClient(data).then(function(response) {
+        $scope.thisClient = response.data.results[0].clientid;
+        console.log('in new client', $scope.thisClient, response.data);
+        addProjectToNewClient();
+      });//
+    }
   };//addProjectToNewClient
 
   $scope.showClients = function(){
@@ -69,19 +71,21 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
 
   $scope.addProjectToClient = function() {
     console.log('in addProjectToClient', $scope.thisClient);
-    factory.addProject($scope.projectIn, $scope.thisClient).then(function() {
-  // console.log('scope.projectIn',$scope.projectIn+' scope.thisClient',$scope.thisClient);
-    $scope.projectIn = undefined;
-      addProjectToClient();
-      factory.getClientProjects($scope.thisClient).then(function(results){
-        $scope.clientProjects = results.data;
-        // console.log('back from showSingleClient', $scope.clientProjects);
-        $scope.getClients();
-        showSingleClient();
-        addProjectToNewClient();
-        modalReset();
+    if($scope.projectIn !== undefined){
+      factory.addProject($scope.projectIn, $scope.thisClient).then(function() {
+    // console.log('scope.projectIn',$scope.projectIn+' scope.thisClient',$scope.thisClient);
+      $scope.projectIn = undefined;
+        addProjectToClient();
+        factory.getClientProjects($scope.thisClient).then(function(results){
+          $scope.clientProjects = results.data;
+          // console.log('back from showSingleClient', $scope.clientProjects);
+          $scope.getClients();
+          showSingleClient();
+          addProjectToNewClient();
+          modalReset();
+        });
       });
-    });
+    }
   };//addProjectToClient
 
   $scope.employees = function (empDrop) {
