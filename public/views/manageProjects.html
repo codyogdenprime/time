@@ -26,7 +26,8 @@
             <h2 ng-repeat = "client in clients" ng-show = "client.clientid == thisClient">{{client.clientname}}</h2><!-- Selected Client's Name -->
             <div class="cards">
                 <div class="card" ng-repeat = "project in clientProjects"><!-- ng-repeat goes here - It shows all the projects for the selected client -->
-                    <a ng-click="getAllEmployees(project.projectid)" class="card__link">{{project.projectname}}</a><!-- Project's Name -->
+                    <a ng-click="getAllEmployees(project.projectid)" class="card__link">{{project.projectname}}</a>
+                    <input ng-click = "editProject(project.projectid, 'isactive', !project.isactive)" ng-checked="project.isactive"  type="checkbox" /></div><!-- Project's Name -->
                 </div>
                 <div class="card card-top"><!-- This must remain. -->
                     <a onclick="addProjectToClient()" class="card__new">Add Project</a>

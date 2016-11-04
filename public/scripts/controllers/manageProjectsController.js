@@ -111,13 +111,17 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
   //edit project start date
   //edit project end date
   //make project active/inactive
-  $scope.editProject = function(type, value, projectId) {
-      console.log('in editProject');
+  $scope.editProject = function(projectId, type, value) {
+      console.log('in editProject', projectId, type, value);
       factory.editProject(type, value, projectId).then(function(response) {
           $scope.editProjectSuccess = response.data;
           console.log($scope.editProjectSuccess);
+          factory.getClientProjects($scope.thisClient).then(function(results){
+            $scope.clientProjects = results.data;
+          });
       });
   };
+
   //get all employees
   $scope.getAllEmployees = function(projectid) {
       console.log('in getAllEmployees', projectid);
