@@ -29,9 +29,11 @@ router.get('/reports', function(req, res) {
                 //object properties expected req.query{userid,projectId,sDate,eDate}
 
                 if (objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
+                    console.log('inside if statement reports query');
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
                     // console.log('test thing one');
                 } else {
+                    console.log('inside else statement reports query');
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId]);
                     // console.log('test thing three');
                 }

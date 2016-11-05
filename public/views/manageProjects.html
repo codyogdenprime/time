@@ -73,7 +73,7 @@
                     <div class="description">Description</div>
                     <div class="actions" ng-show="myCurrentProject.isactive">Actions</div> <!-- ng-show if the project is active -->
                 </div>
-                <div class="row" ng-repeat="time in allMyTime"> <!-- ng-repeat would go here -->
+                <div class="row" ng-repeat="time in allTimeForThisProject"> <!-- ng-repeat would go here -->
                     <div class="date">{{time.date}}</div>
                     <div class="time">{{time.hours}}</div>
                     <div class="description">{{time.description}}</div>
