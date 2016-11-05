@@ -16,6 +16,7 @@ router.route('/projectsbyclient')
     pg.connect(connectionString, function(err, client, done) {
       //req.query pulls client id from query paramaters
       var data = req.query;
+      
       if (err) {
         console.log(err);
       } else {
