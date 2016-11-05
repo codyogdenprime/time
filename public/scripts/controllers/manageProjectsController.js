@@ -38,6 +38,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     // console.log('showSingleClient() clicked clientid is ',data);
       $scope.thisClient = data;
       $scope.currentClient = this.client;
+      console.log(this.client);
     factory.getClientProjects(data).then(function(results){
       $scope.clientProjects = results.data;
       // console.log('back from showSingleClient', $scope.clientProjects);
