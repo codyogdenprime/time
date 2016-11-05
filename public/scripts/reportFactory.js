@@ -34,12 +34,21 @@ myApp.factory('reportFactory', ['$http', function($http) {
         });
     };//get Admin Reports
 
-
+    var getReportsByProject = function(projectId) {
+        return $http({
+            method: 'GET',
+            url: 'api/reports/?projectId=' + projectId,
+            headers: {
+                id_token: idToken
+            }
+        }); //end http
+    }; //end get reports
 
     return{
       getUserReports: getUserReports,
       getAdminReports: getAdminReports,
-      getReportsNoEmpId: getReportsNoEmpId
+      getReportsNoEmpId: getReportsNoEmpId,
+      getReportsByProject: getReportsByProject
     };//end return
 
 }]);

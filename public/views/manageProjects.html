@@ -66,5 +66,29 @@
                     </div>
                 </div>
             </div>
+            <div class="sheet">
+                <div class="row titles">
+                    <div class="date">Date</div>
+                    <div class="time">Time</div>
+                    <div class="description">Description</div>
+                    <div class="actions" ng-show="myCurrentProject.isactive">Actions</div> <!-- ng-show if the project is active -->
+                </div>
+                <div class="row" ng-repeat="time in allTimeForThisProject"> <!-- ng-repeat would go here -->
+                    <div class="date">{{time.date}}</div>
+                    <div class="time">{{time.hours}}</div>
+                    <div class="description">{{time.description}}</div>
+                    <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
+                        <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
+                        <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
+                    </div>
+                </div>
+                <div class="row totals">
+                    <div class="total"><b>Total:</b></div>
+                    <div class="total-time">{{allHoursAdded}}</div> <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
+                    <div class="actions">
+                        <button class="btn-export" ng-click="exportCSV()">Export to CSV</button>
+                    </div>
+                </div>
+            </div>
         </section>
       </div>
