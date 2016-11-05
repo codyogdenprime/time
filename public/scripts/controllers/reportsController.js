@@ -51,8 +51,17 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         console.log(results.data, 'all proj results');
         $scope.reports = results.data;
         $scope.addHours();
-      });
-    };
+      });//end factory
+    };//end search all client
+
+      //get all time reports for currently logged in user
+    $scope.getAllUserTime = function(){
+      var empid = userProfile.empid;
+      reportFactory.getAllEmp(empid).then(function(results){
+        console.log(results.data);
+        $scope.reports = results.data;
+      });//end factory
+    };//end get all user time
 
     //get all projects based on selected client from above function
     $scope.client = function(selectedClient) {
@@ -90,10 +99,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search by date and projectId for user
     $scope.searchByDateUser = function() {
+        console.log(userProfile);
+        var empid = userProfile.empid;
         var projectId = $scope.selUserProject.projectid;
         var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
         var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
-        reportFactory.getUserReports(projectId, sDate, eDate).then(function(results) {
+        reportFactory.getUserReports(empid,projectId, sDate, eDate).then(function(results) {
             console.log(results.data, 'date search results');
             $scope.reports = results.data;
             $scope.addHours();

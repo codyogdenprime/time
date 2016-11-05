@@ -63,18 +63,19 @@ router.get('/reports', function(req, res) {
 //get reports for users
 router.get('/reports/date', function(req, res) {
     var objectIn = {
+        empid: req.query.empid,
         projectId: req.query.projectId,
         sDate: req.query.sDate,
         eDate: req.query.eDate
     };
     console.log('this is the info sent users', objectIn);
-    if(checkDataType('number',[objectIn.projectId]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
+    if(checkDataType('number',[objectIn.projectId, objectIn.empid]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3 AND empid = $4', [objectIn.projectId, objectIn.sDate, objectIn.eDate, objectIn.empid]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row

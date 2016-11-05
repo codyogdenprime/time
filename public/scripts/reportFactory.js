@@ -4,10 +4,10 @@ myApp.factory('reportFactory', ['$http', function($http) {
     var idToken = sessionStorage.getItem('userAuth');
 
     //gets reports for users with date search
-    var getUserReports = function(projectId, sDate, eDate) {
+    var getUserReports = function(empid, projectId, sDate, eDate) {
         return $http({
             method: 'GET',
-            url: 'api/reports/date/?projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
+            url: 'api/reports/date/?empid='+ empid +'&projectId=' + projectId + '&sDate=' + sDate + '&eDate=' + eDate,
             headers: {
                 id_token: idToken
             }
@@ -57,6 +57,17 @@ myApp.factory('reportFactory', ['$http', function($http) {
         }
       });
     };
+
+    //get all time for currently logged in user 
+    var getAllEmp = function(empid){
+      return $http({
+        method: 'GET',
+        url: 'api/time/getAllEmp/?empid=' + empid,
+        headers: {
+          id_token: idToken
+        }
+      });
+    };//end get all empp
 
     return{
       getUserReports: getUserReports,
