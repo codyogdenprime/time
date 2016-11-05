@@ -38,7 +38,9 @@ router.route('/users')
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('users post route hit');
             var data = req.body;
-            console.log('data which is also req.body', data);
+            // console.log('data which is also req.body', data);
+            if(checkDataType('string',[data.name,data.authid,data.authpic,data.authemail])&&checkDataType('boolean',[data.adminstatus])){
+
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
@@ -49,6 +51,11 @@ router.route('/users')
                     });
                 } //else bracket
             }); //pg.connect
+          }else{
+            res.send({
+                success: false,
+            });//res.send
+          }//nested else bracket
         }).catch(function(error) {
             console.log(error);
             // If the id_token isn't right, you end up in this callback function
@@ -64,6 +71,8 @@ router.route('/users')
         console.log('put route');
         var data = req.body;
         console.log(data, 'DATAAAAA');
+        if(checkDataType('string',[data.type]) && checkDataType('number',[data.empid])){
+
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
@@ -86,10 +95,18 @@ router.route('/users')
                         });
                         break;
                     default:
+                    res.send({
+                        success: false
+                    });
                         console.log('critical switch failure');
                 } //end switch
             } //else
         }); //pg.connect
+      }else{
+        res.send({
+            success: false,
+        });//res.send
+      }//nested else bracket
     }).catch(function(error) {
         console.log(error);
         // If the id_token isn't right, you end up in this callback function
@@ -177,23 +194,22 @@ router.get('/users/inactive', function(req, res) {
 router.post('/users/verify', function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         console.log('users/verify get route hit');
+        var data = req.body;
+        var objectIn = {
+            name: req.body.name,
+            adminstatus: false,
+            activestatus: true,
+            authpic: req.body.pic,
+            authemail: req.body.email,
+            userId: req.body.id
+        };
+      if(checkDataType('string',[data.name,data.pic,data.email,data.id])){
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
             } else {
                 var resultsArray = [];
-                var objectIn = {
-                    name: req.body.name,
-                    adminstatus: false,
-                    activestatus: true,
-                    authpic: req.body.pic,
-                    authemail: req.body.email,
-                    userId: req.body.id
-                };
-
                 var queryResults = client.query('SELECT * FROM employee WHERE authid = $1', [objectIn.userId]);
-
-
                 queryResults.on('row', function(row) {
                     resultsArray.push(row);
                 }); //on row function
@@ -212,13 +228,18 @@ router.post('/users/verify', function(req, res) {
                             }); //.on end function
                         }); //queryResults on end function
                     } else if (resultsArray.length > 0) {
-                        console.log('resultsArray again >>>>>>>', resultsArray);
+                        // console.log('resultsArray again >>>>>>>', resultsArray);
                         done();
                         return res.send(resultsArray);
                     } // nested else if
                 }); //on end function
             } //else
         }); //pg.connect
+      }else{
+        res.send({
+            success: false,
+        });//res.send
+      }//else
     }).catch(function(error) {
         console.log(error);
         // If the id_token isn't right, you end up in this callback function
@@ -232,6 +253,8 @@ router.get('/users/byProject', function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         var data = req.query;
         console.log('users/byProject get route hit');
+        if(checkDataType('number',[data.projectId])){
+
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
@@ -254,6 +277,11 @@ router.get('/users/byProject', function(req, res) {
                 }); //on end function
             } //else
         }); //pg.connect
+      }else{
+        res.send({
+            success: false,
+        });//res.send
+      }//else
     }).catch(function(error) {
         console.log(error);
         // If the id_token isn't right, you end up in this callback function
@@ -264,7 +292,8 @@ router.get('/users/byProject', function(req, res) {
 router.get('/userstatus',function(req,res){
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
   var data = req.query;
-  console.log(data.authid, 'AUTHIDDDDD');
+  // console.log(data.authid, 'AUTHIDDDDD');
+  if(checkDataType('string',[data.authid])){
   pg.connect(connectionString, function(err,client,done){
     if (err) {
       console.log(err);
@@ -276,10 +305,16 @@ router.get('/userstatus',function(req,res){
       }); //query on row function
       query.on('end', function() {
           done();
+
           return res.send(resultsArray);
       }); //.on end function
     }//end else
   });//end pg connect
+}else{
+  res.send({
+      success: false,
+  });//res.send
+}
 }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function
