@@ -62,7 +62,8 @@ myApp.factory('reportFactory', ['$http', function($http) {
       getUserReports: getUserReports,
       getAdminReports: getAdminReports,
       getReportsNoEmpId: getReportsNoEmpId,
-      getReportsByProject: getReportsByProject
+      getReportsByProject: getReportsByProject,
+      getAllbyClient: getAllbyClient
     };//end return
 
 }]);

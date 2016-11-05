@@ -186,7 +186,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search for all times on a project - only for admin
     $scope.srcByProject = function() {
-      if ($scope.allProj == null) {
+      if ($scope.allProj === null) {
         $window.alert('all projects selected');
         var clientid = $scope.selectedClient.clientid;
         reportFactory.getAllbyClient(clientid).then(function(results){
