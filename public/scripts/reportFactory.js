@@ -58,7 +58,7 @@ myApp.factory('reportFactory', ['$http', function($http) {
       });
     };
 
-    //get all time for currently logged in user 
+    //get all time for currently logged in user
     var getAllEmp = function(empid){
       return $http({
         method: 'GET',
@@ -69,12 +69,24 @@ myApp.factory('reportFactory', ['$http', function($http) {
       });
     };//end get all empp
 
+    var getAllByDate = function(emp_id,s_Date,e_Date){
+      return $http({
+        method: 'GET',
+        url: 'api/reports/allTime/?emp_id=' + emp_id + '&s_Date=' + s_Date + '&e_Date='+ e_Date,
+        headers: {
+          id_token: idToken
+        }
+      });
+    };
+
     return{
       getUserReports: getUserReports,
       getAdminReports: getAdminReports,
       getReportsNoEmpId: getReportsNoEmpId,
       getReportsByProject: getReportsByProject,
-      getAllbyClient: getAllbyClient
+      getAllbyClient: getAllbyClient,
+      getAllEmp: getAllEmp,
+      getAllByDate: getAllByDate
     };//end return
 
 }]);

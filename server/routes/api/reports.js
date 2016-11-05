@@ -168,4 +168,29 @@ router.get('/reports/all', function(req, res) {
         }
     });
 }); //end get
+
+//get all time based on dates and emp id
+router.get('/reports/allTime', function(req, res) {
+  console.log(req.query,'admin query ');
+    var objectIn = {
+        empid: req.query.emp_id,
+        sDate: req.query.s_Date,
+        eDate: req.query.e_Date
+    };
+    console.log('this is the info sent admin', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.empid, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
 module.exports = router;

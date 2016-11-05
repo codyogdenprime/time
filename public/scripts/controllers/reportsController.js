@@ -1,5 +1,5 @@
 myApp.constant('moment', moment);
-myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location','$window', function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
+myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location', '$window', function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
     console.log('in reportsController');
 
     //global arrays
@@ -41,33 +41,37 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 console.log(results, 'if not admin get projects for current user');
                 $scope.userProjects = results.data;
             }); //end factory get user projects
+        reportFactory.getAllEmp(empid).then(function(results) {
+            console.log(results.data);
+            $scope.reports = results.data;
+        }); //end factory
         } //end if
         $scope.userStatus();
     }; //end scope dot init
 
-    $scope.searchAllClient = function(selectedClient){
-      var clientid = $scope.selectedClient.clientid;
-      reportFactory.getAllbyClient(clientid).then(function(results){
-        console.log(results.data, 'all proj results');
-        $scope.reports = results.data;
-        $scope.addHours();
-      });//end factory
-    };//end search all client
+    $scope.searchAllClient = function(selectedClient) {
+        var clientid = $scope.selectedClient.clientid;
+        reportFactory.getAllbyClient(clientid).then(function(results) {
+            console.log(results.data, 'all proj results');
+            $scope.reports = results.data;
+            $scope.addHours();
+        }); //end factory
+    }; //end search all client
 
-      //get all time reports for currently logged in user
-    $scope.getAllUserTime = function(){
-      var empid = userProfile.empid;
-      reportFactory.getAllEmp(empid).then(function(results){
-        console.log(results.data);
-        $scope.reports = results.data;
-      });//end factory
-    };//end get all user time
+    //get all time reports for currently logged in user
+    $scope.getAllUserTime = function() {
+        var empid = userProfile.empid;
+        reportFactory.getAllEmp(empid).then(function(results) {
+            console.log(results.data);
+            $scope.reports = results.data;
+        }); //end factory
+    }; //end get all user time
 
     //get all projects based on selected client from above function
     $scope.client = function(selectedClient) {
         var clientid = $scope.selectedClient.clientid;
         factory.getClientProjects(clientid).then(function(results) {
-          console.log(results.data);
+            console.log(results.data);
             $scope.allClientProjects = results.data;
         }); //end get client projects by client_id
     }; //end scope dot client
@@ -78,7 +82,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.project = function(selectedProject) {
         var projectId = $scope.selectedProject.projectid;
         factory.getProjectUsers(projectId).then(function(results) {
-          console.log(results.data);
+            console.log(results.data);
             $scope.usersOnProject = results.data;
         }); //end get project users
     }; //end scope people on project
@@ -92,28 +96,41 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     //get selected user from DOM
     $scope.user = function(selectedUser) {
         if ($scope.selectedUser.empid !== null) {
-          var empId = $scope.selectedUser.empid;
-          console.log(empId);
+            var empId = $scope.selectedUser.empid;
+            console.log(empId);
         }
     }; //end get selected user
 
     //search by date and projectId for user
     $scope.searchByDateUser = function() {
+      if ($scope.selUserProject == null) {
+        console.log('if all time empty');
+        var emp_id = userProfile.empid;
+        var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+        var e_Date = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        reportFactory.getAllByDate(emp_id,s_Date, e_Date).then(function(results){
+          console.log(results.data, 'search by date ALL!');
+          $scope.reports = results.data;
+          $scope.addHours();
+        });
+      }else{
         console.log(userProfile);
+        console.log('else all time full');
         var empid = userProfile.empid;
         var projectId = $scope.selUserProject.projectid;
         var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
         var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
-        reportFactory.getUserReports(empid,projectId, sDate, eDate).then(function(results) {
+        reportFactory.getUserReports(empid, projectId, sDate, eDate).then(function(results) {
             console.log(results.data, 'date search results');
             $scope.reports = results.data;
             $scope.addHours();
         });
+      }
     }; //end searchByDate user
 
     //search by date for admin
     $scope.searchByDateAdmin = function() {
-        if ($scope.selectedUser === undefined) {
+        if ($scope.selectedUser == null) {
             console.log('undefined');
             var projectId = $scope.selectedProject.projectid;
             var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
@@ -142,7 +159,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var empId = userUID;
         var projId = $scope.selUserProject.projectid;
         factory.getMyTimeForThisProject(empId, projId).then(function(results) {
-          console.log(results.data);
+            console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -164,11 +181,11 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var projid = $scope.selectedProject.projectid;
         if ($scope.selectedUser !== null) {
             var empid = $scope.selectedUser.empid;
-        }else{
-          var empid = 0;
+        } else {
+            var empid = 0;
         }
         factory.getTimebyselected(empid, projid).then(function(results) {
-          console.log(results.data);
+            console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -208,7 +225,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.srcByProject = function() {
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
-          console.log(results.data);
+            console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -247,16 +264,16 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         } //end for loop
     }; //scope add hours
 
-      $scope.deleteTime = function(timeId){
-          $window.alert('Are you sure?');
+    $scope.deleteTime = function(timeId) {
+        $window.alert('Are you sure?');
         console.log(timeId);
         console.log($scope.reports);
-        factory.deleteTimeEntry(timeId).then(function(results){
-          console.log(results,'delete results');
-          $window.alert(results.data.success);
+        factory.deleteTimeEntry(timeId).then(function(results) {
+            console.log(results, 'delete results');
+            $window.alert(results.data.success);
         });
         $window.location.reload();
-      };
+    };
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
