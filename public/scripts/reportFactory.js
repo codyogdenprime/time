@@ -14,6 +14,7 @@ myApp.factory('reportFactory', ['$http', function($http) {
         }); //end http
     }; //end get reports
 
+    //get reports if no emp id selected
     var getReportsNoEmpId = function(projectId, sDate, eDate){
       return $http({
         method: 'GET',
@@ -24,6 +25,7 @@ myApp.factory('reportFactory', ['$http', function($http) {
       });
   };//get Admin Reports
 
+    //get reports for admin
     var getAdminReports = function(project_Id,empId,s_Date,e_Date){
         return $http({
           method: 'GET',
@@ -34,6 +36,7 @@ myApp.factory('reportFactory', ['$http', function($http) {
         });
     };//get Admin Reports
 
+    //get reports by Project id
     var getReportsByProject = function(projectId) {
         return $http({
             method: 'GET',
@@ -43,6 +46,17 @@ myApp.factory('reportFactory', ['$http', function($http) {
             }
         }); //end http
     }; //end get reports
+
+    //get all Projects(and those Projects time) based on Client
+    var getAllbyClient = function(clientid){
+      return $http({
+        method: 'GET',
+        url: '/api/reports/all/?clientid=' + clientid,
+        headers: {
+          id_token: idToken
+        }
+      });
+    };
 
     return{
       getUserReports: getUserReports,

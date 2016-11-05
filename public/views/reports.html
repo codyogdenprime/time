@@ -24,11 +24,15 @@
                             <!-- if user logged in -->
                             <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-show="userProfile.isadmin===false"></select>
                             <!-- if admin logged in -->
-                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true" ></select>
+                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true">
+                               <option value="" ng-model="allProj"> All Projects </option>
+                            </select>
                         </div>
                          <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
-                            <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject"></select>
+                            <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject">
+                               <option value="" ng-model="allEmps"> Everyone </option>
+                            </select>
                         </div>
                         <div class="submit">
                           <button  ng-click="runReport()"> Run Report </button>

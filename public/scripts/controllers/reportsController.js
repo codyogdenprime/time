@@ -32,6 +32,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     // get all clients
     $scope.init = function() {
         factory.getAllClients().then(function(results) {
+            console.log(results.data, 'ALL CLIENTS');
             $scope.allClients = results.data;
         }); //get all clients
         if (userProfile.isadmin === false) {
@@ -57,6 +58,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     //*********** this should only show if admin = true ************************
     //get user for project selected from above function
     $scope.project = function(selectedProject) {
+      console.log($scope.allProj, 'if all selected ');
         var projectId = $scope.selectedProject.projectid;
         factory.getProjectUsers(projectId).then(function(results) {
           console.log(results.data);
@@ -184,6 +186,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search for all times on a project - only for admin
     $scope.srcByProject = function() {
+      if ($scope.allProj == null) {
+        $window.alert('all projects selected');
+        var clientid = $scope.selectedClient.clientid;
+        reportFactory.getAllbyClient(clientid).then(function(results){
+          console.log(results.data, 'all proj results');
+        });
+      }
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
           console.log(results.data);
