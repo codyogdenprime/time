@@ -216,6 +216,29 @@ router.route('/timebyproj')
             // If the id_token isn't right, you end up in this callback function
             res.send("Sorry your Auth-Token was incorrect");
         }); //end catch
-    });//router.get
+    })//router.get
+
+    .post(function(req, res) {
+            firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+                console.log('timebyProj post route hit');
+                var data = req.body;
+                console.log('data which is also req.body', data);
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        var queryResults = client.query('INSERT INTO time (date, hours, description, empid, projid) VALUES ($1,$2,$3,$4,$5)', [data.date, Number(data.hours), data.description, data.empid, data.projectid]);
+                      queryResults.on('end', function() {
+                          done();
+                          return res.send({success: true});
+                      }); //on end function
+                    } //else bracket
+                }); //pg.connect
+          }).catch(function(error) {
+              console.log(error);
+              // If the id_token isn't right, you end up in this callback function
+              res.send("Sorry your Auth-Token was incorrect");
+          }); //end catch
+        }); //post route
 
 module.exports = router;
