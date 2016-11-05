@@ -20,6 +20,18 @@
 		$color-alert: lighten(#f1cc30, 42);
 		$color-alert-border: darken(#f1cc30, 10 );
 
+%fa {
+	margin: 0 0.75em;
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 
 body {
 	background-color: #FAFAFA;
@@ -84,6 +96,11 @@ body {
 		color: #45BCCE;
 	}
 
+	h2 > .fa-toggle-on,
+	h2 > .fa-toggle-off {
+		font-size: 1.25em;
+	}
+
 	.single-project,
 	.single-client {
 		.back-button {
@@ -91,5 +108,17 @@ body {
 		}
 		h2 {
 			padding: 0 1em;
+		}
+		.editable:hover:after {
+			@extend %fa;
+			content: '\f040';
+		}
+		.editable-click {
+			text-decoration: none;
+			border: none;
+			color: inerit;
+			&:hover {
+				cursor: pointer;
+			}
 		}
 	}
