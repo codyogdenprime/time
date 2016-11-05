@@ -62,7 +62,7 @@ body {
 		width: 60em;
 		left: 200px;
 		opacity: 0;
-		padding: 1em;
+		//padding: 1em;
 		box-sizing: border-box;
 	}
 
@@ -73,4 +73,9 @@ body {
 
 	.back-button {
 		padding: 0.5em 0.5em;
+	}
+
+	.clients--project_name > .fa {
+		float: right;
+		margin: 0 1em;
 	}
