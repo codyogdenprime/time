@@ -1,5 +1,5 @@
 myApp.constant('moment', moment);
-myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location', function(factory, authFactory, reportFactory, $scope, $http, $location) {
+myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location','$window', function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
     console.log('in reportsController');
 
     //global arrays
@@ -175,7 +175,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.srcByProject = function() {
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
-          console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -201,7 +200,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         } else {
             //if user IS NOT admin show forms
             $scope.selectEmp = true;
-              $scope.actionBtn = true;
+            $scope.actionBtn = true;
             $scope.clientSelect = true;
         } //end else
     }; //end scope.userStatus
@@ -214,15 +213,29 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         } //end for loop
     }; //scope add hours
 
+      $scope.deleteTime = function(timeId){
+          $window.alert('Are you sure?');
+        console.log(timeId);
+        console.log($scope.reports);
+        factory.deleteTimeEntry(timeId).then(function(results){
+          console.log(results,'delete results');
+          $window.alert(results.data.success);
+        });
+        $window.location.reload();
+      };
+
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
+        var myStyle = {
+            headers: true,
+            quotes: false
+        };
         var data = $scope.reports;
-        var hourData = $scope.addAllHours;
         //if admin use these file names
         if (userProfile.isadmin === true) {
             var projectName = $scope.selectedProject.projectname;
             var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-            alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ?', [data, hourData])
+            alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", ?)FROM ?', [myStyle, data])
                 .then(function() {
                     console.log('DATA SAVED');
                 }).catch(function(err) {
@@ -230,9 +243,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 }); //end catch
         } else {
             //if user use these file names
-            var projectName = $scope.selUserProject.projectname; // Project Name from Scope
-            var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
-            alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", {headers:TRUE, quote:FALSE})FROM ? ?', [data, hourData])
+            var project_Name = $scope.selUserProject.projectname; // Project Name from Scope
+            var file_name = project_Name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+            alasql.promise('SELECT * INTO XLSX("' + file_name + '-hours.xlsx", ?)FROM ?', [myStyle, data])
                 .then(function() {
                     console.log('DATA SAVED');
                 }).catch(function(err) {

@@ -36,8 +36,6 @@ myApp.factory('reportFactory', ['$http', function($http) {
 
 
 
-
-
     return{
       getUserReports: getUserReports,
       getAdminReports: getAdminReports,
