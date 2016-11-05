@@ -1,6 +1,6 @@
 myApp.constant('moment', moment);
 
-myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'authFactory', function($scope, $http, factory, authFactory) {
+myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'authFactory', 'reportFactory', function($scope, $http, factory, authFactory, reportFactory) {
     console.log('in manageProjectsController');
 
     // Hides the transition views
@@ -155,6 +155,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
         factory.getAllEmployees().then(function(response) {
           $scope.allEmployees = response.data;
           showSingleProject();
+          $scope.getTimeForThisProject();
           console.log('allEmployees', $scope.allEmployees);
       });
     });
@@ -218,7 +219,38 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
       factory.deleteTimeEntry(timeId);
   };
 
+  $scope.getTimeForThisProject = function () {
+    console.log('in getTimeForThisProject');
+    reportFactory.getReportsByProject($scope.currentProject).then(function (response) {
+      console.log(response);
+      $scope.allTimeForThisProject = response.data;
+      $scope.allTimeForThisProject = $scope.allTimeForThisProject.map(function(index) {
+          console.log(index);
+          var m = moment(index.date).format('M/D/YY');
+          console.log(m);
+          return ({
+              timeid: index.timeid,
+              date: m,
+              hours: index.hours,
+              description: index.description,
+              empid: index.empid
+          });//end return
+      });//end map
+      $scope.addAllHours();
+    });//end factory call then
+  };//end getTimeForThisProject
+
+  $scope.addAllHours = function() {
+      $scope.allHoursAdded = 0;
+      for (var i = 0; i < $scope.allTimeForThisProject.length; i++) {
+          console.log(Number($scope.allTimeForThisProject[i].hours));
+          $scope.allHoursAdded += Number($scope.allTimeForThisProject[i].hours);
+      }
+      console.log('added all hours:', $scope.allHoursAdded);
+  };
+
   $scope.getClients();
+
 
 }]); //end manageProjectsController
 
