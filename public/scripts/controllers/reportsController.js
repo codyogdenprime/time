@@ -1,5 +1,5 @@
 myApp.constant('moment', moment);
-myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location', '$window', function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
+myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location', '$window',function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
     console.log('in reportsController');
 
     //global arrays
@@ -50,6 +50,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     }; //end scope dot init
 
     $scope.searchAllClient = function(selectedClient) {
+      console.log('search all client');
         var clientid = $scope.selectedClient.clientid;
         reportFactory.getAllbyClient(clientid).then(function(results) {
             console.log(results.data, 'all proj results');
@@ -177,13 +178,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //this will get reports for selected user from drop down list -- only for admins
     $scope.getAllUserInfo = function() {
-        // console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
         var projid = $scope.selectedProject.projectid;
-        if ($scope.selectedUser !== null) {
-            var empid = $scope.selectedUser.empid;
-        } else {
-            var empid = 0;
-        }
+        var empid = $scope.selectedUser.empid;
         factory.getTimebyselected(empid, projid).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
@@ -205,7 +201,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.runReport = function() {
         if (userProfile.isadmin === true) {
             if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
-                $scope.searchAllClient();
+
                 $scope.srcByProject();
                 $scope.getAllUserInfo();
             } else {
@@ -223,6 +219,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search for all times on a project - only for admin
     $scope.srcByProject = function() {
+      if ($scope.selectedProject == null) {
+        $scope.searchAllClient();
+      }else {
+      console.log('search by project');
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
             console.log(results.data);
@@ -239,6 +239,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             });
             $scope.addHours();
         }); //end factory
+        }
     }; //end scope src by project
 
     // what to display for admin or user
