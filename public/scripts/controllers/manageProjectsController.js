@@ -65,7 +65,8 @@ $scope.addClient = function(){
 $scope.showSingleClient = function(data){
   // console.log('showSingleClient() clicked clientid is ',data);
     $scope.index = data;
-  factory.getClientProjects(data).then(function(results){
+    $scope.currentClient = this.client;
+    factory.getClientProjects(data).then(function(results){
     $scope.clientProjects = results.data;
     // console.log('back from showSingleClient', $scope.clientProjects);
 
