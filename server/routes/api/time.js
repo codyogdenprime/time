@@ -151,6 +151,10 @@ router.route('/timebyprojemp')
                             column = 'empid';
                             break;
                         default:
+                        console.log('switch failure');
+                        res.send({
+                            success: false
+                        });
                     }
                     updatedInfo = data.value;
                     client.query('UPDATE time SET ' + column + ' = $1 WHERE timeid = $2', [updatedInfo, data.timeid]);
