@@ -45,6 +45,15 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         $scope.userStatus();
     }; //end scope dot init
 
+    $scope.searchAllClient = function(selectedClient){
+      var clientid = $scope.selectedClient.clientid;
+      reportFactory.getAllbyClient(clientid).then(function(results){
+        console.log(results.data, 'all proj results');
+        $scope.reports = results.data;
+        $scope.addHours();
+      });
+    };
+
     //get all projects based on selected client from above function
     $scope.client = function(selectedClient) {
         var clientid = $scope.selectedClient.clientid;
@@ -58,7 +67,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     //*********** this should only show if admin = true ************************
     //get user for project selected from above function
     $scope.project = function(selectedProject) {
-      console.log($scope.allProj, 'if all selected ');
         var projectId = $scope.selectedProject.projectid;
         factory.getProjectUsers(projectId).then(function(results) {
           console.log(results.data);
@@ -169,6 +177,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.runReport = function() {
         if (userProfile.isadmin === true) {
             if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
+                $scope.searchAllClient();
                 $scope.srcByProject();
                 $scope.getAllUserInfo();
             } else {
@@ -186,13 +195,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search for all times on a project - only for admin
     $scope.srcByProject = function() {
-      if ($scope.allProj === null) {
-        $window.alert('all projects selected');
-        var clientid = $scope.selectedClient.clientid;
-        reportFactory.getAllbyClient(clientid).then(function(results){
-          console.log(results.data, 'all proj results');
-        });
-      }
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
           console.log(results.data);

@@ -147,4 +147,24 @@ router.get('/reports/adminNoEmp', function(req, res) {
         }
     });
 }); //end get
+
+
+router.get('/reports/all', function(req, res) {
+  console.log(req.query,'admin query ');
+        var clientid = req.query.clientid;
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1', [clientid]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
 module.exports = router;
