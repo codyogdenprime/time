@@ -58,7 +58,7 @@ router.get('/reports/date', function(req, res) {
         sDate: req.query.sDate,
         eDate: req.query.eDate
     };
-    console.log('this is the info sent', objectIn);
+    console.log('this is the info sent users', objectIn);
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
@@ -75,21 +75,47 @@ router.get('/reports/date', function(req, res) {
     });
 }); //end get
 
-//get reports for admins 
+//get reports for admins
 router.get('/reports/admin', function(req, res) {
+  console.log(req.query,'admin query ');
     var objectIn = {
         empId: req.query.empId,
         projectId: req.query.projectId,
         sDate: req.query.sDate,
         eDate: req.query.eDate
     };
-    console.log('this is the info sent', objectIn);
+    console.log('this is the info sent admin', objectIn);
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
             var resultsArray = [];
             var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
+
+//get reports for admins
+router.get('/reports/adminNoEmp', function(req, res) {
+  console.log(req.query,'admin query ');
+    var objectIn = {
+        projectId: req.query.projectId,
+        sDate: req.query.sDate,
+        eDate: req.query.eDate
+    };
+    console.log('this is the info sent admin', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
