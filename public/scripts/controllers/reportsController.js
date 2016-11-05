@@ -47,6 +47,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.client = function(selectedClient) {
         var clientid = $scope.selectedClient.clientid;
         factory.getClientProjects(clientid).then(function(results) {
+          console.log(results.data);
             $scope.allClientProjects = results.data;
         }); //end get client projects by client_id
     }; //end scope dot client
@@ -57,6 +58,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.project = function(selectedProject) {
         var projectId = $scope.selectedProject.projectid;
         factory.getProjectUsers(projectId).then(function(results) {
+          console.log(results.data);
             $scope.usersOnProject = results.data;
         }); //end get project users
     }; //end scope people on project
@@ -116,6 +118,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var empId = userUID;
         var projId = $scope.selUserProject.projectid;
         factory.getMyTimeForThisProject(empId, projId).then(function(results) {
+          console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -137,6 +140,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var projid = $scope.selectedProject.projectid;
         var empid = $scope.selectedUser.empid;
         factory.getTimebyselected(empid, projid).then(function(results) {
+          console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -175,6 +179,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.srcByProject = function() {
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
+          console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
