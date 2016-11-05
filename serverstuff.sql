@@ -38,10 +38,10 @@ project_id INT REFERENCES projects(projectid)
 
 
 
-INSERT INTO employee(empname,isadmin,isactive) VALUES('Matt Callahan',false,true);
-INSERT INTO employee(empname,isadmin,isactive) VALUES('John Arkema',false,true);
-INSERT INTO employee(empname,isadmin,isactive) VALUES('Lisa Cook',true,true);
-INSERT INTO employee(empname,isadmin,isactive) VALUES('Cody Ogden',false,true);
+INSERT INTO employee(empname,isadmin,isactive) VALUES('Matt Stevens',false,true);
+INSERT INTO employee(empname,isadmin,isactive) VALUES('John Fischer',false,true);
+INSERT INTO employee(empname,isadmin,isactive) VALUES('Lisa Williams',true,true);
+INSERT INTO employee(empname,isadmin,isactive) VALUES('Cody Richards',false,true);
 
 INSERT INTO clients(clientname,isactive) VALUES('IBM',true);
 INSERT INTO clients(clientname,isactive) VALUES('STARBUCKS',true);
@@ -56,13 +56,36 @@ INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-8-13','2016-10-12','CDO Model Repository',true,2);
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-1-23','2016-10-14','Modeling Workflow Engine',true,3);
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','EMF Parsley',false,3);
+INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','Retrofit',false,4);
+INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','Field Tech Study',false,4);
+INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','Repurpose Front End',false,4);
 
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',2,3);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',2,4);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',4,1);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',4,1);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',1,2);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',3,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',2,1);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',3,1);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',2,5);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',1,5);
 INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',3,2);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',2,6);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',4,6);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',4,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',1,4);
 
 INSERT INTO emp_proj(emp_id, project_id) VALUES(1,2);
 INSERT INTO emp_proj(emp_id, project_id) VALUES(4,1);
 INSERT INTO emp_proj(emp_id, project_id) VALUES(3,3);
 INSERT INTO emp_proj(emp_id, project_id) VALUES(2,1);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(3,1);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(2,5);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(1,5);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(3,2);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(2,6);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(4,6);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(4,3);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(1,4);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(2,4);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(2,7);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(3,7);
+INSERT INTO emp_proj(emp_id, project_id) VALUES(4,7);

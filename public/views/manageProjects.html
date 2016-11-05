@@ -55,18 +55,42 @@
                         <div class="actions">Actions</div>
                     </div>
                     <div class="row" ng-repeat="emp in allEmpsForThisProject"><!-- ng-repeat goes here -->
+                      <div ng-click="selectThisEmp(emp.empid, emp.empname)">
                         <div class="photo"><img ng-src="emp.authpic" /></div> <!-- Employee's Photo Should Go Here. -->
                         <div class="name">{{emp.empname}}</div><!-- Employee's Name -->
-                        <div class="actions">
-                            <button ng-click="removeEmpFromProject(emp.empid)">Remove</button><!-- This should remove the employee from the project. -->
-                        </div>
+                      </div>
+                      <div class="actions">
+                        <button ng-click="removeEmpFromProject(emp.empid)">Remove</button><!-- This should remove the employee from the project. -->
+                      </div>
                     </div>
                     <div class="row">
                         <!-- Left Blank on Purpose -->
                     </div>
                 </div>
             </div>
+            <div>
+                <!-- ng-show if the project is active. -->
+                <form class="add-time">
+                    <div class="date">
+                        <label>Date</label>
+                          <input class="date-input" ng-model="dateInputModel" type="text" id="datepicker" placeholder="mm/dd/yy"/>
+                    </div>
+                    <div class="time">
+                        <label>Time</label>
+                        <input class="time-input" type="text" ng-model="timeInputModel" />
+                    </div>
+                    <div class="description">
+                        <label>Description</label>
+                        <input type="text" ng-model="descriptionInputModel" />
+                    </div>
+                    <div class="submit">
+                        <button ng-click="newTime()">Add Time</button>
+                        <!-- This button should save the time entry to the server. -->
+                    </div>
+                </form>
+            </div>
             <div class="sheet">
+              <div ng-if = "selectedEmp">Time Entries for: {{selectedEmp.empname}}</div>
                 <div class="row titles">
                     <div class="date">Date</div>
                     <div class="time">Time</div>
@@ -77,7 +101,8 @@
                     <div class="date">{{time.date}}</div>
                     <div class="time">{{time.hours}}</div>
                     <div class="description">{{time.description}}</div>
-                    <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
+                    <div class="employeeOnSheet">{{time.empname}}</div>
+                    <div class="actions"><!-- ng-show if the project is active -->
                         <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
                         <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
                     </div>
