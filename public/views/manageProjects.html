@@ -35,8 +35,8 @@
             </div>
         </section>
         <section class="single-project" style="height:40vh;opacity:0;position:relative;left:200px;">
-            <button ng-repeat = "client in clients" ng-show = "client.clientid ==thisClient" class="back-button" ng-click="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> {{client.clientname}}</button><!-- Current Client's Name -->
-            <h2 style="display:inline-block;">{{currentProjectObject.projectname}}</h2><!-- Current Project's Name -->
+            <button class="back-button" ng-click="backToSingleClient()"><i class="fa fa-caret-square-o-left "></i> {{client.clientname}}</button><!-- Current Client's Name -->
+            <h2 style="display:inline-block;"><span editable-text="currentProjectObject.projectname">{{currentProjectObject.projectname}}</span></h2><!-- Current Project's Name -->
             <div>
                 <div >
                     <select ng-change = "employees(empDrop)" ng-model = "empDrop" ng-options = "emp as emp.empname for emp in allEmployees">

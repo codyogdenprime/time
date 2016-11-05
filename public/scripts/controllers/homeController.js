@@ -15,10 +15,10 @@ myApp.controller('homeController', ['$scope', '$http', '$firebaseArray', '$fireb
     $scope.logIn = function login() {
         auth.$signInWithPopup("google").then(function(firebaseUser) {
             console.log("Signed in as:", firebaseUser);
-            if (!firebaseUser.user.email.includes("@gmail.com")) {
+            if (!firebaseUser.user.email.includes("@cimarronwinter.com")) {
                 $scope.logOut();
                 //change to @cimarronwinter.com to only allow cimarron emp's
-                alert("Only Users with a @gmail.com account");
+                alert("Only Users with a @cimarronwinter.com account");
             } //end if
         }).catch(function(error) {
             console.log("Authentication failed: ", error);

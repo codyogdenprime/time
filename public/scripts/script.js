@@ -76,7 +76,7 @@ $(document).keyup(function(e) {
     }
 });
 
-var myApp = angular.module('myApp', ['ngRoute', 'firebase']);
+var myApp = angular.module('myApp', ['ngRoute', 'firebase','xeditable']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
