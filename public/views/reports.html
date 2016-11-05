@@ -42,7 +42,7 @@
                         <div class="date">Date</div>
                         <div class="time">Time</div>
                         <div class="description">Description</div>
-                        <div class="actions">Actions</div> <!-- ng-show if the project is active --->
+                        <div class="actions" ng-hide="actionBtn">Actions</div> <!-- ng-show if the project is active --->
                     </div>
                     <div class="row" ng-repeat="rep in reports">
                         <div class="date"> {{rep.date | date}} </div>
@@ -50,7 +50,7 @@
                         <div class="description"> {{rep.description}} </div>
                         <div class="actions"ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
                             <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
-                            <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
+                            <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
                         </div>
                     </div>
                     <div class="row" >

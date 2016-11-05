@@ -1,5 +1,5 @@
 myApp.constant('moment', moment);
-myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location', function(factory, authFactory, reportFactory, $scope, $http, $location) {
+myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory', '$scope', '$http', '$location','$window', function(factory, authFactory, reportFactory, $scope, $http, $location, $window) {
     console.log('in reportsController');
 
     //global arrays
@@ -175,7 +175,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.srcByProject = function() {
         var projId = $scope.selectedProject.projectid;
         factory.getTimeByProj(projId).then(function(results) {
-            console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
                 var m = moment(index.date).format('M/D/YYYY');
@@ -213,6 +212,17 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             $scope.addAllHours += Number($scope.reports[i].hours);
         } //end for loop
     }; //scope add hours
+
+      $scope.deleteTime = function(timeId){
+          $window.alert('Are you sure?');
+        console.log(timeId);
+        console.log($scope.reports);
+        factory.deleteTimeEntry(timeId).then(function(results){
+          console.log(results,'delete results');
+          $window.alert(results.data.success);
+        });
+        $window.location.reload();
+      };
 
     //this exports to CSV! see html for more
     $scope.exportCSV = function() {
