@@ -9,6 +9,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.reports = [];
     $scope.userProjects = [];
 
+
     //get user status
     var userProfile = authFactory.get_user();
     console.log(userProfile.isadmin);
@@ -71,8 +72,10 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //get selected user from DOM
     $scope.user = function(selectedUser) {
-        var empId = $scope.selectedUser.empid;
-        console.log(empId);
+        if ($scope.selectedUser.empid !== null) {
+          var empId = $scope.selectedUser.empid;
+          console.log(empId);
+        }
     }; //end get selected user
 
     //search by date and projectId for user
@@ -136,9 +139,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //this will get reports for selected user from drop down list -- only for admins
     $scope.getAllUserInfo = function() {
-        console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
+        // console.log($scope.selectedUser.empid, $scope.selectedProject.projectid, $scope.selectedClient.clientid);
         var projid = $scope.selectedProject.projectid;
-        var empid = $scope.selectedUser.empid;
+        if ($scope.selectedUser !== null) {
+            var empid = $scope.selectedUser.empid;
+        }else{
+          var empid = 0;
+        }
         factory.getTimebyselected(empid, projid).then(function(results) {
           console.log(results.data);
             $scope.reports = results.data;
