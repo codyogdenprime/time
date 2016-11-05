@@ -49,7 +49,6 @@
                         <div class="hours"> {{rep.hours}} </div>
                         <div class="description"> {{rep.description}} </div>
                         <div class="actions"ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
-                            <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
                             <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
                         </div>
                     </div>
