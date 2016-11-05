@@ -27,6 +27,10 @@
 	margin-right: 0;
 	padding-top: 1.5em;
 	// background-color: lightblue;
+	li {
+		display: flex;
+		align-items: center;
+	}
 }
 
 .main__nav .menu__main {
