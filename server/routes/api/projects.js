@@ -202,6 +202,7 @@ router.route('/projects/users')
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     console.log('projects/users post route hit');
     var data = req.body;
+    if(checkDataType('number',[data.empid,data.projectid])){
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
         console.log(err);
@@ -213,6 +214,11 @@ router.route('/projects/users')
         });
       }
     }); //pg connect
+  }else {
+    res.send({
+      success: false
+    });
+  }
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function
@@ -226,6 +232,8 @@ router.route('/projects/users')
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     var data = req.body;
     console.log('making sure there is a req.body', data);
+    if(checkDataType('number',[data.empid,data.projectid])){
+
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
         console.log(err);
@@ -237,6 +245,11 @@ router.route('/projects/users')
         });
       }
     }); //pg connect
+  }else {
+    res.send({
+      success: false
+    });
+  }
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function
@@ -250,9 +263,10 @@ router.route('/userprojects')
 .get(function(req, res) {
   //verify idToken sent in headers
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+    var data = req.query;
+    if(checkDataType('number',[data.empid])){
     pg.connect(connectionString, function(err, client, done) {
       //req.query pulls client id from query paramaters
-      var data = req.query;
       if (err) {
         console.log(err);
       } else {
@@ -267,6 +281,11 @@ router.route('/userprojects')
         }); //on end function
       } //else
     }); //pg.connect
+  }else {
+    res.send({
+      success: false
+    });
+  }
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function

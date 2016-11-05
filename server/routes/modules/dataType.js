@@ -9,12 +9,12 @@ var checkDataType = function(type, arrayIn){
       arrayIn[i] = Number(arrayIn[i]);
       console.log('arrayIn[i]',arrayIn[i]);
       if(isNaN(arrayIn[i])){
-        arrayIn[i]='not a number, yo';
+        arrayIn[i]='what you entered';
       }//if statement
     }//if type =='number'
 
     if( typeof(arrayIn[i]) !== type){
-      console.log( 'error in checkDataType! "'+arrayIn[i]+'" is not a '+type+'!');
+      console.log( 'error in checkDataType! '+arrayIn[i]+' is not a '+type+'!');
       return false;
     }else{
       return true;
