@@ -28,9 +28,22 @@
 	padding-top: 1.5em;
 	// background-color: lightblue;
 	li {
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
+		&.current a {
+			background-color: $color-blue;
+		}
 	}
+	a,
+	a:visited,
+	a:hover {
+		color: #45BCCE;
+		text-decoration: none;
+		display: block;
+		padding: 0.5em;
+	}
+
 }
 
 .main__nav .menu__main {
