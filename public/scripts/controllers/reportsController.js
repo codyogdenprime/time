@@ -41,12 +41,14 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 console.log(results, 'if not admin get projects for current user');
                 $scope.userProjects = results.data;
             }); //end factory get user projects
+
+            //gets all times for currently logged in user on page load
         reportFactory.getAllEmp(empid).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
             $scope.addHours();
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -115,7 +117,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search by date and projectId for user
     $scope.searchByDateUser = function() {
-      if ($scope.selUserProject === null) {
+      if ($scope.selUserProject == null) {
         console.log('if all time empty');
         var emp_id = userProfile.empid;
         var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
@@ -169,15 +171,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     ///this gets projects based on currently logged in user
     $scope.currentUserProjects = function() {
         var empId = userUID;
-        if ($scope.selUserProject.projectid == null) {
-          $scope.getAllUserTime();
-        }
+        if ($scope.selUserProject !== null) {
         var projId = $scope.selUserProject.projectid;
         factory.getMyTimeForThisProject(empId, projId).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -188,6 +188,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             });
             $scope.addHours();
         }); //end factory get
+      }else {
+        $scope.getAllUserTime();
+      }
     }; //end get current user Projects
 
     //this will get reports for selected user from drop down list -- only for admins
@@ -198,7 +201,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -242,7 +245,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -310,6 +313,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         } else {
             //if user use these file names
             var project_Name = $scope.selUserProject.projectname; // Project Name from Scope
+            // var user_name = userProfile.empname;
             var file_name = project_Name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
             alasql.promise('SELECT * INTO XLSX("' + file_name + '-hours.xlsx", ?)FROM ?', [myStyle, data])
                 .then(function() {
