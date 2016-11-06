@@ -124,3 +124,13 @@ myApp.config(['$routeProvider', function($routeProvider) {
         redirectTo: "/"
     });
 }]);
+
+myApp.controller('menu', [ '$scope', '$location', function($scope, $location){
+    $scope.$on('$locationChangeStart', function(event) {
+        $scope.view = ($location.path()).replace('/', '');
+        if( $scope.view === "" ) {
+            $scope.view="main";
+        }
+        console.log('VIEW:', $scope.view);
+    });
+}]);
