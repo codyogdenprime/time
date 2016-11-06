@@ -42,7 +42,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 $scope.userProjects = results.data;
             }); //end factory get user projects
 
-            //gets all times for currently logged in user on page load
+        //gets all times for currently logged in user on page load
         reportFactory.getAllEmp(empid).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
@@ -63,6 +63,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     }; //end scope dot init
 
     $scope.searchAllClient = function(selectedClient) {
+      if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
       console.log('search all client');
         var clientid = $scope.selectedClient.clientid;
         reportFactory.getAllbyClient(clientid).then(function(results) {
@@ -70,6 +71,16 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             $scope.reports = results.data;
             $scope.addHours();
         }); //end factory
+      }else {
+        var clientid = $scope.selectedClient.clientid;
+        var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+        var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        reportFactory.getAllByClientDate(clientid,sDate,eDate).then(function(results) {
+            console.log(results.data, 'all proj results');
+            $scope.reports = results.data;
+            $scope.addHours();
+        }); //end factory
+      }
     }; //end search all client
 
     //get all time reports for currently logged in user
@@ -144,6 +155,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search by date for admin
     $scope.searchByDateAdmin = function() {
+      if ($scope.selectedProject == null) {
+        $scope.searchAllClient();
+      }
         if ($scope.selectedUser == null) {
             console.log('undefined');
             var projectId = $scope.selectedProject.projectid;

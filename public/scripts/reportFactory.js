@@ -69,6 +69,7 @@ myApp.factory('reportFactory', ['$http', function($http) {
       });
     };//end get all empp
 
+      //get time by date and emp id only
     var getAllByDate = function(emp_id,s_Date,e_Date){
       return $http({
         method: 'GET',
@@ -77,7 +78,18 @@ myApp.factory('reportFactory', ['$http', function($http) {
           id_token: idToken
         }
       });
-    };
+    };//end get all by date
+
+    var getAllByClientDate = function(clientid,sDate,eDate){
+        return $http({
+          method: 'GET',
+          url: 'api/reports/allTimeClient/?clientid=' + clientid + '&sDate=' + sDate + '&eDate=' + eDate,
+          headers: {
+            id_token: idToken
+          }
+        });
+    };//end get all by client and date
+
 
     return{
       getUserReports: getUserReports,
@@ -86,7 +98,8 @@ myApp.factory('reportFactory', ['$http', function($http) {
       getReportsByProject: getReportsByProject,
       getAllbyClient: getAllbyClient,
       getAllEmp: getAllEmp,
-      getAllByDate: getAllByDate
+      getAllByDate: getAllByDate,
+      getAllByClientDate: getAllByClientDate
     };//end return
 
 }]);
