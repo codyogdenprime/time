@@ -1,6 +1,6 @@
 myApp.constant('moment', moment);
 
-myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'authFactory', function($scope, $http, factory, authFactory) {
+myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'authFactory', 'reportFactory', function($scope, $http, factory, authFactory, reportFactory) {
     console.log('in manageProjectsController');
 
     // Hides the transition views
@@ -15,6 +15,14 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     $scope.thisClient = '';
     $scope.allProjectUsers = [];
     $scope.allEmpsForThisProject = [];
+    $scope.selectedEmp = '';
+    var userUID = sessionStorage.getItem('userGoogleId');
+
+    $(function() {
+        $("#datepicker").datepicker({
+            "dataformat": "yy-mm-dd"
+        });
+    });
 
     var userProfile = authFactory.get_user();
     console.log(userProfile.isadmin);
@@ -155,6 +163,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
         factory.getAllEmployees().then(function(response) {
           $scope.allEmployees = response.data;
           showSingleProject();
+          $scope.getTimeForThisProject();
           console.log('allEmployees', $scope.allEmployees);
       });
     });
@@ -218,7 +227,93 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
       factory.deleteTimeEntry(timeId);
   };
 
+  $scope.getTimeForThisProject = function () {
+    console.log('in getTimeForThisProject');
+    reportFactory.getReportsByProject($scope.currentProject).then(function (response) {
+      console.log(response);
+      $scope.allTimeForThisProject = response.data;
+      $scope.allTimeForThisProject = $scope.allTimeForThisProject.map(function(index) {
+          console.log(index);
+          var m = moment(index.date).format('M/D/YY');
+          console.log(m);
+          for (var i = 0; i < $scope.allEmpsForThisProject.length; i++) {
+            console.log('$scope.allEmpsForThisProject', $scope.allEmpsForThisProject);
+            if($scope.allEmpsForThisProject[i].empid == index.empid)
+            var changeToName = $scope.allEmpsForThisProject[i].empname;
+          }
+          return ({
+              timeid: index.timeid,
+              date: m,
+              hours: index.hours,
+              description: index.description,
+              empid: index.empid,
+              empname: changeToName
+          });//end return
+      });//end map
+      console.log('$scope.allTimeForThisProject', $scope.allTimeForThisProject);
+      $scope.addAllHours();
+    });//end factory call then
+  };//end getTimeForThisProject
+
+  $scope.addAllHours = function() {
+      $scope.allHoursAdded = 0;
+      for (var i = 0; i < $scope.allTimeForThisProject.length; i++) {
+          console.log(Number($scope.allTimeForThisProject[i].hours));
+          $scope.allHoursAdded += Number($scope.allTimeForThisProject[i].hours);
+      }
+      console.log('added all hours:', $scope.allHoursAdded);
+  };
+
+  $scope.newTime = function() {
+    var newDate = moment($('#datepicker').val()).format('YYYY-MM-DD');
+      var objectToSend = {
+          date: newDate,
+          hours: $scope.timeInputModel,
+          description: $scope.descriptionInputModel,
+          projectid: $scope.currentProject,
+          empid: $scope.selectedEmp.empid
+      }; //end object
+
+      console.log('in newTime', objectToSend);
+
+      factory.addTimeWithEmp(objectToSend).then(function() {
+          console.log('new time worked!');
+          $scope.getTimeForThisProject();
+      });
+      $scope.dateInputModel = '';
+      $scope.timeInputModel = '';
+      $scope.descriptionInputModel = '';
+  };
+
+  $scope.selectThisEmp = function (empid, empname) {
+    console.log('in selectThisEmp click');
+    $scope.selectedEmp = {empid: empid, empname: empname};
+    console.log('in selectThisEmp', empid);
+    factory.getTimebyselected(empid, $scope.currentProject).then(function (response) {
+      $scope.allTimeForThisProject = response.data;
+      $scope.allTimeForThisProject = $scope.allTimeForThisProject.map(function(index) {
+          console.log(index);
+          var m = moment(index.date).format('M/D/YY');
+          console.log(m);
+          for (var i = 0; i < $scope.allEmpsForThisProject.length; i++) {
+            console.log('$scope.allEmpsForThisProject', $scope.allEmpsForThisProject);
+            if($scope.allEmpsForThisProject[i].empid == index.empid)
+            var changeToName = $scope.allEmpsForThisProject[i].empname;
+          }
+          return ({
+              timeid: index.timeid,
+              date: m,
+              hours: index.hours,
+              description: index.description,
+              empid: index.empid,
+              empname: changeToName
+          });//end return
+      });//end map
+    });
+  };
+
   $scope.getClients();
+
 
 }]); //end manageProjectsController
 

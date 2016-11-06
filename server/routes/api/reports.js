@@ -4,6 +4,7 @@ var path = require('path');
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/cimarron-winter';
 var firebase = require('firebase');
+var checkDataType = require('../modules/dataType');
 
 router.use(bodyParser.urlencoded({
     extended: true
@@ -19,6 +20,7 @@ router.get('/reports', function(req, res) {
             eDate: req.query.eDate
         };
         console.log('this is the info sent', objectIn);
+        if(checkDataType('number',[objectIn.projectId])){
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
@@ -29,9 +31,11 @@ router.get('/reports', function(req, res) {
                 //object properties expected req.query{userid,projectId,sDate,eDate}
 
                 if (objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
+                    console.log('inside if statement reports query');
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
                     // console.log('test thing one');
                 } else {
+                    console.log('inside else statement reports query');
                     queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId]);
                     // console.log('test thing three');
                 }
@@ -44,6 +48,11 @@ router.get('/reports', function(req, res) {
                 }); //on end function
             } //else
         }); //pg.connect
+      }else {
+        res.send({
+          success: false
+        });
+      }
     }).catch(function(error) {
         console.log(error);
         // If the id_token isn't right, you end up in this callback function
@@ -59,6 +68,7 @@ router.get('/reports/date', function(req, res) {
         eDate: req.query.eDate
     };
     console.log('this is the info sent users', objectIn);
+    if(checkDataType('number',[objectIn.projectId]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
@@ -72,7 +82,12 @@ router.get('/reports/date', function(req, res) {
                 return res.send(resultsArray);
             });
         }
+    });//pg connect
+  }else {
+    res.send({
+      success: false
     });
+  }
 }); //end get
 
 //get reports for admins
@@ -85,6 +100,8 @@ router.get('/reports/admin', function(req, res) {
         eDate: req.query.eDate
     };
     console.log('this is the info sent admin', objectIn);
+    if(checkDataType('number',[objectIn.projectId,objectIn.empId]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
+
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
@@ -96,9 +113,14 @@ router.get('/reports/admin', function(req, res) {
             }); //queryResults on row
             queryResults.on('end', function() {
                 return res.send(resultsArray);
-            });
-        }
+            });//on end function
+        }//else
+    });//pg connect
+  }else {
+    res.send({
+      success: false
     });
+  }
 }); //end get
 
 //get reports for admins
