@@ -44,6 +44,17 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         reportFactory.getAllEmp(empid).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
+            $scope.addHours();
+            $scope.reports = $scope.reports.map(function(index) {
+                var m = moment(index.date).format('M/D/YYYY');
+                return ({
+                    timeid: index.timeid,
+                    date: m,
+                    hours: index.hours,
+                    description: index.description,
+                    empid: index.empid
+                });
+              });
         }); //end factory
         } //end if
         $scope.userStatus();
@@ -104,7 +115,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search by date and projectId for user
     $scope.searchByDateUser = function() {
-      if ($scope.selUserProject == null) {
+      if ($scope.selUserProject === null) {
         console.log('if all time empty');
         var emp_id = userProfile.empid;
         var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
@@ -158,6 +169,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     ///this gets projects based on currently logged in user
     $scope.currentUserProjects = function() {
         var empId = userUID;
+        if ($scope.selUserProject.projectid == null) {
+          $scope.getAllUserTime();
+        }
         var projId = $scope.selUserProject.projectid;
         factory.getMyTimeForThisProject(empId, projId).then(function(results) {
             console.log(results.data);
