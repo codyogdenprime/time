@@ -245,4 +245,32 @@ router.route('/timebyproj')
           }); //end catch
         }); //post route
 
+        router.route('/time/getAllEmp')
+            //selecting time by emp id only
+            .get(function(req, res) {
+              console.log('/time/getAllEmp HIT');
+                firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
+                  var data = req.query.empid;
+                    pg.connect(connectionString, function(err, client, done) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            var resultsArray = [];
+                            var queryResults = client.query('SELECT * FROM time WHERE empid = $1', [data]);
+                            queryResults.on('row', function(row) {
+                                resultsArray.push(row);
+                            }); //on row function
+                            queryResults.on('end', function() {
+                                done();
+                                return res.send(resultsArray);
+                            }); //on end function
+                        } //else
+                    }); //pg.connect
+                }).catch(function(error) {
+                    console.log(error);
+                    // If the id_token isn't right, you end up in this callback function
+                    res.send("Sorry your Auth-Token was incorrect");
+                }); //end catch
+            });//router.get
+
 module.exports = router;
