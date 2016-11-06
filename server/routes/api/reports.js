@@ -63,18 +63,19 @@ router.get('/reports', function(req, res) {
 //get reports for users
 router.get('/reports/date', function(req, res) {
     var objectIn = {
+        empid: req.query.empid,
         projectId: req.query.projectId,
         sDate: req.query.sDate,
         eDate: req.query.eDate
     };
     console.log('this is the info sent users', objectIn);
-    if(checkDataType('number',[objectIn.projectId]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
+    if(checkDataType('number',[objectIn.projectId, objectIn.empid]) && checkDataType('string',[objectIn.sDate,objectIn.eDate])){
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3 AND empid = $4', [objectIn.projectId, objectIn.sDate, objectIn.eDate, objectIn.empid]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -138,6 +139,51 @@ router.get('/reports/adminNoEmp', function(req, res) {
         } else {
             var resultsArray = [];
             var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
+
+
+router.get('/reports/all', function(req, res) {
+  console.log(req.query,'admin query ');
+        var clientid = req.query.clientid;
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1', [clientid]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
+
+//get all time based on dates and emp id
+router.get('/reports/allTime', function(req, res) {
+  console.log(req.query,'admin query ');
+    var objectIn = {
+        empid: req.query.emp_id,
+        sDate: req.query.s_Date,
+        eDate: req.query.e_Date
+    };
+    console.log('this is the info sent admin', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.empid, objectIn.sDate, objectIn.eDate]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
