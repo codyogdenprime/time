@@ -325,8 +325,15 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
       var data = $scope.reports;
       if ($scope.selectedProject == null) {
         var projectName = "All";
+        var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+        alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", ?)FROM ?', [myStyle, data])
+            .then(function() {
+                console.log('DATA SAVED');
+            }).catch(function(err) {
+                console.log('ERROR', err);
+            }); //end catch
       }else {
-        var projectName = $scope.selectedProject.projectname;
+      var projectName = $scope.selectedProject.projectname;
       var filename = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
       alasql.promise('SELECT * INTO XLSX("' + filename + '-hours.xlsx", ?)FROM ?', [myStyle, data])
           .then(function() {
@@ -344,7 +351,18 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
           quotes: false
       };
       var data = $scope.reports;
-      //if user use these file names
+      if ($scope.selUserProject == null) {
+        console.log($scope.selUserProject, 'if');
+        var projectName = "All"; // Project Name from Scope
+        var file_name = projectName.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
+        alasql.promise('SELECT * INTO XLSX("' + file_name + '-hours.xlsx", ?)FROM ?', [myStyle, data])
+            .then(function() {
+                console.log('DATA SAVED');
+            }).catch(function(err) {
+                console.log('ERROR', err);
+            }); //end catch
+      }else {
+        console.log($scope.selUserProject, 'else');
       var project_Name = $scope.selUserProject.projectname; // Project Name from Scope
       var file_name = project_Name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
       alasql.promise('SELECT * INTO XLSX("' + file_name + '-hours.xlsx", ?)FROM ?', [myStyle, data])
@@ -353,6 +371,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
           }).catch(function(err) {
               console.log('ERROR', err);
           }); //end catch
+        }
     };//end user CSV
     $scope.init();
 }]);
