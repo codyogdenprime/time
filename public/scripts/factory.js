@@ -246,7 +246,7 @@ myApp.factory('factory', ['$http', function($http) {
     var addEmpToProject = function(empId, projId) {
         console.log('made it to addEmpToProject');
         var objectToSend = {
-            empid: empID,
+            empid: empId,
             projectid: projId,
         };
         return $http({
