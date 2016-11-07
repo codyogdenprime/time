@@ -6,6 +6,15 @@
 	& > div {
 		padding: 0.5em 0;
 	}
+	.photo img {
+		display: block;
+		height: 25px;
+		border-radius: 50%;
+		margin: 0 auto 0 0;
+	}
+	.photo {
+		width: 60px;
+	}
 	.date {
 		box-sizing: border-box;
 		float:left;

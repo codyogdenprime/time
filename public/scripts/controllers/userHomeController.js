@@ -42,22 +42,24 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     };
     //add new time
     $scope.newTime = function() {
+      var newDate = moment($('#datepicker').val()).format('YYYY-MM-DD');
         var objectToSend = {
-            date: $scope.dateInputModel,
+            date: newDate,
             hours: $scope.timeInputModel,
             description: $scope.descriptionInputModel,
             projectid: $scope.myCurrentProject.projectid,
             empid: userUID
         }; //end object
+
         console.log('in newTime', objectToSend);
 
         factory.addTime(objectToSend).then(function() {
             console.log('new time worked!');
-            $scope.dateInputModel = '';
-            $scope.timeInputModel = '';
-            $scope.descriptionInputModel = '';
             $scope.getMyTimeForThisProject();
         });
+        $scope.dateInputModel = '';
+        $scope.timeInputModel = '';
+        $scope.descriptionInputModel = '';
     };
 
     $scope.showProject = function() {

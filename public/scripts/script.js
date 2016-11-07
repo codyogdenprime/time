@@ -76,7 +76,7 @@ $(document).keyup(function(e) {
     }
 });
 
-var myApp = angular.module('myApp', ['ngRoute', 'firebase']);
+var myApp = angular.module('myApp', ['ngRoute', 'firebase','xeditable']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -122,5 +122,15 @@ myApp.config(['$routeProvider', function($routeProvider) {
     }).
     otherwise({
         redirectTo: "/"
+    });
+}]);
+
+myApp.controller('menu', [ '$scope', '$location', function($scope, $location){
+    $scope.$on('$locationChangeStart', function(event) {
+        $scope.view = ($location.path()).replace('/', '');
+        if( $scope.view === "" ) {
+            $scope.view="main";
+        }
+        console.log('VIEW:', $scope.view);
     });
 }]);

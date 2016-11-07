@@ -28,6 +28,15 @@ h2.entity-title {
 		color: #45bcce;
 		display: block;
 	}
+	.photo img {
+		display: block;
+		height: 25px;
+		border-radius: 50%;
+		margin: 0 auto 0 0;
+	}
+	.photo {
+		width: 60px;
+	}
 	.description input {
 		width: 350px;
 	}
@@ -37,7 +46,7 @@ h2.entity-title {
 		margin-bottom: 0.25em;
 	}
 	.date-input {
-		width: 90px;
+		width: 110px;
 	}
 	.time-input {
 		width: 50px;
@@ -63,6 +72,15 @@ h2.entity-title {
 			box-sizing: border-box;
 			width: 100%;
 		}
+	.photo img {
+		display: block;
+		height: 25px;
+		border-radius: 50%;
+		margin: 0 auto 0 0;
+	}
+	.photo {
+		width: 60px;
+	}
 		& > div {
 			padding-bottom: 1em;
 		}

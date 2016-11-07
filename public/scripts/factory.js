@@ -123,6 +123,18 @@ myApp.factory('factory', ['$http', function($http) {
         });
     };
 
+    var addTimeWithEmp = function(objectToSend) {
+
+        return $http({
+            method: 'POST',
+            url: 'api/timebyproj',
+            data: objectToSend,
+            headers: {
+                id_token: idToken
+            }
+        });
+    };
+
     var editTime = function(type, value, id) {
         console.log('made it to edit time factory');
         var objectToSend = {
@@ -234,7 +246,7 @@ myApp.factory('factory', ['$http', function($http) {
     var addEmpToProject = function(empId, projId) {
         console.log('made it to addEmpToProject');
         var objectToSend = {
-            empid: empId,
+            empid: empID,
             projectid: projId,
         };
         return $http({
@@ -369,7 +381,8 @@ myApp.factory('factory', ['$http', function($http) {
         getMyTimeForThisProject: getMyTimeForThisProject,
         toggleStatus: toggleStatus,
         addClient: addClient,
-        removeEmpFromProject: removeEmpFromProject
+        removeEmpFromProject: removeEmpFromProject,
+        addTimeWithEmp: addTimeWithEmp
 
     };
 }]);

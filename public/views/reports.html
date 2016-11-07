@@ -22,13 +22,19 @@
                         <div class="description">
                             <label>Project</label>
                             <!-- if user logged in -->
-                            <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-show="userProfile.isadmin===false"></select>
+                            <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-show="userProfile.isadmin===false">
+                                <option value="" ng-model="allTime"> All Time </option>  
+                            </select>
                             <!-- if admin logged in -->
-                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true" ></select>
+                            <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true">
+                               <option value="" ng-model="allProj"> All Projects </option>
+                            </select>
                         </div>
                          <div ng-hide="selectEmp"><!-- This only shows if there is an administrator present. -->
                             <label>Person</label>
-                            <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject"></select>
+                            <select ng-change="user(selectedUser)" ng-model="selectedUser" ng-options="user as user.empname for user in usersOnProject">
+                               <option value="" ng-model="allEmps"> Everyone </option>
+                            </select>
                         </div>
                         <div class="submit">
                           <button  ng-click="runReport()"> Run Report </button>
@@ -42,15 +48,16 @@
                         <div class="date">Date</div>
                         <div class="time">Time</div>
                         <div class="description">Description</div>
-                        <div class="actions">Actions</div> <!-- ng-show if the project is active --->
+                        <!-- <div class="project"> Project Name </div>
+                        <div class="person">Contractor</div> -->
+                        <div class="actions" ng-hide="actionBtn">Actions</div> <!-- ng-show if the project is active --->
                     </div>
                     <div class="row" ng-repeat="rep in reports">
                         <div class="date"> {{rep.date | date}} </div>
                         <div class="hours"> {{rep.hours}} </div>
                         <div class="description"> {{rep.description}} </div>
                         <div class="actions"ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
-                            <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
-                            <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
+                            <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
                         </div>
                     </div>
                     <div class="row" >
