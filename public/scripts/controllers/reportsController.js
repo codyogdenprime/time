@@ -41,15 +41,29 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 console.log(results, 'if not admin get projects for current user');
                 $scope.userProjects = results.data;
             }); //end factory get user projects
+
+        //gets all times for currently logged in user on page load
         reportFactory.getAllEmp(empid).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
+            $scope.addHours();
+            $scope.reports = $scope.reports.map(function(index) {
+                var m = moment(index.date).format('YYYY-MM-DD');
+                return ({
+                    timeid: index.timeid,
+                    date: m,
+                    hours: index.hours,
+                    description: index.description,
+                    empid: index.empid
+                });
+              });
         }); //end factory
         } //end if
         $scope.userStatus();
     }; //end scope dot init
 
     $scope.searchAllClient = function(selectedClient) {
+      if ($("#datepickerStart").val() === "" && $("#datepickerEnd").val() === "") {
       console.log('search all client');
         var clientid = $scope.selectedClient.clientid;
         reportFactory.getAllbyClient(clientid).then(function(results) {
@@ -57,6 +71,16 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             $scope.reports = results.data;
             $scope.addHours();
         }); //end factory
+      }else {
+        var clientid = $scope.selectedClient.clientid;
+        var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
+        var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        reportFactory.getAllByClientDate(clientid,sDate,eDate).then(function(results) {
+            console.log(results.data, 'all proj results');
+            $scope.reports = results.data;
+            $scope.addHours();
+        }); //end factory
+      }
     }; //end search all client
 
     //get all time reports for currently logged in user
@@ -131,6 +155,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
     //search by date for admin
     $scope.searchByDateAdmin = function() {
+      if ($scope.selectedProject == null) {
+        $scope.searchAllClient();
+      }
         if ($scope.selectedUser == null) {
             console.log('undefined');
             var projectId = $scope.selectedProject.projectid;
@@ -158,12 +185,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     ///this gets projects based on currently logged in user
     $scope.currentUserProjects = function() {
         var empId = userUID;
+        if ($scope.selUserProject !== null) {
         var projId = $scope.selUserProject.projectid;
         factory.getMyTimeForThisProject(empId, projId).then(function(results) {
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -174,6 +202,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             });
             $scope.addHours();
         }); //end factory get
+      }else {
+        $scope.getAllUserTime();
+      }
     }; //end get current user Projects
 
     //this will get reports for selected user from drop down list -- only for admins
@@ -184,7 +215,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -228,7 +259,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('M/D/YYYY');
+                var m = moment(index.date).format('YYYY-MM-DD');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -296,6 +327,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         } else {
             //if user use these file names
             var project_Name = $scope.selUserProject.projectname; // Project Name from Scope
+            // var user_name = userProfile.empname;
             var file_name = project_Name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with dash, force lowercase
             alasql.promise('SELECT * INTO XLSX("' + file_name + '-hours.xlsx", ?)FROM ?', [myStyle, data])
                 .then(function() {

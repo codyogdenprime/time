@@ -193,4 +193,29 @@ router.get('/reports/allTime', function(req, res) {
         }
     });
 }); //end get
+
+//get all time base on client id and date's
+router.get('/reports/allTimeClient', function(req, res) {
+  console.log(req.query,'admin query ');
+    var objectIn = {
+        client_id: req.query.clientid,
+        sDate: req.query.sDate,
+        eDate: req.query.eDate
+    };
+    console.log('this is the info sent admin', objectIn);
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            console.log(err);
+        } else {
+            var resultsArray = [];
+            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.client_id, objectIn.sDate, objectIn.eDate]);
+            queryResults.on('row', function(row) {
+                resultsArray.push(row);
+            }); //queryResults on row
+            queryResults.on('end', function() {
+                return res.send(resultsArray);
+            });
+        }
+    });
+}); //end get
 module.exports = router;
