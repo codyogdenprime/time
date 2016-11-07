@@ -20,6 +20,18 @@
 		$color-alert: lighten(#f1cc30, 42);
 		$color-alert-border: darken(#f1cc30, 10 );
 
+%fa {
+	margin: 0 0.75em;
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 
 body {
 	background-color: #FAFAFA;
@@ -62,7 +74,7 @@ body {
 		width: 60em;
 		left: 200px;
 		opacity: 0;
-		padding: 1em;
+		//padding: 1em;
 		box-sizing: border-box;
 	}
 
@@ -74,3 +86,57 @@ body {
 	.back-button {
 		padding: 0.5em 0.5em;
 	}
+
+	.fa-toggle-on,
+	.fa-toggle-off {
+		cursor: pointer;
+	}
+
+	.fa-toggle-on {
+		color: #45BCCE;
+	}
+
+	h2 > .fa-toggle-on,
+	h2 > .fa-toggle-off {
+		font-size: 1.25em;
+	}
+
+	.single-project,
+	.single-client {
+		.back-button {
+			margin: 0 1em;
+		}
+		h2 {
+			padding: 0 1em;
+		}
+		.editable:hover:after {
+			@extend %fa;
+			content: '\f040';
+		}
+		.editable-click {
+			text-decoration: none;
+			border: none;
+			color: inerit;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
+.date-input {
+	width: 200px;
+}
+.emp-photo {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}

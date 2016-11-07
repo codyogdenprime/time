@@ -7,19 +7,18 @@ var checkDataType = function(type, arrayIn){
     //in case a number comes in as a string
     if(type == 'number'){
       arrayIn[i] = Number(arrayIn[i]);
-      console.log('arrayIn[i]',arrayIn[i]);
       if(isNaN(arrayIn[i])){
-        arrayIn[i]='not a number, yo';
+        arrayIn[i]='what you entered';
       }//if statement
     }//if type =='number'
 
     if( typeof(arrayIn[i]) !== type){
-      console.log( 'error in checkDataType! "'+arrayIn[i]+'" is not a '+type+'!');
+      console.log( 'error in checkDataType! '+arrayIn[i]+' is not a '+type+'!');
       return false;
-    }else{
+    }//if it doesn't match
+    }//for loop
+
       return true;
-    }//else statement
-  }//for loop
 };//
 
 module.exports = checkDataType;
