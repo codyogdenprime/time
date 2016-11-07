@@ -41,23 +41,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
                 console.log(results, 'if not admin get projects for current user');
                 $scope.userProjects = results.data;
             }); //end factory get user projects
-
-        //gets all times for currently logged in user on page load
-        reportFactory.getAllEmp(empid).then(function(results) {
-            console.log(results.data);
-            $scope.reports = results.data;
-            $scope.addHours();
-            $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('YYYY-MM-DD');
-                return ({
-                    timeid: index.timeid,
-                    date: m,
-                    hours: index.hours,
-                    description: index.description,
-                    empid: index.empid
-                });
-              });
-        }); //end factory
         } //end if
         $scope.userStatus();
     }; //end scope dot init
@@ -69,15 +52,35 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         reportFactory.getAllbyClient(clientid).then(function(results) {
             console.log(results.data, 'all proj results');
             $scope.reports = results.data;
+            $scope.reports = $scope.reports.map(function(index) {
+                var m = moment(index.date).format('M/D/YY');
+                return ({
+                    timeid: index.timeid,
+                    date: m,
+                    hours: index.hours,
+                    description: index.description,
+                    empid: index.empid
+                });
+              });
             $scope.addHours();
         }); //end factory
       }else {
         var clientid = $scope.selectedClient.clientid;
-        var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-        var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        var sDate = moment($('#datepickerStart').val()).format('M/D/YY');
+        var eDate = moment($('#datepickerEnd').val()).format('M/D/YY');
         reportFactory.getAllByClientDate(clientid,sDate,eDate).then(function(results) {
             console.log(results.data, 'all proj results');
             $scope.reports = results.data;
+            $scope.reports = $scope.reports.map(function(index) {
+                var m = moment(index.date).format('M/D/YY');
+                return ({
+                    timeid: index.timeid,
+                    date: m,
+                    hours: index.hours,
+                    description: index.description,
+                    empid: index.empid
+                });
+              });
             $scope.addHours();
         }); //end factory
       }
@@ -131,8 +134,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
       if ($scope.selUserProject == null) {
         console.log('if all time empty');
         var emp_id = userProfile.empid;
-        var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-        var e_Date = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        var s_Date = moment($('#datepickerStart').val()).format('M/D/YY');
+        var e_Date = moment($('#datepickerEnd').val()).format('M/D/YY');
         reportFactory.getAllByDate(emp_id,s_Date, e_Date).then(function(results){
           console.log(results.data, 'search by date ALL!');
           $scope.reports = results.data;
@@ -143,8 +146,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         console.log('else all time full');
         var empid = userProfile.empid;
         var projectId = $scope.selUserProject.projectid;
-        var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-        var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+        var sDate = moment($('#datepickerStart').val()).format('M/D/YY');
+        var eDate = moment($('#datepickerEnd').val()).format('M/D/YY');
         reportFactory.getUserReports(empid, projectId, sDate, eDate).then(function(results) {
             console.log(results.data, 'date search results');
             $scope.reports = results.data;
@@ -161,8 +164,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         if ($scope.selectedUser == null) {
             console.log('undefined');
             var projectId = $scope.selectedProject.projectid;
-            var sDate = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-            var eDate = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+            var sDate = moment($('#datepickerStart').val()).format('M/D/YY');
+            var eDate = moment($('#datepickerEnd').val()).format('M/D/YY');
             reportFactory.getReportsNoEmpId(projectId, sDate, eDate).then(function(results) {
                 console.log(results.data, 'date search results');
                 $scope.reports = results.data;
@@ -172,8 +175,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log('defined');
             var empId = $scope.selectedUser.empid;
             var project_Id = $scope.selectedProject.projectid;
-            var s_Date = moment($('#datepickerStart').val()).format('YYYY-MM-DD');
-            var e_Date = moment($('#datepickerEnd').val()).format('YYYY-MM-DD');
+            var s_Date = moment($('#datepickerStart').val()).format('M/D/YY');
+            var e_Date = moment($('#datepickerEnd').val()).format('M/D/YY');
             reportFactory.getAdminReports(project_Id, empId, s_Date, e_Date).then(function(results) {
                 console.log(results.data, 'date search results');
                 $scope.reports = results.data;
@@ -191,7 +194,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('YYYY-MM-DD');
+                var m = moment(index.date).format('M/D/YY');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -215,7 +218,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('YYYY-MM-DD');
+                var m = moment(index.date).format('M/D/YY');
                 return ({
                     timeid: index.timeid,
                     date: m,
@@ -259,7 +262,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results.data);
             $scope.reports = results.data;
             $scope.reports = $scope.reports.map(function(index) {
-                var m = moment(index.date).format('YYYY-MM-DD');
+                var m = moment(index.date).format('M/D/YY');
                 return ({
                     timeid: index.timeid,
                     date: m,
