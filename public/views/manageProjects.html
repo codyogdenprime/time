@@ -56,7 +56,7 @@
                     </div>
                     <div class="row" ng-repeat="emp in allEmpsForThisProject"><!-- ng-repeat goes here -->
                       <div ng-click="selectThisEmp(emp.empid, emp.empname)">
-                        <div class="photo"><img ng-src="emp.authpic" /></div> <!-- Employee's Photo Should Go Here. -->
+                        <div class="photo"><img class="emp-photo" src="{{emp.authpic}}" /></div> <!-- Employee's Photo Should Go Here. -->
                         <div class="name">{{emp.empname}}</div><!-- Employee's Name -->
                       </div>
                       <div class="actions">
