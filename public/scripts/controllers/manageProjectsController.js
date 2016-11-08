@@ -278,7 +278,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
 
       factory.addTimeWithEmp(objectToSend).then(function() {
           console.log('new time worked!');
-          $scope.getTimeForThisProject();
+          $scope.getTimeByProjectAndEmp($scope.selectedEmp.empid); //----------------------
       });
       $scope.dateInputModel = '';
       $scope.timeInputModel = '';
@@ -289,6 +289,11 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     console.log('in selectThisEmp click');
     $scope.selectedEmp = {empid: empid, empname: empname};
     console.log('in selectThisEmp', empid);
+    $scope.getTimeByProjectAndEmp(empid);
+  };
+
+  $scope.getTimeByProjectAndEmp = function (empid) {
+    console.log('in getTimeByProjectAndEmp');
     factory.getTimebyselected(empid, $scope.currentProject).then(function (response) {
       $scope.allTimeForThisProject = response.data;
       $scope.allTimeForThisProject = $scope.allTimeForThisProject.map(function(index) {
@@ -309,7 +314,7 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
               empname: changeToName
           });//end return
       });//end map
-    });
+    });//end factory call
   };
 
   $scope.getClients();
