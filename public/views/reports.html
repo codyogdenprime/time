@@ -23,7 +23,7 @@
                             <label>Project</label>
                             <!-- if user logged in -->
                             <select ng-change="userProject(selUserProject)" ng-model="selUserProject" ng-options="userProject as userProject.projectname for userProject in userProjects" ng-show="userProfile.isadmin===false">
-                                <option value="" ng-model="allTime"> All Time </option>  
+                                <option value="" ng-model="allTime"> All Time </option>
                             </select>
                             <!-- if admin logged in -->
                             <select ng-change="project(selectedProject)" ng-model="selectedProject" ng-options="project as project.projectname for project in allClientProjects" ng-show="userProfile.isadmin===true">
@@ -58,6 +58,7 @@
                         <div class="description"> {{rep.description}} </div>
                         <div class="actions"ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
                             <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
+                            <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
                         </div>
                     </div>
                     <div class="row" >
