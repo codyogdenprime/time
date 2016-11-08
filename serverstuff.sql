@@ -45,7 +45,7 @@ INSERT INTO employee(empname,isadmin,isactive) VALUES('Cody Richards',false,true
 
 INSERT INTO clients(clientname,isactive) VALUES('IBM',true);
 INSERT INTO clients(clientname,isactive) VALUES('STARBUCKS',true);
-INSERT INTO clients(clientname,isactive) VALUES('3M',true);
+INSERT INTO clients(clientname,isactive) VALUES('Medtronic',true);
 INSERT INTO clients(clientname,isactive) VALUES('Microsoft',false);
 
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-9-1','2016-10-1','Data Tools Platform',false,1);
@@ -60,18 +60,18 @@ INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','Field Tech Study',false,4);
 INSERT INTO projects(startdate,enddate,projectname,isactive,client_id) VALUES('2016-6-13','2016-10-23','Repurpose Front End',false,4);
 
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',4,1);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',1,2);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',3,3);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',2,1);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',3,1);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',2,5);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',1,5);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',3,2);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Measured twice cut once',2,6);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Crunched the numbers',4,6);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Touched Base',4,3);
-INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got my ducks in a row',1,4);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Met with client',4,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Researched front end toolboxes',3,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Planning phase started',3,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Received back end data',2,1);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Reformatted database',3,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Met with client base',4,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Finished with presentation',1,5);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Got the figures from Matt',3,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-13',12,'Implemented working definition',2,6);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-14',12,'Worked with Lisa on swim lanes',4,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-23',12,'Communicated with Clients',4,3);
+INSERT INTO time(date,hours,description,empid,projid) VALUES('2016-10-27',12,'Finishing touches on scope',1,4);
 
 INSERT INTO emp_proj(emp_id, project_id) VALUES(1,2);
 INSERT INTO emp_proj(emp_id, project_id) VALUES(4,1);
