@@ -1,4 +1,4 @@
-var bodyParser = require('body-parser');
+ var bodyParser = require('body-parser');
 var router = require('express').Router();
 var path = require('path');
 var pg = require('pg');
@@ -108,7 +108,7 @@ router.get('/reports/admin', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -138,7 +138,7 @@ router.get('/reports/adminNoEmp', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.date >= $2 AND time.date <= $3;', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -158,7 +158,7 @@ router.get('/reports/all', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1', [clientid]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE client_id = $1', [clientid]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
