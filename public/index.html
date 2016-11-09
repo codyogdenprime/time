@@ -36,7 +36,7 @@
         <script src="scripts/reportFactory.js"></script>
     </head>
   <body ng-app="myApp" ng-controller="homeController">
-    <header class="header"><!-- This header is the same on every page. -->
+    <header class="header" style="padding-top: 4em"><!-- This header is the same on every page. -->
         <h1 class="h1 header__title"><img src="files/cw-logo.png" /></h1>
         <nav class="nav main__nav">
             <ul class="menu menu__main" ng-controller="menu">
@@ -53,8 +53,8 @@
     <main ng-view ng-if="loggedIn">
       <!-- This is where the ng-view -->
     </main>
-    <footer ng-show="loggedIn" style="text-align: center;color:#45BCCE;font-size:0.9em;padding: 3em 0;">
+<!--     <footer ng-show="loggedIn" style="text-align: center;color:#45BCCE;font-size:0.9em;padding: 3em 0;">
     {{ userProfile.empname }} - <a href="http://cimarronwinter.com" style="color:#45BCCE;text-decoration: none;border-bottom: 1px dotted currentColor;">Cimarron Winter</a> - <button ng-click="logOut()">Logout</button>
-    </footer>
+    </footer> -->
   </body>
 </html>
