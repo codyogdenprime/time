@@ -47,36 +47,28 @@
                     <div class="row titles">
                         <div class="date">Date</div>
                         <div class="time">Time</div>
+                        <div class="person" ng-hide="actionBtn" style="width:140px">Person</div>
                         <div class="description">Description</div>
-                        <!-- <div class="project"> Project Name </div>
-                        <div class="person">Contractor</div> -->
-                        <div class="actions" ng-hide="actionBtn">Actions</div> <!-- ng-show if the project is active --->
+                        <div class="actions" ng-hide="actionBtn">Actions</div> <!-- ng-show if the project is active -->
                     </div>
+                    <!-- <div style="text-align:center;padding: 1em 0;opacity:0.5;" ng-hide="!reports">No Report Selected</div> -->
                     <div class="row" ng-repeat="rep in reports">
-                        <div class="date"> {{rep.date | date}} </div>
-                        <div class="hours"> {{rep.hours}} </div>
-                        <div class="description"> {{rep.description}} </div>
-                        <div class="actions"ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
+                        <div class="date" style="width:200px"> {{rep.date | date : 'MMM dd'}} </div>
+                        <div class="hours" style="width:70px"> {{rep.hours}} </div>
+                        <div class="person" ng-hide="actionBtn" style="width:140px;display:flex;align-items:center;">{{ rep.empname }}</div>
+                        <div class="description">{{rep.description}}</div>
+                        <div class="actions" ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
+                            <button class="btn-delete">Edit</button>&nbsp;
                             <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
                             <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
                         </div>
-                    </div>
-                    <div class="row" >
-                        <div class="date"></div>
-                        <div class="hours"></div>
-                        <div class="description"></div>
-                    </div>
-                    <div class="row" >
-                        <div class="date"></div>
-                        <div class="time"></div>
-                        <div class="description"></div>
                     </div>
                     <div class="row totals">
                         <div class="total"><b>Total:</b></div>
                         <div class="total-time">{{addAllHours}}</div>
                         <!-- Angular adds the total of the time entries and puts that total in the span tag. -->
                         <div class="actions">
-                            <button ng-click="exportCSV()">Export to CSV</button>
+                            <button ng-click="exportCSV()" style="font-size:0.9em;">Export to CSV</button>
                         </div>
                     </div>
                 </div>
