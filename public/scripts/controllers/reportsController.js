@@ -5,7 +5,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     //global arrays
     $scope.allClients = [];
     $scope.allClientProjects = [];
-    $scope.usersOnProject = [];
+    $scope.usersOnProject = null;
     $scope.reports = [];
     $scope.userProjects = [];
 
@@ -409,6 +409,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             $scope.descriptionInputModel = null;
             $scope.addTimePerson = '--';
             $('.addTimeSucces').addClass('play');
+            setTimeout( function(){
+                $('.addTimeSucces').removeClass('play');
+            },4000);
         });
     };
 

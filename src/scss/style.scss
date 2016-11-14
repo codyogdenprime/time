@@ -24,11 +24,11 @@
 	background-color: $color-success;
 	border: 1px solid $color-success-border;
 	opacity: 0;
+	transition: opacity 1s;
 }
 
 .play {
 	opacity: 1;
-	transition: opacity 1s;
 }
 
 %fa {
