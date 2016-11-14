@@ -11,28 +11,37 @@ router.route('/timebyprojemp')
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('time get route hit', req.query.empid, req.query.projectid);
             var data = req.query;
+            if(checkDataType('number',[data.projectid])){
+
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
                 } else {
+
                     var resultsArray = [];
                     var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid]);
                     empID.on('end', function () {
-                      //console.log( 'sdfghjk-------' + empID._result.rows[0].empid );
                       var thisisEmpId = empID._result.rows[0].empid;
                       var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[thisisEmpId, data.projectid]);
                       console.log(thisisEmpId, data.projectid);
                       queryResults.on('row', function(row) {
                         resultsArray.push(row);
                       }); //on row function
+
                     queryResults.on('end', function() {
                         done();
                         console.log(resultsArray,'resultssssss');
                         return res.send(resultsArray);
                     }); //on end function
+
                   });
                 } //else
             }); //pg.connect
+          }else{
+            res.send({
+                success: false,
+            });//res.send
+          }//nested else bracket
         }).catch(function(error) {
             console.log(error);
             // If the id_token isn't right, you end up in this callback function
@@ -44,6 +53,8 @@ router.route('/timebyprojemp')
       .get(function(req,res){
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         var data = req.query;
+        if(checkDataType('number',[data.empid,data.projectid])){
+
         pg.connect(connectionString, function(err,client,done){
           if (err) {
             console.log(err);
@@ -59,6 +70,11 @@ router.route('/timebyprojemp')
             });//end queryResults end
           }//end else
         });//end pg connect
+      }else{
+        res.send({
+            success: false,
+        });//res.send
+      }//nested else bracket
       }).catch(function(error) {
           console.log(error);
           // If the id_token isn't right, you end up in this callback function
@@ -100,6 +116,7 @@ router.route('/timebyprojemp')
             console.log('time post route hit');
             var data = req.body;
             console.log('data which is also req.body', data);
+            if(checkDataType('string',[data.empid,data.date,data.description,]) && checkDataType('number',[data.hours,data.projectid])){
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
@@ -116,6 +133,11 @@ router.route('/timebyprojemp')
                 });
                 } //else bracket
             }); //pg.connect
+          }else{
+            res.send({
+                success: false,
+            });//res.send
+          }//nested else bracket
         }).catch(function(error) {
             console.log(error);
             // If the id_token isn't right, you end up in this callback function
@@ -128,7 +150,9 @@ router.route('/timebyprojemp')
 .put(function(req, res) {
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
             console.log('/time put route');
-            console.log('Body:', req.body);
+            var data = req.body;
+            console.log("data logged here", data);
+            if(checkDataType('string',[data.type]) && checkDataType('number',[data.timeid])){
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
@@ -140,6 +164,11 @@ router.route('/timebyprojemp')
                     });
                 } //else
             }); //pg.connect
+          }else{
+            res.send({
+                success: false,
+            });//res.send
+          }//nested else bracket
         }).catch(function(error) {
             console.log(error);
             // If the id_token isn't right, you end up in this callback function
@@ -152,6 +181,8 @@ router.route('/timebyprojemp')
 .delete(function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
         var data = req.body;
+        if(checkDataType('number',[data.timeid])){
+
         pg.connect(connectionString, function(err, client, done) {
             if (err) {
                 console.log(err);
@@ -163,6 +194,11 @@ router.route('/timebyprojemp')
                 });
             } //else
         }); //pg.connect
+      }else{
+        res.send({
+            success: false,
+        });//res.send
+      }//nested else bracket
     }).catch(function(error) {
         console.log(error);
         // If the id_token isn't right, you end up in this callback function
@@ -176,6 +212,8 @@ router.route('/timebyproj')
     .get(function(req, res) {
         firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
           var data = req.query.projId;
+          if(checkDataType('number',[data])){
+
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
@@ -191,6 +229,11 @@ router.route('/timebyproj')
                     }); //on end function
                 } //else
             }); //pg.connect
+          }else{
+            res.send({
+                success: false,
+            });//res.send
+          }//nested else bracket
         }).catch(function(error) {
             console.log(error);
             // If the id_token isn't right, you end up in this callback function
@@ -203,6 +246,8 @@ router.route('/timebyproj')
                 console.log('timebyProj post route hit');
                 var data = req.body;
                 console.log('data which is also req.body', data);
+                  if(checkDataType('number',[data])){
+
                 pg.connect(connectionString, function(err, client, done) {
                     if (err) {
                         console.log(err);
@@ -214,6 +259,8 @@ router.route('/timebyproj')
                       }); //on end function
                     } //else bracket
                 }); //pg.connect
+
+              }//nested else bracket
           }).catch(function(error) {
               console.log(error);
               // If the id_token isn't right, you end up in this callback function
@@ -227,6 +274,8 @@ router.route('/timebyproj')
               console.log('/time/getAllEmp HIT');
                 firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
                   var data = req.query.empid;
+                  if(checkDataType('number',[data])){
+
                     pg.connect(connectionString, function(err, client, done) {
                         if (err) {
                             console.log(err);
@@ -242,6 +291,11 @@ router.route('/timebyproj')
                             }); //on end function
                         } //else
                     }); //pg.connect
+                  }else{
+                    res.send({
+                        success: false,
+                    });//res.send
+                  }//nested else bracket
                 }).catch(function(error) {
                     console.log(error);
                     // If the id_token isn't right, you end up in this callback function
