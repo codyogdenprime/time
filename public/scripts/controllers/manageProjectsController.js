@@ -68,7 +68,9 @@ myApp.controller('manageProjectsController', ['$scope', '$http', 'factory', 'aut
     if (data !== undefined){
       factory.addClient(data).then(function(response) {
         $scope.thisClient = response.data.results[0].clientid;
-        console.log('in new client', $scope.thisClient, response.data);
+        console.log($scope.currentClient)
+        console.log('in new client', $scope.thisClient);
+        console.log( 'AddProjectToNewClient Data:', response.data );
         addProjectToNewClient();
       });//
     }
