@@ -81,7 +81,7 @@
     <form class="add-time edit-time" style="display: block;" ng-submit="addTime()">
         <div class="date" style="display: block;">
             <label>Date</label>
-              <input class="date-input" ng-model="addTimeDate" type="text" placeholder="mm/dd/yy" style="width:100%;box-sizing:border-box" />
+              <input class="date-input" ng-model="addTimeDate" id="addTimeDatePicker" type="text" placeholder="YYYY-MM-DD" style="width:100%;box-sizing:border-box" />
         </div>
         <div class="date" style="display: block;">
             <label>Person</label>
@@ -102,4 +102,8 @@
             <input type="submit" value="Add Time" /><!-- Submits the form -->
         </div>
     </form>
+</div>
+
+<div class="addTimeSucces success" style="position:absolute;top:0;right:0;padding: 1em;">
+Time Added!
 </div>
