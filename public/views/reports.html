@@ -38,6 +38,7 @@
                         </div>
                         <div class="submit">
                           <button  ng-click="runReport()"> Run Report </button>
+                          <button ng-show="usersOnProject" ng-click="toggleAddTimeModal()">Add Time</button>
                         </div>
                     </form>
                 </div>
@@ -58,9 +59,8 @@
                         <div class="person" ng-hide="actionBtn" style="width:140px;display:flex;align-items:center;">{{ rep.empname }}</div>
                         <div class="description">{{rep.description}}</div>
                         <div class="actions" ng-hide="actionBtn" ng-show="selectedProject.isactive"><!-- ng-show if the project is active -->
-                            <button class="btn-delete">Edit</button>&nbsp;
+                            <button class="btn-delete">Edit</button>&nbsp;&nbsp;
                             <button class="btn-delete" ng-click=deleteTime(rep.timeid)>Delete</button>
-                            <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
                         </div>
                     </div>
                     <div class="row totals">
@@ -74,3 +74,32 @@
                 </div>
             </section>
         </div>
+
+<div ng-show="showAddTimeModal" class="add-edit-form" style="position:fixed;top:50%;left:50%;width:20em;padding:2em;box-sizing: border-box; border:5px solid #45bcce; background-color:#FAFAFA; transform:translate(-50%) translateY(-50%);">
+    <div style="text-align:right;" ng-click="toggleAddTimeModal()">X</div><!-- WilL Cancel the Edit or Add -->
+    <div>Add Time to {{ selectedProject.projectname }}</div>
+    <form class="add-time edit-time" style="display: block;" ng-submit="addTime()">
+        <div class="date" style="display: block;">
+            <label>Date</label>
+              <input class="date-input" ng-model="addTimeDate" id="addTimeDatePicker" type="text" placeholder="YYYY-MM-DD" style="width:100%;box-sizing:border-box" />
+        </div>
+        <div class="date" style="display: block;">
+            <label>Person</label>
+              <select style="width:100%;" ng-model="addTimePerson">
+                <option selected disabled>--</option>
+                <option ng-repeat="user in usersOnProject" value="{{user.empid}}">{{ user.empname }}</option>
+              </select>
+        </div>
+        <div class="time" style="display: block;">
+            <label>Time</label>
+            <input class="time-input" type="text" ng-model="timeInputModel" style="width:100%;box-sizing:border-box;" />
+        </div>
+        <div class="description" style="display: block;">
+            <label>Description</label>
+            <input type="text" ng-model="descriptionInputModel" style="width:100%;box-sizing: border-box;" />
+        </div>
+        <div class="submit">
+            <input type="submit" value="Add Time" /><!-- Submits the form -->
+        </div>
+    </form>
+</div>

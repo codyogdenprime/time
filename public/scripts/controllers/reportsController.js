@@ -5,9 +5,11 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     //global arrays
     $scope.allClients = [];
     $scope.allClientProjects = [];
-    $scope.usersOnProject = [];
+    $scope.usersOnProject = null;
     $scope.reports = [];
     $scope.userProjects = [];
+
+    $scope.showAddTimeModal = false;
 
 
     //get user status
@@ -25,6 +27,12 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     });
     $(function() {
         $("#datepickerEnd").datepicker({
+            "dataformat": "yy-mm-dd"
+        });
+    });
+
+    $(function() {
+        $("#addTimeDatePicker").datepicker({
             "dataformat": "yy-mm-dd"
         });
     });
@@ -377,4 +385,44 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         }
     };//end user CSV
     $scope.init();
+
+
+
+
+
+    $scope.addTime = function(){
+        console.log('addTime Project Id', $scope.selectedProject.projectid);
+        var m = moment($scope.addTimeDate).format('M/D/YY');
+        var objToSend = {
+            date: m,
+            hours: $scope.timeInputModel,
+            description: $scope.descriptionInputModel,
+            empid: $scope.addTimePerson,
+            projectid: $scope.selectedProject.projectid
+        };
+
+        factory.addTimeWithEmp(objToSend).then(function(result){
+            console.log('resulted thing', result);
+            $scope.toggleAddTimeModal();
+            $scope.addTimeDate = null;
+            $scope.timeInputModel = null;
+            $scope.descriptionInputModel = null;
+            $scope.addTimePerson = '--';
+            $('.addTimeSucces').addClass('play');
+            setTimeout( function(){
+                $('.addTimeSucces').removeClass('play');
+            },4000);
+        });
+    };
+
+
+
+    $scope.toggleAddTimeModal = function(){
+        $scope.showAddTimeModal = !$scope.showAddTimeModal;
+    };
+
+
+
+
+
 }]);
