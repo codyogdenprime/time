@@ -9,6 +9,8 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
     $scope.reports = [];
     $scope.userProjects = [];
 
+    $scope.showAddTimeModal = false;
+
 
     //get user status
     var userProfile = authFactory.get_user();
@@ -399,7 +401,9 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
 
 
-
+    $scope.toggleAddTimeModal = function(){
+        $scope.showAddTimeModal = !$scope.showAddTimeModal;
+    };
 
 
 
