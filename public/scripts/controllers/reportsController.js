@@ -377,4 +377,31 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         }
     };//end user CSV
     $scope.init();
+
+
+
+
+
+    $scope.addTime = function(){
+        var objToSend = {
+            date: $scope.addTimeDate,
+            hours: $scope.timeInputModel,
+            description: $scope.descriptionInputModel,
+            empid: $scope.addTimePerson,
+            projid: $scope.selectedProject.projectid
+        };
+
+        factory.addTime(objToSend).then(function(result){
+            console.log('resulted thing', result);
+        });
+    };
+
+
+
+
+
+
+
+
+
 }]);

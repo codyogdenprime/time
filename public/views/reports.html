@@ -73,3 +73,32 @@
                 </div>
             </section>
         </div>
+
+<div class="add-edit-form" style="position:fixed;top:50%;left:50%;width:20em;padding:2em;box-sizing: border-box; border:5px solid #45bcce; background-color:#FAFAFA; transform:translate(-50%) translateY(-50%);">
+    <div style="text-align:right;">X</div><!-- WilL Cancel the Edit or Add -->
+    <div>Add Time to {{ selectedProject.projectname }}</div>
+    <form class="add-time edit-time" style="display: block;" ng-submit="addTime()">
+        <div class="date" style="display: block;">
+            <label>Date</label>
+              <input class="date-input" ng-model="addTimeDate" type="text" placeholder="mm/dd/yy" style="width:100%;box-sizing:border-box" />
+        </div>
+        <div class="date" style="display: block;">
+            <label>Person</label>
+              <select style="width:100%;" ng-model="addTimePerson">
+                <option selected disabled>--</option>
+                <option ng-repeat="user in usersOnProject" value="{{user.empid}}">{{ user.empname }}</option>
+              </select>
+        </div>
+        <div class="time" style="display: block;">
+            <label>Time</label>
+            <input class="time-input" type="text" ng-model="timeInputModel" style="width:100%;box-sizing:border-box;" />
+        </div>
+        <div class="description" style="display: block;">
+            <label>Description</label>
+            <input type="text" ng-model="descriptionInputModel" style="width:100%;box-sizing: border-box;" />
+        </div>
+        <div class="submit">
+            <input type="submit" value="Add Time" /><!-- Submits the form -->
+        </div>
+    </form>
+</div>
