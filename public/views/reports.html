@@ -76,7 +76,7 @@
         </div>
 
 <div ng-show="showAddTimeModal" class="add-edit-form" style="position:fixed;top:50%;left:50%;width:20em;padding:2em;box-sizing: border-box; border:5px solid #45bcce; background-color:#FAFAFA; transform:translate(-50%) translateY(-50%);">
-    <div style="text-align:right;">X</div><!-- WilL Cancel the Edit or Add -->
+    <div style="text-align:right;" ng-click="toggleAddTimeModal()">X</div><!-- WilL Cancel the Edit or Add -->
     <div>Add Time to {{ selectedProject.projectname }}</div>
     <form class="add-time edit-time" style="display: block;" ng-submit="addTime()">
         <div class="date" style="display: block;">
