@@ -383,15 +383,16 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
 
 
     $scope.addTime = function(){
+        console.log('addTime Project Id', $scope.selectedProject.projectid);
         var objToSend = {
             date: $scope.addTimeDate,
             hours: $scope.timeInputModel,
             description: $scope.descriptionInputModel,
             empid: $scope.addTimePerson,
-            projid: $scope.selectedProject.projectid
+            projectid: $scope.selectedProject.projectid
         };
 
-        factory.addTime(objToSend).then(function(result){
+        factory.addTimeWithEmp(objToSend).then(function(result){
             console.log('resulted thing', result);
         });
     };
