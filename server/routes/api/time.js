@@ -22,7 +22,13 @@ router.route('/timebyprojemp')
                     var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid]);
                     empID.on('end', function () {
                       var thisisEmpId = empID._result.rows[0].empid;
-                      var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[thisisEmpId, data.projectid]);
+                      var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND projid = $2',[thisisEmpId, data.projectid], function(err, response){
+                        if(err){
+                          console.log(err.message);
+                          done();
+                          res.send({success:false, error:err.message});
+                        }//if err
+                      });//client.query););
                       console.log(thisisEmpId, data.projectid);
                       queryResults.on('row', function(row) {
                         resultsArray.push(row);
@@ -60,7 +66,13 @@ router.route('/timebyprojemp')
             console.log(err);
           }else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 and projid = $2', [data.empid, data.projid]);
+            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 and projid = $2', [data.empid, data.projid], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query););
             queryResults.on('row',function(row){
               resultsArray.push(row);
             });//query results row
@@ -93,7 +105,13 @@ router.route('/timebyprojemp')
                     } else {
                         var resultsArray = [];
                         var clientID = client.query('');
-                        var queryResults = client.query('SELECT * FROM time');
+                        var queryResults = client.query('SELECT * FROM time', function(err, response){
+                          if(err){
+                            console.log(err.message);
+                            done();
+                            res.send({success:false, error:err.message});
+                          }//if err
+                        });//client.query););
                         queryResults.on('row', function(row) {
                             resultsArray.push(row);
                         }); //on row function
@@ -219,7 +237,13 @@ router.route('/timebyproj')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM time WHERE projid = $1', [data]);
+                    var queryResults = client.query('SELECT * FROM time WHERE projid = $1', [data], function(err, response){
+                      if(err){
+                        console.log(err.message);
+                        done();
+                        res.send({success:false, error:err.message});
+                      }//if err
+                    });//client.query););
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
@@ -280,7 +304,13 @@ router.route('/timebyproj')
                             console.log(err);
                         } else {
                             var resultsArray = [];
-                            var queryResults = client.query('SELECT * FROM time WHERE empid = $1', [data]);
+                            var queryResults = client.query('SELECT * FROM time WHERE empid = $1', [data], function(err, response){
+                              if(err){
+                                console.log(err.message);
+                                done();
+                                res.send({success:false, error:err.message});
+                              }//if err
+                            });//client.query););
                             queryResults.on('row', function(row) {
                                 resultsArray.push(row);
                             }); //on row function

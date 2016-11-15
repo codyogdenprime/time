@@ -16,7 +16,13 @@ router.route('/users')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM employee');
+                    var queryResults = client.query('SELECT * FROM employee', function(err, response){
+                      if(err){
+                        console.log(err.message);
+                        done();
+                        res.send({success:false, error:err.message});
+                      }//if err
+                    });//client.query););
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
@@ -123,7 +129,13 @@ router.get('/users/admin', function(req, res) {
                 console.log(err);
             } else {
                 var resultsArray = [];
-                var queryResults = client.query('SELECT * FROM employee WHERE isadmin = true');
+                var queryResults = client.query('SELECT * FROM employee WHERE isadmin = true', function(err, response){
+                  if(err){
+                    console.log(err.message);
+                    done();
+                    res.send({success:false, error:err.message});
+                  }//if err
+                });//client.query););
                 queryResults.on('row', function(row) {
                     resultsArray.push(row);
                 }); //on row function
@@ -149,7 +161,13 @@ router.get('/users/active', function(req, res) {
                 console.log(err);
             } else {
                 var resultsArray = [];
-                var queryResults = client.query('SELECT * FROM employee WHERE isactive = true');
+                var queryResults = client.query('SELECT * FROM employee WHERE isactive = true', function(err, response){
+                  if(err){
+                    console.log(err.message);
+                    done();
+                    res.send({success:false, error:err.message});
+                  }//if err
+                });//client.query););
                 queryResults.on('row', function(row) {
                     resultsArray.push(row);
                 }); //on row function
@@ -174,7 +192,13 @@ router.get('/users/inactive', function(req, res) {
                 console.log(err);
             } else {
                 var resultsArray = [];
-                var queryResults = client.query('SELECT * FROM employee WHERE isactive = false');
+                var queryResults = client.query('SELECT * FROM employee WHERE isactive = false', function(err, response){
+                  if(err){
+                    console.log(err.message);
+                    done();
+                    res.send({success:false, error:err.message});
+                  }//if err
+                });//client.query););
                 queryResults.on('row', function(row) {
                     resultsArray.push(row);
                 }); //on row function
@@ -299,7 +323,13 @@ router.get('/userstatus',function(req,res){
       console.log(err);
     }else {
       var resultsArray = [];
-      var query = client.query('SELECT * FROM employee WHERE authid = $1', [data.authid]);
+      var query = client.query('SELECT * FROM employee WHERE authid = $1', [data.authid], function(err, response){
+        if(err){
+          console.log(err.message);
+          done();
+          res.send({success:false, error:err.message});
+        }//if err
+      });//client.query););
       query.on('row', function(row) {
           resultsArray.push(row);
       }); //query on row function
