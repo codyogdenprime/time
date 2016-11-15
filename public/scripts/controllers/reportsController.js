@@ -315,6 +315,7 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
             console.log(results, 'delete results');
             $window.alert(results.data.success);
         });
+        //****** change this to refresh data not the whole page.  ********
         $window.location.reload();
     };
 
@@ -385,9 +386,6 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         }
     };//end user CSV
     $scope.init();
-
-
-
 
 
     $scope.addTime = function(){

@@ -208,7 +208,7 @@ router.get('/reports/allTimeClient', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.client_id, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid JOIN employee ON time.empid = employee.empid WHERE client_id = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.client_id, objectIn.sDate, objectIn.eDate]);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row

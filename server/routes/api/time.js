@@ -219,7 +219,7 @@ router.route('/timebyproj')
                     console.log(err);
                 } else {
                     var resultsArray = [];
-                    var queryResults = client.query('SELECT * FROM time WHERE projid = $1', [data]);
+                    var queryResults = client.query('SELECT * FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projid = $1', [data]);
                     queryResults.on('row', function(row) {
                         resultsArray.push(row);
                     }); //on row function
