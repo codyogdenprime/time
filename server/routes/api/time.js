@@ -270,7 +270,7 @@ router.route('/timebyproj')
                 console.log('timebyProj post route hit');
                 var data = req.body;
                 console.log('data which is also req.body', data);
-                  if(checkDataType('number',[data])){
+                  if(checkDataType('number',[data.hours, data.empid, data.projectid])&&checkDataType('string',[data.date,data.description])){
 
                 pg.connect(connectionString, function(err, client, done) {
                     if (err) {
