@@ -246,7 +246,7 @@ router.route('/timebyproj')
                 console.log('timebyProj post route hit');
                 var data = req.body;
                 console.log('data which is also req.body', data);
-                  if(checkDataType('number',[data])){
+                  if(checkDataType('number',[data.hours, data.empid, data.projectid])&&checkDataType('string',[data.date,data.description])){
 
                 pg.connect(connectionString, function(err, client, done) {
                     if (err) {
@@ -274,7 +274,6 @@ router.route('/timebyproj')
               console.log('/time/getAllEmp HIT');
                 firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
                   var data = req.query.empid;
-                  if(checkDataType('number',[data])){
 
                     pg.connect(connectionString, function(err, client, done) {
                         if (err) {
@@ -291,11 +290,6 @@ router.route('/timebyproj')
                             }); //on end function
                         } //else
                     }); //pg.connect
-                  }else{
-                    res.send({
-                        success: false,
-                    });//res.send
-                  }//nested else bracket
                 }).catch(function(error) {
                     console.log(error);
                     // If the id_token isn't right, you end up in this callback function

@@ -48,10 +48,15 @@ router.route('/clients')
                   if(checkDataType('string',[data.clientname])){
 
                     var resultsArray = [];
-                    var query = client.query('INSERT INTO clients (clientname) VALUES ($1) RETURNING clientid', [data.clientname]);
+                    var query = client.query('INSERT INTO clients (clientname) VALUES ($1) RETURNING clientid', [data.clientname],function(err){
+                      if(err){
+                        done();
+                        res.send({success:false,error:err.message});
+                        console.log(err.message);
+                      }else{
                     query.on('row', function (row) {
                       resultsArray.push(row);
-                      console.log('resultsArray in post experimental call',resultsArray);
+                      // console.log('resultsArray in post experimental call',resultsArray);
                     });//query on row funciton
                     query.on('end', function () {
                       done();
@@ -60,6 +65,8 @@ router.route('/clients')
                           results: resultsArray
                       });//res.send
                     });//query on end function
+                  }//sql query else block
+                });//sql query err handling function
                   }else{
                     res.send({
                         success: false,
@@ -84,17 +91,25 @@ router.route('/clients')
                 console.log(err);
             } else {
               if(checkDataType('number',[data.clientid])&& checkDataType('string',[data.clientname])){
-                client.query('UPDATE clients SET clientname = $1 WHERE clientid = $2', [data.clientname, data.clientid]);
+                client.query('UPDATE clients SET clientname = $1 WHERE clientid = $2', [data.clientname, data.clientid],function(err){
+                  if(err){
+                    done();
+                    res.send({success:false,error:err.message});
+                    console.log(err.message);
+                  }else{
                 done();
                 res.send({
                     success: true
                 });//res.send
+              }//sql query else block
+            });//sql query err handling function
               }else{
                 res.send({
                     success: false
                 });//res.send
               }//nested else
             } //else
+
         }); //pg.connect
     }).catch(function(error) {
         console.log(error);

@@ -393,13 +393,13 @@ myApp.controller('reportsController', ['factory', 'authFactory', 'reportFactory'
         var m = moment($scope.addTimeDate).format('M/D/YY');
         var objToSend = {
             date: m,
-            hours: $scope.timeInputModel,
+            hours: Number( $scope.timeInputModel ),
             description: $scope.descriptionInputModel,
-            empid: $scope.addTimePerson,
-            projectid: $scope.selectedProject.projectid
+            empid: Number( $scope.addTimePerson ),
+            projectid: Number( $scope.selectedProject.projectid )
         };
 
-        factory.addTimeWithEmp(objToSend).then(function(result){
+        factory.addTime(objToSend).then(function(result){
             console.log('resulted thing', result);
             $scope.toggleAddTimeModal();
             $scope.addTimeDate = null;
