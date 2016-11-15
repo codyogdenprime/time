@@ -10,6 +10,7 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     $scope.allMyProjects = [];
     $scope.allMyTime = [];
     $scope.myCurrentProject = '';
+    $scope.showEditTimeModal = false;
 
     // var a = moment('2016-01-01');
     // var b = a.add(1, 'week');
@@ -135,5 +136,37 @@ myApp.controller('userHomeController', ['$scope', '$http', 'factory', 'moment', 
     }; //end scope
 
     $scope.getMyProjects();
+
+
+
+
+
+$scope.editTimeEntry = function() {
+    alert('hello');
+    $scope.showEditTimeModal = !$scope.showEditTimeModal;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }]);

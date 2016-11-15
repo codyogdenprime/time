@@ -45,7 +45,7 @@
                     <div class="time">{{time.hours}}</div>
                     <div class="description">{{time.description}}</div>
                     <div class="actions" ng-show="myCurrentProject.isactive"><!-- ng-show if the project is active -->
-                        <button class="btn-edit" style="font-size: 0.75em;">Edit</button>&nbsp;&nbsp;
+                        <button class="btn-edit" style="font-size: 0.75em;" ng-click="editTimeEntry()">Edit</button>&nbsp;&nbsp;
                         <button class="btn-delete" ng-click=deleteTimeEntry(time.timeid)>Delete</button>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
         </section>
     </div>
 </div>
-<div ng-show="showAddTimeModal" class="add-edit-form" style="position:fixed;top:50%;left:50%;width:20em;padding:2em;box-sizing: border-box; border:5px solid #45bcce; background-color:#FAFAFA; transform:translate(-50%) translateY(-50%);">
-    <div style="text-align:right;" ng-click="toggleAddTimeModal()">X</div><!-- WilL Cancel the Edit or Add -->
+<div ng-show="showEditTimeModal" class="add-edit-form" style="position:fixed;top:50%;left:50%;width:20em;padding:2em;box-sizing: border-box; border:5px solid #45bcce; background-color:#FAFAFA; transform:translate(-50%) translateY(-50%);">
+    <div style="text-align:right;" ng-click="editTimeEntry()">X</div><!-- WilL Cancel the Edit or Add -->
     <div>Add Time to {{ selectedProject.projectname }}</div>
     <form class="add-time edit-time" style="display: block;" ng-submit="addTime()">
         <div class="date" style="display: block;">
