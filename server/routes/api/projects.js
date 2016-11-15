@@ -16,18 +16,20 @@ router.route('/projectsbyclient')
     pg.connect(connectionString, function(err, client, done) {
       //req.query pulls client id from query paramaters
       var data = req.query;
-      
+
       if (err) {
         console.log(err);
       } else {
         var resultsArray = [];
         var queryResults;
+
         if(checkDataType('number',[data.clientUID]) || data.clientUID === undefined){
           if (data.clientUID !== undefined) {
             queryResults = client.query('SELECT * FROM projects WHERE client_id = $1', [data.clientUID]);
           } else {
             queryResults = client.query('SELECT * FROM projects');
           }
+
           queryResults.on('row', function(row) {
             resultsArray.push(row);
           }); //on row function
@@ -65,7 +67,13 @@ router.route('/projects')
         if(checkDataType('string',[data.empid])){
 
           var resultsArray = [];
-          var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid]);
+          var empID = client.query('SELECT empid FROM employee WHERE authid = $1', [data.empid],function(err){
+            if(err){
+            done();
+            res.send({success:false,error:err.message});
+            console.log(err.message);
+          }
+          });
           empID.on('end', function () {
             //handles undefined error
             if( empID._result.rows[0]===undefined){
@@ -75,7 +83,13 @@ router.route('/projects')
               });//res.send
             }//if
             var thisisEmpId = empID._result.rows[0].empid;
-            var queryResults = client.query('SELECT * FROM projects JOIN emp_proj ON projectid=project_id WHERE emp_id = $1;',[thisisEmpId]);
+            var queryResults = client.query('SELECT * FROM projects JOIN emp_proj ON projectid=project_id WHERE emp_id = $1;',[thisisEmpId],function(err){
+              if(err){
+              done();
+              res.send({success:false,error:err.message});
+              console.log(err.message);
+            }
+            });
             console.log(thisisEmpId, data.projectid);
             queryResults.on('row', function(row) {
               resultsArray.push(row);
@@ -112,12 +126,20 @@ router.route('/projects')
         if (err) {
           console.log(err);
         } else {
-          var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)', [data.projectname, true, data.startdate, data.enddate, data.client_id]);
-          //need to assign employees to project via emp_proj join table
-          done();
-          res.send({
-            success: true
-          });
+          var query = client.query('INSERT INTO projects (projectname, isactive, startdate, enddate, client_id ) VALUES ($1,$2,$3,$4,$5)', [data.projectname, true, data.startdate, data.enddate, data.client_id],function(err){
+            if(err){
+            done();
+            res.send({success:false,error:err.message});
+            console.log(err.message);
+          }else{
+            //need to assign employees to project via emp_proj join table
+            done();
+            res.send({
+              success: true
+            });
+          }
+        });//query
+
 
         } //else bracket
       });//pg.connect
@@ -138,8 +160,6 @@ router.route('/projects')
     console.log('put route');
     var data = req.body;
     if(checkDataType('string',[data.type]) && checkDataType('number',[data.projectid])){
-
-
     console.log('req.body', req.body.type, req.body.value, req.body.projectid);
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
@@ -165,14 +185,16 @@ router.route('/projects')
           break;
           default:
           console.log('critical switch malfunction');
+
         }
         // var querystring = 'UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [data.value, data.projectid];
         client.query('UPDATE projects SET ' + column + ' = $1 WHERE projectid = $2', [data.value, data.projectid], function(err, response){
           if(err){
-            console.log(err);
+            console.log(err.message);
             done();
             res.send({
-              success:false
+              success: false,
+              error: err.message
             });//res.send
           }else{
             done();
@@ -208,18 +230,24 @@ router.route('/projects/users')
       if (err) {
         console.log(err);
       } else {
-        var query = client.query('INSERT INTO emp_proj (emp_id,project_id) VALUES ($1,$2)', [data.empid, data.projectid]);
-        done();
-        res.send({
-          success: true
-        });
-      }
+        var query = client.query('INSERT INTO emp_proj (emp_id,project_id) VALUES ($1,$2)', [data.empid, data.projectid], function(err, response){
+          if(err){
+            console.log(err.message);
+            done();
+            res.send({
+              success: false, error: err.message});//res.send
+          }else{
+            done();
+            res.send({success: true});//res.send
+          }//else
+        });//client.query
+      }//pg connect err handling
     }); //pg connect
   }else {
     res.send({
       success: false
-    });
-  }
+    });//res.send
+  }//checkDataType error handling else bracket
   }).catch(function(error) {
     console.log(error);
     // If the id_token isn't right, you end up in this callback function
@@ -232,18 +260,23 @@ router.route('/projects/users')
   console.log('projects/users delete route hit');
   firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
     var data = req.body;
-    console.log('making sure there is a req.body', data);
+    // console.log('making sure there is a req.body', data);
     if(checkDataType('number',[data.empid,data.projectid])){
 
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
         console.log(err);
       } else {
-        var query = client.query('DELETE FROM emp_proj WHERE emp_id=$1 AND project_id=$2', [data.empid, data.projectid]);
-        done();
-        res.send({
-          success: true
-        });
+        var query = client.query('DELETE FROM emp_proj WHERE emp_id=$1 AND project_id=$2', [data.empid, data.projectid], function(err, response){
+          if(err){
+            console.log(err.message);
+            done();
+            res.send({success: false, error: err.message});
+          }else{
+            done();
+            res.send({success: true});
+          }//else
+        });//client.query
       }
     }); //pg connect
   }else {
@@ -272,7 +305,13 @@ router.route('/userprojects')
         console.log(err);
       } else {
         var resultsArray = [];
-        var queryResults = client.query('SELECT projects.projectid, projects.projectname, projects.isactive FROM emp_proj JOIN projects ON emp_proj.project_id=projects.projectid WHERE emp_proj.emp_id= $1;', [data.empid]);
+        var queryResults = client.query('SELECT projects.projectid, projects.projectname, projects.isactive FROM emp_proj JOIN projects ON emp_proj.project_id=projects.projectid WHERE emp_proj.emp_id= $1;', [data.empid], function(err, response){
+          if(err){
+            console.log(err.message);
+            done();
+            res.send({success:false, error:err.message});
+          }//if err
+        });//client.query
         queryResults.on('row', function(row) {
           resultsArray.push(row);
         }); //on row function

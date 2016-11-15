@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({
 //report get route
 router.get('/reports', function(req, res) {
     firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
-        console.log('/reports get route hit');
+        // console.log('/reports get route hit');
         var objectIn = {
             projectId: req.query.projectId,
             sDate: req.query.sDate,
@@ -32,11 +32,23 @@ router.get('/reports', function(req, res) {
 
                 if (objectIn.username !== undefined && objectIn.sDate !== undefined && objectIn.eDate !== undefined) {
                     console.log('inside if statement reports query');
-                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.projectId, objectIn.sDate, objectIn.eDate], function(err, response){
+                      if(err){
+                        console.log(err.message);
+                        done();
+                        res.send({success:false, error:err.message});
+                      }//if err
+                    });//client.query);
                     // console.log('test thing one');
                 } else {
                     console.log('inside else statement reports query');
-                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId]);
+                    queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1', [objectIn.projectId], function(err, response){
+                      if(err){
+                        console.log(err.message);
+                        done();
+                        res.send({success:false, error:err.message});
+                      }//if err
+                    });//client.query);
                     // console.log('test thing three');
                 }
                 queryResults.on('row', function(row) {
@@ -75,7 +87,13 @@ router.get('/reports/date', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3 AND empid = $4', [objectIn.projectId, objectIn.sDate, objectIn.eDate, objectIn.empid]);
+            var queryResults = client.query('SELECT * FROM time JOIN projects on projid = projectid WHERE projectid = $1 AND time.date >= $2 AND time.date <= $3 AND empid = $4', [objectIn.projectId, objectIn.sDate, objectIn.eDate, objectIn.empid], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -108,7 +126,13 @@ router.get('/reports/admin', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.empid = $2 AND time.date >= $3 AND time.date <= $4', [objectIn.projectId, objectIn.empId, objectIn.sDate, objectIn.eDate], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -138,7 +162,13 @@ router.get('/reports/adminNoEmp', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.date >= $2 AND time.date <= $3;', [objectIn.projectId, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE projects.projectid = $1 AND time.date >= $2 AND time.date <= $3;', [objectIn.projectId, objectIn.sDate, objectIn.eDate], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -158,7 +188,13 @@ router.get('/reports/all', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE client_id = $1', [clientid]);
+            var queryResults = client.query('SELECT time.timeid, time.date, time.hours, time.description, employee.empname FROM time JOIN projects ON projid = projectid JOIN employee ON time.empid = employee.empid WHERE client_id = $1', [clientid], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -183,7 +219,13 @@ router.get('/reports/allTime', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.empid, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT * FROM time WHERE empid = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.empid, objectIn.sDate, objectIn.eDate], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
@@ -208,7 +250,13 @@ router.get('/reports/allTimeClient', function(req, res) {
             console.log(err);
         } else {
             var resultsArray = [];
-            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.client_id, objectIn.sDate, objectIn.eDate]);
+            var queryResults = client.query('SELECT * FROM projects JOIN time on projectid = projid  WHERE client_id = $1 AND time.date >= $2 AND time.date <= $3', [objectIn.client_id, objectIn.sDate, objectIn.eDate], function(err, response){
+              if(err){
+                console.log(err.message);
+                done();
+                res.send({success:false, error:err.message});
+              }//if err
+            });//client.query);
             queryResults.on('row', function(row) {
                 resultsArray.push(row);
             }); //queryResults on row
