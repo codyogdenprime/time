@@ -153,35 +153,11 @@ router.route('/timebyprojemp')
             var data = req.body;
             console.log("data logged here", data);
             if(checkDataType('string',[data.type]) && checkDataType('number',[data.timeid])){
-
             pg.connect(connectionString, function(err, client, done) {
                 if (err) {
                     console.log(err);
                 } else {
-                    var column = '';
-                    var updatedInfo = '';
-                    //build sql statement based on data in
-                    switch (data.type) {
-                        case 'date':
-                            column = 'date';
-                            break;
-                        case 'hours':
-                            column = 'hours';
-                            break;
-                        case 'description':
-                            column = 'description';
-                            break;
-                        case 'empid':
-                            column = 'empid';
-                            break;
-                        default:
-                        console.log('switch failure');
-                        res.send({
-                            success: false
-                        });
-                    }
-                    updatedInfo = data.value;
-                    client.query('UPDATE time SET ' + column + ' = $1 WHERE timeid = $2', [updatedInfo, data.timeid]);
+                    client.query('UPDATE time SET date = $2, hours = $3, description = $4, empid = $5, projid = $6 WHERE timeid = $1', [req.body.id, req.body.date, req.body.hours, req.body.description, req.body.empid, req.body.projid]);
                     done();
                     res.send({
                         success: true
@@ -298,7 +274,6 @@ router.route('/timebyproj')
               console.log('/time/getAllEmp HIT');
                 firebase.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
                   var data = req.query.empid;
-                  if(checkDataType('number',[data])){
 
                     pg.connect(connectionString, function(err, client, done) {
                         if (err) {
@@ -315,11 +290,6 @@ router.route('/timebyproj')
                             }); //on end function
                         } //else
                     }); //pg.connect
-                  }else{
-                    res.send({
-                        success: false,
-                    });//res.send
-                  }//nested else bracket
                 }).catch(function(error) {
                     console.log(error);
                     // If the id_token isn't right, you end up in this callback function

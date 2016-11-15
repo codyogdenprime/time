@@ -135,18 +135,12 @@ myApp.factory('factory', ['$http', function($http) {
         });
     };
 
-    var editTime = function(type, value, id) {
+    var editTime = function(obj) {
         console.log('made it to edit time factory');
-        var objectToSend = {
-            timeid: id,
-            type: type,
-            value: value
-        }; //objectToSend
-
         return $http({
             method: 'PUT',
             url: 'api/time',
-            data: objectToSend,
+            data: obj,
             headers: {
                 id_token: idToken
             }
